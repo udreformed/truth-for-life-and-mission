@@ -744,7 +744,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		badge: "หนังสือภาษาไทย · ดาวน์โหลดฟรี",
 		title: "หลักคำสอนแห่งพระคุณ",
 		description: "คู่มือศึกษาพระคัมภีร์เรื่อง “หลักคำสอนแห่งพระคุณ” ที่ช่วยให้เข้าใจว่าความรอดตั้งแต่ต้นจนจบเป็นพระคุณของพระเจ้า เหมาะสำหรับการเรียนส่วนตัวและกลุ่มศึกษาพระคัมภีร์",
-		cover: "/images/doctrines-of-grace-th-cover.png?v=20260815a",
+		editor: "เรียบเรียงโดย: Yongjin Choi",
 		downloads: [{
 			action: "PDF ภาษาไทย",
 			href: "/downloads/doctrines-of-grace-th.pdf"
@@ -753,7 +753,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		badge: "한국어 도서 · 무료 다운로드",
 		title: "은혜의 교리",
 		description: "칼빈주의 5대 교리로 알려진 “은혜의 교리”를 성경공부 교재 형식으로 정리한 자료입니다. 구원이 처음부터 끝까지 하나님의 은혜임을 차분히 배우도록 돕습니다.",
-		cover: "/images/doctrines-of-grace-ko-cover.png?v=20260815a",
+		editor: "편저자: 최용진",
 		downloads: [{
 			action: "한국어 PDF",
 			href: "/downloads/doctrines-of-grace-ko.pdf"
@@ -762,7 +762,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		badge: "Thai edition · Free download",
 		title: "Doctrines of Grace",
 		description: "A Bible-study guide to the “Doctrines of Grace,” commonly known as the five points of Calvinism. It helps readers see that salvation is God's grace from beginning to end.",
-		cover: "/images/doctrines-of-grace-th-cover.png?v=20260815a",
+		editor: "Editor: Yongjin Choi",
 		downloads: [{
 			action: "Thai PDF",
 			href: "/downloads/doctrines-of-grace-th.pdf"
@@ -1023,28 +1023,22 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			badge: "เอกสารหลักคำสอน · PDF",
 			title: "คำแถลงชิคาโกว่าด้วยความไร้ข้อผิดพลาดของพระคัมภีร์",
 			description: "คำแถลงปี 1978 ที่อธิบายอย่างเป็นระบบถึงการดลใจ สิทธิอำนาจ ความจริง และความไร้ข้อผิดพลาดของพระคัมภีร์ โดยยืนยันว่าพระคัมภีร์ซึ่งพระเจ้าประทานนั้นเป็นพระวจนะที่เชื่อถือได้และเป็นจริงในต้นฉบับ",
-			attribution: "The Chicago Statement on Biblical Inerrancy · 1978",
-			preview: "ดูตัวอย่างและดาวน์โหลด",
-			pdf: "/downloads/chicago-statement-biblical-inerrancy-th.pdf",
-			cover: "/images/chicago-statement-cover-th.jpg"
+			download: "ดาวน์โหลด PDF ภาษาไทย",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-th.pdf"
 		},
 		ko: {
 			badge: "교리 문서 · PDF",
 			title: "성경 무오에 대한 시카고 선언",
 			description: "1978년 복음주의 신학자와 목회자들이 성경의 영감·권위·진실성과 무오성을 분명히 밝힌 신앙 선언문입니다. 성경이 하나님이 주신 말씀으로서 원문에서 참되고 신뢰할 수 있음을 조항별로 설명합니다.",
-			attribution: "The Chicago Statement on Biblical Inerrancy · 1978",
-			preview: "미리보기 및 다운로드",
-			pdf: "/downloads/chicago-statement-biblical-inerrancy-ko.pdf",
-			cover: "/images/chicago-statement-cover-ko.jpg"
+			download: "한국어 PDF 다운로드",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-ko.pdf"
 		},
 		en: {
 			badge: "Doctrine document · PDF",
 			title: "The Chicago Statement on Biblical Inerrancy · 1978",
 			description: "A 1978 evangelical statement explaining the inspiration, authority, truthfulness, and inerrancy of Scripture through a summary, articles of affirmation and denial, and exposition.",
-			attribution: "Chicago Summit · 1978",
-			preview: "Preview and download",
-			pdf: "/downloads/chicago-statement-biblical-inerrancy-en.pdf",
-			cover: "/images/chicago-statement-cover-en.jpg"
+			download: "Download English PDF",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-en.pdf"
 		}
 	}[lang];
 	const quest = {
@@ -2099,7 +2093,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"lang": lang,
 		"url": coverageVisionDetailUrl,
 		"title": coverageVisionResource.title
-	})}</div></article></div></div><div class="pdf-resource-group pdf-resource-group-doctrine"><header class="pdf-resource-group-heading"><h2>${pdfGroups.doctrine}</h2></header><div class="uploaded-pdf-grid"><article class="uploaded-pdf-card cambridge-declaration-card" id="cambridge-declaration"><p class="type-pill">${cambridgeDeclaration.badge}</p><h2>${cambridgeDeclaration.title}</h2><p>${cambridgeDeclaration.description}</p><p class="source-attribution">${cambridgeDeclaration.attribution}</p><div class="resource-action-row"><div class="uploaded-pdf-actions"><a class="button secondary"${addAttribute(cambridgeDeclaration.pdf, "href")} data-pdf-preview${addAttribute(cambridgeDeclaration.title, "data-pdf-preview-title")}${addAttribute(cambridgeDeclaration.pdf.split("/").pop(), "download")}>${cambridgeDeclaration.preview} ↗</a></div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	})}</div></article></div></div><div class="pdf-resource-group pdf-resource-group-doctrine"><header class="pdf-resource-group-heading"><h2>${pdfGroups.doctrine}</h2></header><div class="uploaded-pdf-grid"><article class="uploaded-pdf-card cambridge-declaration-card" id="cambridge-declaration"><p class="type-pill">${cambridgeDeclaration.badge}</p><h2>${cambridgeDeclaration.title}</h2><p>${cambridgeDeclaration.description}</p><p class="source-attribution">${cambridgeDeclaration.attribution}</p><div class="resource-action-row"><div class="uploaded-pdf-actions"><a class="button download-button"${addAttribute(cambridgeDeclaration.pdf, "href")}${addAttribute(cambridgeDeclaration.pdf.split("/").pop(), "download")}>${cambridgeDeclaration.download}</a></div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": lang,
 		"url": cambridgeDeclaration.pdf,
 		"title": cambridgeDeclaration.title
@@ -2107,11 +2101,11 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"lang": lang,
 		"url": uploadedPdf.downloads[0]?.href ?? `/${lang}/library/?type=pdf#new-city-catechism`,
 		"title": uploadedPdf.title
-	})}</div></article><article class="uploaded-pdf-card chicago-statement-card" id="chicago-statement"><p class="type-pill">${chicagoStatement.badge}</p><img class="uploaded-pdf-cover"${addAttribute(chicagoStatement.cover, "src")}${addAttribute(chicagoStatement.title, "alt")} loading="lazy" decoding="async"><h2>${chicagoStatement.title}</h2><p>${chicagoStatement.description}</p><p class="source-attribution">${chicagoStatement.attribution}</p><div class="resource-action-row"><div class="uploaded-pdf-actions"><a class="button secondary"${addAttribute(chicagoStatement.pdf, "href")} data-pdf-preview${addAttribute(chicagoStatement.title, "data-pdf-preview-title")}${addAttribute(chicagoStatement.pdf.split("/").pop(), "download")}>${chicagoStatement.preview} ↗</a></div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	})}</div></article><article class="uploaded-pdf-card chicago-statement-card" id="chicago-statement"><p class="type-pill">${chicagoStatement.badge}</p><h2>${chicagoStatement.title}</h2><p>${chicagoStatement.description}</p><div class="resource-action-row"><div class="uploaded-pdf-actions"><a class="button download-button"${addAttribute(chicagoStatement.pdf, "href")}${addAttribute(chicagoStatement.pdf.split("/").pop(), "download")}>${chicagoStatement.download}</a></div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": lang,
 		"url": chicagoStatement.pdf,
 		"title": chicagoStatement.title
-	})}</div></article><article class="uploaded-pdf-card doctrines-of-grace-pdf-card" id="doctrines-of-grace-pdf"><p class="type-pill">${doctrinesOfGracePdfCard.badge}</p><h2>${doctrinesOfGracePdfCard.title}</h2><img class="uploaded-pdf-cover"${addAttribute(doctrinesOfGracePdfCard.cover, "src")}${addAttribute(doctrinesOfGracePdfCard.title, "alt")} loading="lazy"><p>${doctrinesOfGracePdfCard.description}</p><div class="resource-action-row"><div class="uploaded-pdf-actions">${doctrinesOfGracePdfCard.downloads.map((download) => renderTemplate`<a class="button download-button"${addAttribute(download.href, "href")} download>${download.action}</a>`)}</div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	})}</div></article><article class="uploaded-pdf-card doctrines-of-grace-pdf-card" id="doctrines-of-grace-pdf"><p class="type-pill">${doctrinesOfGracePdfCard.badge}</p><h2>${doctrinesOfGracePdfCard.title}</h2><p class="source-attribution">${doctrinesOfGracePdfCard.editor}</p><p>${doctrinesOfGracePdfCard.description}</p><div class="resource-action-row"><div class="uploaded-pdf-actions">${doctrinesOfGracePdfCard.downloads.map((download) => renderTemplate`<a class="button download-button"${addAttribute(download.href, "href")} download>${download.action}</a>`)}</div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": lang,
 		"url": doctrinesOfGracePdfCard.downloads[0]?.href ?? `/${lang}/library/?type=pdf#doctrines-of-grace-pdf`,
 		"title": doctrinesOfGracePdfCard.title
