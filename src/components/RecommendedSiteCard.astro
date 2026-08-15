@@ -1,0 +1,39 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  meta: string;
+  action: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageLayout?: "square" | "wide";
+  iconText?: string;
+  titleLines?: string[];
+  target?: "_blank" | "_self";
+  showArrow?: boolean;
+  hideAction?: boolean;
+}
+
+const { href, title, description, meta, action, imageSrc, imageAlt = "", imageLayout = "square", iconText, titleLines, target = "_blank", showArrow = true, hideAction = false } = Astro.props;
+const hasIcon = Boolean(imageSrc || iconText);
+---
+
+<a
+  class:list={{ "external-site-card": true, "clickable-site-card": true, "commentary-site-card": hasIcon, "wide-logo-site-card": hasIcon && imageLayout === "wide", "external-site-card-no-action": hideAction }}
+  href={href}
+  target={target}
+  rel={target === "_blank" ? "noopener noreferrer" : undefined}
+  aria-label={hideAction ? title : `${title} — ${action}`}
+>
+  <div class="external-site-card-copy">
+    {imageSrc && <img class:list={{ "commentary-site-icon": true, "wide-site-logo": imageLayout === "wide" }} src={imageSrc} alt={imageAlt} width={imageLayout === "wide" ? "140" : "76"} height="76" loading="lazy" />}
+    {!imageSrc && iconText && <span class="commentary-site-icon emoji-site-icon" aria-hidden="true">{iconText}</span>}
+    <h2 class:list={{ "two-line-site-title": Boolean(titleLines?.length) }}>
+      {titleLines?.length ? titleLines.map((line) => <span>{line}</span>) : title}
+    </h2>
+    <p>{description}</p>
+    <p class="external-site-meta">{meta}</p>
+  </div>
+  {!hideAction && <span class="button" aria-hidden="true">{action}{showArrow && <> ↗</>}</span>}
+</a>

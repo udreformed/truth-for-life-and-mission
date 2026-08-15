@@ -1,0 +1,458 @@
+---
+import "../../styles/global.css";
+Astro.response.headers.set("Cache-Control", "no-store");
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>관리자 · Truth for Life and Mission</title>
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-top">
+        <div>
+          <p class="eyebrow">Truth for Life and Mission</p>
+          <h1>관리자 페이지</h1>
+        </div>
+        <div>
+          <span id="identity" class="status">Checking access…</span>
+          <button id="logout" class="button secondary hidden" type="button" style="margin-left:8px">로그아웃</button>
+          <a class="button secondary" href="/th/" style="margin-left:8px">사이트 보기</a>
+        </div>
+      </header>
+
+      <section id="admin-login" class="panel local-login hidden">
+        <h2>관리자 로그인</h2>
+        <p>등록된 관리자 이메일과 비밀번호를 입력하세요.</p>
+        <form id="admin-login-form" class="field-row">
+          <div class="field" style="margin:0">
+            <label for="admin-email">관리자 이메일</label>
+            <input id="admin-email" type="email" autocomplete="username" value="thaigodpleasing@naver.com" required />
+          </div>
+          <div class="field" style="margin:0">
+            <label for="admin-password">비밀번호</label>
+            <input id="admin-password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="button" type="submit" style="align-self:end">로그인</button>
+        </form>
+      </section>
+
+      <section id="local-login" class="panel local-login hidden">
+        <h2>로컬 테스트 접속</h2>
+        <div class="field-row">
+          <div class="field" style="margin:0">
+            <label for="local-email">관리자 이메일</label>
+            <input id="local-email" type="email" placeholder="thaigodpleasing@naver.com" />
+          </div>
+          <button id="local-connect" class="button" type="button" style="align-self:end">접속</button>
+        </div>
+      </section>
+
+      <div id="message" class="notice hidden" role="status"></div>
+
+      <div id="workspace" class="admin-grid hidden">
+        <section class="panel">
+          <div class="admin-help-box">
+            <h2>간단 사용법</h2>
+            <ol>
+              <li>카테고리와 언어를 선택합니다.</li>
+              <li>제목, 짧은 소개, 내용을 입력합니다.</li>
+              <li>묵상은 날짜를 꼭 선택합니다. 태국어 묵상은 한국어·영어가 자동 번역됩니다.</li>
+              <li>PDF나 이미지는 먼저 글을 저장한 뒤 아래에서 업로드합니다.</li>
+            </ol>
+          </div>
+
+          <h2 id="form-title">새 글 작성</h2>
+          <form id="resource-form">
+            <input id="resource-id" type="hidden" />
+            <input id="slug" type="hidden" />
+            <input id="daily-kind" type="hidden" value="" />
+            <input id="series-slot" type="hidden" value="" />
+            <input id="audience" type="hidden" value="" />
+            <input id="difficulty" type="hidden" value="" />
+            <div class="field-row">
+              <div class="field">
+                <label for="type">카테고리</label>
+                <select id="type" required>
+                  <option value="devotional">묵상</option>
+                  <option value="article">글</option>
+                  <option value="pdf">PDF 자료</option>
+                  <option value="video">영상자료</option>
+                  <option value="book">무료도서</option>
+                  <option value="course">강좌</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="language">언어</label>
+                <select id="language" required>
+                  <option value="th">ไทย</option>
+                  <option value="ko">한국어</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="title">제목</label>
+              <input id="title" required maxlength="180" />
+            </div>
+            <div class="field">
+              <label for="content-date">날짜 <span class="admin-muted">(묵상일 때만 필요)</span></label>
+              <input id="content-date" type="date" />
+            </div>
+            <div class="field">
+              <label for="summary">짧은 소개</label>
+              <textarea id="summary" maxlength="600" placeholder="자료나 글을 한두 문장으로 소개하세요."></textarea>
+            </div>
+            <div class="field">
+              <label for="body">본문</label>
+              <textarea id="body" style="min-height:320px" placeholder="글 또는 묵상 내용을 여기에 붙여 넣으세요."></textarea>
+            </div>
+            <div class="field">
+              <label for="youtube-url">유튜브 주소 <span class="admin-muted">(영상자료일 때만)</span></label>
+              <input id="youtube-url" type="url" placeholder="https://www.youtube.com/watch?v=…" />
+            </div>
+            <div class="field">
+              <label for="status">저장 방식</label>
+              <select id="status">
+                <option value="published">바로 게시</option>
+                <option value="draft">임시저장</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button class="button" type="submit">저장하기</button>
+              <button id="reset-form" class="button secondary" type="button">새 글</button>
+              <button id="delete-resource" class="button danger hidden" type="button">삭제</button>
+            </div>
+          </form>
+
+          <hr style="border:0;border-top:1px solid var(--line);margin:28px 0" />
+          <h2>파일 업로드</h2>
+          <p style="color:var(--muted);font-size:14px">먼저 위 글을 저장한 뒤 파일을 올리세요. 이미지는 5MB, PDF는 25MB까지 가능합니다.</p>
+          <form id="media-form">
+            <div class="field-row">
+              <div class="field">
+                <label for="media-kind">파일 종류</label>
+                <select id="media-kind">
+                  <option value="image">대표 이미지</option>
+                  <option value="pdf">PDF</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="media-file">파일 선택</label>
+                <input id="media-file" type="file" />
+              </div>
+            </div>
+            <button class="button secondary" type="submit">파일 올리기</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading" style="margin-bottom:20px">
+            <div><h2 style="margin:0">작성한 자료</h2><p id="resource-count">불러오는 중…</p></div>
+            <button id="refresh" class="button secondary" type="button">새로고침</button>
+          </div>
+          <div class="admin-list-controls">
+            <label for="resource-language-filter">목록 언어</label>
+            <select id="resource-language-filter">
+              <option value="all">전체</option>
+              <option value="th">태국어</option>
+              <option value="ko">한국어</option>
+              <option value="en">영어</option>
+            </select>
+          </div>
+          <div id="resource-list" class="admin-list"></div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      // @ts-nocheck -- This is dependency-free browser JavaScript; API input is validated server-side.
+      const localMode = ["localhost", "127.0.0.1"].includes(location.hostname);
+      const localLogin = document.querySelector("#local-login");
+      const adminLogin = document.querySelector("#admin-login");
+      const adminLoginForm = document.querySelector("#admin-login-form");
+      const logoutButton = document.querySelector("#logout");
+      const localEmail = document.querySelector("#local-email");
+      const identity = document.querySelector("#identity");
+      const workspace = document.querySelector("#workspace");
+      const message = document.querySelector("#message");
+      const form = document.querySelector("#resource-form");
+      const mediaForm = document.querySelector("#media-form");
+      const resourceList = document.querySelector("#resource-list");
+      const resourceLanguageFilter = document.querySelector("#resource-language-filter");
+      let resources = [];
+      resourceLanguageFilter.value = localStorage.getItem("adminResourceLanguage") || "all";
+
+      if (localMode) {
+        localLogin.classList.remove("hidden");
+        localEmail.value = localStorage.getItem("localAdminEmail") || "thaigodpleasing@naver.com";
+      } else {
+        adminLogin.classList.remove("hidden");
+      }
+
+      function headers(json = false) {
+        const result = {};
+        if (json) result["content-type"] = "application/json";
+        if (localMode && localEmail.value) result["x-local-admin-email"] = localEmail.value.trim();
+        return result;
+      }
+
+      async function api(url, options = {}) {
+        const response = await fetch(url, { ...options, headers: { ...headers(Boolean(options.body && !(options.body instanceof FormData))), ...(options.headers || {}) } });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
+        return data;
+      }
+
+      function notify(text, isError = false) {
+        message.textContent = text;
+        message.classList.toggle("error", isError);
+        message.classList.remove("hidden");
+        if (!isError) setTimeout(() => message.classList.add("hidden"), 4000);
+      }
+
+      async function loadResources() {
+        try {
+          const selectedLanguage = resourceLanguageFilter.value || "all";
+          const query = selectedLanguage === "all" ? "" : `?language=${encodeURIComponent(selectedLanguage)}`;
+          const data = await api(`/api/admin/resources${query}`);
+          resources = data.resources || [];
+          identity.textContent = `${data.user.email} · ${data.user.role}`;
+          workspace.classList.remove("hidden");
+          adminLogin.classList.add("hidden");
+          if (!localMode) logoutButton.classList.remove("hidden");
+          renderList();
+        } catch (error) {
+          workspace.classList.add("hidden");
+          identity.textContent = "로그인 필요";
+          if (!localMode) adminLogin.classList.remove("hidden");
+          notify(error.message, true);
+        }
+      }
+
+      function renderList() {
+        const selectedLanguage = resourceLanguageFilter.value || "all";
+        const languageLabel = selectedLanguage === "all" ? "전체 언어" : labelForLanguage(selectedLanguage);
+        document.querySelector("#resource-count").textContent = `${languageLabel} · ${resources.length}개 자료`;
+        resourceList.replaceChildren();
+        if (!resources.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = "이 언어로 표시할 자료가 없습니다.";
+          resourceList.append(empty);
+          return;
+        }
+        for (const resource of resources) {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = "admin-item";
+          item.style.textAlign = "left";
+          item.style.background = "white";
+          item.style.cursor = "pointer";
+          const text = document.createElement("div");
+          const title = document.createElement("h3");
+          title.textContent = resource.title || resource.slug;
+          const meta = document.createElement("p");
+          meta.textContent = `${labelForType(resource.type)} · ${labelForLanguage(resource.language || "th")} · ${resource.content_date || "날짜 없음"}`;
+          const status = document.createElement("span");
+          status.className = `status ${resource.status}`;
+          status.textContent = resource.status === "published" ? "게시됨" : "임시저장";
+          text.append(title, meta);
+          item.append(text, status);
+          item.addEventListener("click", () => fillForm(resource));
+          resourceList.append(item);
+        }
+      }
+
+      function fillForm(resource) {
+        document.querySelector("#form-title").textContent = "자료 수정";
+        document.querySelector("#resource-id").value = resource.id;
+        document.querySelector("#type").value = ["devotional", "article", "pdf", "video", "book", "course"].includes(resource.type) ? resource.type : "article";
+        document.querySelector("#language").value = resource.language || "th";
+        document.querySelector("#title").value = resource.title || "";
+        document.querySelector("#slug").value = resource.slug;
+        document.querySelector("#summary").value = resource.summary || "";
+        document.querySelector("#body").value = resource.body || "";
+        document.querySelector("#youtube-url").value = resource.youtube_url || "";
+        document.querySelector("#content-date").value = resource.content_date || "";
+        document.querySelector("#series-slot").value = resource.series_slot || "";
+        document.querySelector("#daily-kind").value = resource.type === "devotional" && resource.content_date ? "devotional" : "";
+        document.querySelector("#audience").value = resource.audience || "";
+        document.querySelector("#difficulty").value = resource.difficulty || "";
+        document.querySelector("#status").value = resource.status;
+        document.querySelector("#delete-resource").classList.remove("hidden");
+        scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function resetForm() {
+        form.reset();
+        document.querySelector("#resource-id").value = "";
+        document.querySelector("#slug").value = "";
+        document.querySelector("#daily-kind").value = "";
+        document.querySelector("#series-slot").value = "";
+        document.querySelector("#audience").value = "";
+        document.querySelector("#difficulty").value = "";
+        document.querySelector("#status").value = "published";
+        document.querySelector("#form-title").textContent = "새 글 작성";
+        document.querySelector("#delete-resource").classList.add("hidden");
+      }
+
+      function labelForType(type) {
+        return {
+          devotional: "묵상",
+          article: "글",
+          pdf: "PDF 자료",
+          video: "영상자료",
+          book: "무료도서",
+          course: "강좌"
+        }[type] || type;
+      }
+
+      function labelForLanguage(language) {
+        return { th: "태국어", ko: "한국어", en: "영어" }[language] || language;
+      }
+
+      function makeSlug(type, language, title, date, existingSlug) {
+        if (existingSlug) return existingSlug;
+        const asciiTitle = title
+          .normalize("NFKD")
+          .replace(/[^\w\s-]/g, "")
+          .trim()
+          .toLowerCase()
+          .replace(/[\s_]+/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+        const base = asciiTitle || `${type}-${language}${date ? `-${date}` : ""}`;
+        return `${base}-${Date.now().toString(36)}`.replace(/-+/g, "-").slice(0, 80);
+      }
+
+      function payload() {
+        const id = Number(document.querySelector("#resource-id").value || 0);
+        const type = document.querySelector("#type").value;
+        const language = document.querySelector("#language").value;
+        const title = document.querySelector("#title").value.trim();
+        const contentDate = document.querySelector("#content-date").value;
+        const existingSlug = document.querySelector("#slug").value;
+        const slug = makeSlug(type, language, title, contentDate, existingSlug);
+        document.querySelector("#slug").value = slug;
+        return {
+          id,
+          type,
+          language,
+          title,
+          slug,
+          summary: document.querySelector("#summary").value,
+          body: document.querySelector("#body").value,
+          youtubeUrl: document.querySelector("#youtube-url").value,
+          contentDate,
+          seriesSlot: type === "devotional" ? 1 : 0,
+          audience: document.querySelector("#audience").value,
+          difficulty: document.querySelector("#difficulty").value,
+          status: document.querySelector("#status").value
+        };
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const data = payload();
+        if (data.type === "devotional" && !data.contentDate) {
+          notify("묵상은 날짜를 선택해야 합니다.", true);
+          return;
+        }
+        if (data.type === "video" && !data.youtubeUrl) {
+          notify("영상자료는 유튜브 주소를 입력해야 합니다.", true);
+          return;
+        }
+        try {
+          const result = await api("/api/admin/resources", { method: data.id ? "PUT" : "POST", body: JSON.stringify(data) });
+          const needsTranslation = data.language === "th" && (data.type === "devotional" || data.type === "article");
+          const translationNote = needsTranslation
+            ? result.autoTranslated
+              ? data.type === "article" ? " 영어 번역도 자동 생성되었습니다." : " 한국어·영어 번역도 자동 생성되었습니다."
+              : " 태국어 원문은 저장됐지만 자동번역은 다시 확인이 필요합니다."
+            : "";
+          notify((data.status === "published" ? "게시되었습니다." : "임시저장되었습니다.") + translationNote, needsTranslation && !result.autoTranslated);
+          await loadResources();
+          const saved = resources.find((item) => item.id === (data.id || result.id));
+          if (saved) fillForm(saved);
+        } catch (error) {
+          notify(error.message, true);
+        }
+      });
+
+      mediaForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const id = Number(document.querySelector("#resource-id").value || 0);
+        const file = document.querySelector("#media-file").files[0];
+        if (!id || !file) return notify("먼저 글을 저장하고 파일을 선택하세요.", true);
+        const data = new FormData();
+        data.set("resourceId", String(id));
+        data.set("kind", document.querySelector("#media-kind").value);
+        data.set("file", file);
+        try {
+          await api("/api/admin/media", { method: "POST", body: data });
+          notify("파일을 올렸습니다.");
+          mediaForm.reset();
+          await loadResources();
+        } catch (error) {
+          notify(error.message, true);
+        }
+      });
+
+      document.querySelector("#delete-resource").addEventListener("click", async () => {
+        const id = Number(document.querySelector("#resource-id").value || 0);
+        if (!id || !confirm("이 자료를 삭제할까요? 업로드된 파일도 함께 삭제될 수 있습니다.")) return;
+        try {
+          await api(`/api/admin/resources?id=${id}`, { method: "DELETE" });
+          notify("삭제되었습니다.");
+          resetForm();
+          await loadResources();
+        } catch (error) {
+          notify(error.message, true);
+        }
+      });
+
+      document.querySelector("#reset-form").addEventListener("click", resetForm);
+      document.querySelector("#refresh").addEventListener("click", loadResources);
+      resourceLanguageFilter.addEventListener("change", () => {
+        localStorage.setItem("adminResourceLanguage", resourceLanguageFilter.value);
+        loadResources();
+      });
+      adminLoginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          await api("/api/admin/login", {
+            method: "POST",
+            body: JSON.stringify({
+              email: document.querySelector("#admin-email").value,
+              password: document.querySelector("#admin-password").value
+            })
+          });
+          document.querySelector("#admin-password").value = "";
+          notify("로그인되었습니다.");
+          await loadResources();
+        } catch (error) {
+          notify(error.message, true);
+        }
+      });
+      logoutButton.addEventListener("click", async () => {
+        await api("/api/admin/login", { method: "DELETE" });
+        workspace.classList.add("hidden");
+        logoutButton.classList.add("hidden");
+        adminLogin.classList.remove("hidden");
+        identity.textContent = "로그인 필요";
+        notify("로그아웃되었습니다.");
+      });
+      document.querySelector("#local-connect").addEventListener("click", () => {
+        localStorage.setItem("localAdminEmail", localEmail.value.trim());
+        loadResources();
+      });
+
+      loadResources();
+    </script>
+  </body>
+</html>

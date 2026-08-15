@@ -1,0 +1,36 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import ResourceCard from "../../components/ResourceCard.astro";
+import { copy, isLanguage } from "../../lib/i18n";
+import { listPublishedResources } from "../../lib/resources";
+
+const langParam = Astro.params.lang;
+if (!isLanguage(langParam)) return Astro.redirect("/th/", 302);
+const lang = langParam;
+const t = copy[lang];
+const query = Astro.url.searchParams.get("q")?.trim() ?? "";
+const resources = query ? await listPublishedResources(lang, { query, limit: 48 }) : [];
+Astro.response.headers.set("Cache-Control", "public, max-age=30, s-maxage=60");
+---
+
+<SiteLayout lang={lang} current="search" title={String(t.nav.search)}>
+  <header class="page-heading container">
+    <p class="eyebrow">Guided Discovery</p>
+    <h1>{t.nav.search}</h1>
+    <p>{lang === "th" ? "การค้นหาเป็นส่วนหนึ่งของพันธกิจ เราต้องการช่วยให้ทุกคำถามนำไปสู่พระวจนะและก้าวต่อไปที่มีความหมาย" : lang === "ko" ? "검색은 사역입니다. 모든 질문이 말씀과 의미 있는 다음 단계로 이어지도록 돕습니다." : "Search is ministry. We want every question to lead toward Scripture and a meaningful next step."}</p>
+  </header>
+  <section class="container section" style="padding-top:0">
+    <form class="search-form" action={`/${lang}/search/`} method="get" role="search">
+      <input name="q" type="search" required value={query} placeholder={t.searchPlaceholder} aria-label={t.searchPlaceholder} />
+      <button class="button" type="submit">{t.searchAction}</button>
+    </form>
+    <div style="height:32px"></div>
+    {query && resources.length > 0 ? (
+      <div class="resource-grid">
+        {resources.map((resource) => <ResourceCard resource={resource} lang={lang} />)}
+      </div>
+    ) : query ? (
+      <div class="empty-state">{t.empty}</div>
+    ) : null}
+  </section>
+</SiteLayout>

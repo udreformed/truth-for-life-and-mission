@@ -1,0 +1,727 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import AnnualBibleReadingPanel from "../../../components/AnnualBibleReadingPanel.astro";
+import { isLanguage } from "../../../lib/i18n";
+import { getLocalizedReadingSummary } from "../../../lib/reading-summaries";
+import { getWeekdayReadingVideoId, weekdayReadingVideoIds } from "../../../lib/bible-reading-videos";
+
+const langParam = Astro.params.lang;
+if (!isLanguage(langParam)) return Astro.redirect("/th/bible-reading/");
+const lang = langParam;
+
+const pageCopy = {
+  th: {
+    eyebrow: "45 สัปดาห์ · อ่านพระคัมภีร์ทั้งเล่ม",
+    title: "อ่านพระคัมภีร์",
+    description: "เริ่มต้นสัปดาห์ในวันอาทิตย์ด้วยวิดีโอแนะนำ แล้วอ่านพระคัมภีร์วันจันทร์ถึงวันเสาร์ตามแผน 45 สัปดาห์",
+    weekLabel: "สัปดาห์ที่",
+    dayLabel: "วัน",
+    chooseWeek: "เลือกสัปดาห์เริ่มต้น",
+    saveWeek: "บันทึก",
+    savedWeek: "บันทึกแล้ว",
+    previousDay: "วันก่อนหน้า",
+    nextDay: "วันถัดไป",
+    sundayTitle: "วิดีโอแนะนำพระคัมภีร์ประจำสัปดาห์",
+    sundayPlaceholder: "เมื่อส่งลิงก์เพลย์ลิสต์สำหรับวันอาทิตย์มาแล้ว วิดีโอแนะนำของสัปดาห์นั้นจะแสดงตรงนี้โดยอัตโนมัติ",
+    readingTitle: "อ่านพระคัมภีร์ให้จบใน 45 สัปดาห์",
+    readingVideoPreparing: "กำลังเตรียมวิดีโอของวันนี้",
+    readingVideoPreparingDescription: "วิดีโอสำหรับสัปดาห์และวันนี้ยังไม่ได้เชื่อมต่อ เมื่ออัปโหลดและเชื่อมต่อแล้วจะแสดงที่นี่โดยอัตโนมัติ",
+    sundaySummaryTitle: "สรุปการอ่านพระคัมภีร์ประจำสัปดาห์",
+    summaryTitle: "สรุปพระคัมภีร์สำหรับวันนี้",
+    summaryLoading: "กำลังเปลี่ยนสรุป...",
+    summaryPlaceholder: "กำลังเตรียมสรุปภาษาไทยสำหรับสัปดาห์และวันนี้ เมื่ออัปโหลดไฟล์สรุปแล้ว ระบบจะแสดงตามวันที่โดยอัตโนมัติ",
+    translationNotice: "",
+    translationFallbackNotice: "",
+    scheduleTitle: "ตารางอ่านพระคัมภีร์ 45 สัปดาห์",
+    scheduleDescription: "ตารางแบบย่อสำหรับอ่านพระคัมภีร์ให้ครบตามแผน 45 สัปดาห์",
+    scheduleDownload: "ดาวน์โหลดตารางภาษาไทย PDF",
+    scheduleKoreanDownload: "ดาวน์โหลดตารางภาษาเกาหลี PDF",
+    scheduleSource: "ที่มาของโปรแกรมอ่านพระคัมภีร์ วิดีโอ และสรุปเนื้อหา: https://www.wtskorea.org",
+    overviewHeading: "สำรวจเนื้อหาพระคัมภีร์ทั้งเล่ม",
+    overviewDescription: "อธิบายเนื้อหาของพระคัมภีร์เดิมและพระคัมภีร์ใหม่แต่ละเล่มและแต่ละบทด้วยภาพเคลื่อนไหว",
+    playlistOpen: "ดูเพลย์ลิสต์",
+    wholeBibleTitle: "ภาพใหญ่ของพระคัมภีร์ (ปฐมกาลถึงวิวรณ์)",
+    genreIntro: "",
+    days: ["วันอาทิตย์", "วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"],
+    shortDays: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
+    weekOptionLabels: [
+      "สัปดาห์ที่ 1 ปฐมกาล (1)", "สัปดาห์ที่ 2 ปฐมกาล (2)", "สัปดาห์ที่ 3 อพยพ", "สัปดาห์ที่ 4 เลวีนิติ", "สัปดาห์ที่ 5 กันดารวิถี", "สัปดาห์ที่ 6 เฉลยธรรมบัญญัติ", "สัปดาห์ที่ 7 โยชูวา", "สัปดาห์ที่ 8 ผู้วินิจฉัย", "สัปดาห์ที่ 9 ซามูเอล (1)", "สัปดาห์ที่ 10 ซามูเอล (2)", "สัปดาห์ที่ 11 พงศ์กษัตริย์ (1)", "สัปดาห์ที่ 12 พงศ์กษัตริย์ (2)", "สัปดาห์ที่ 13 พงศาวดาร", "สัปดาห์ที่ 14 ช่วงการเป็นเชลย", "สัปดาห์ที่ 15 เอสรา·เนหะมีย์·เอสเธอร์", "สัปดาห์ที่ 16 โยบ", "สัปดาห์ที่ 17 สดุดี (1)", "สัปดาห์ที่ 18 สดุดี (2)", "สัปดาห์ที่ 19 สดุดี (3)", "สัปดาห์ที่ 20 สดุดี (4)", "สัปดาห์ที่ 21 สุภาษิต", "สัปดาห์ที่ 22 ปัญญาจารย์·เพลงซาโลมอน", "สัปดาห์ที่ 23 อิสยาห์ (1)", "สัปดาห์ที่ 24 อิสยาห์ (2)", "สัปดาห์ที่ 25 เยเรมีย์ (1)", "สัปดาห์ที่ 26 เยเรมีย์ (2)", "สัปดาห์ที่ 27 เอเสเคียล (1)", "สัปดาห์ที่ 28 เอเสเคียล (2)", "สัปดาห์ที่ 29 ดาเนียล", "สัปดาห์ที่ 30 ผู้เผยพระวจนะเล็ก (1)", "สัปดาห์ที่ 31 ผู้เผยพระวจนะเล็ก (2)", "สัปดาห์ที่ 32 พระกิตติคุณ (1)", "สัปดาห์ที่ 33 พระกิตติคุณ (2)", "สัปดาห์ที่ 34 พระกิตติคุณ (3)", "สัปดาห์ที่ 35 พระกิตติคุณ (4)", "สัปดาห์ที่ 36 กิจการ (1)", "สัปดาห์ที่ 37 กิจการ (2)", "สัปดาห์ที่ 38 โรม", "สัปดาห์ที่ 39 จดหมายของเปาโล (1)", "สัปดาห์ที่ 40 จดหมายของเปาโล (2)", "สัปดาห์ที่ 41 จดหมายของเปาโล (3)", "สัปดาห์ที่ 42 จดหมายทั่วไป (1)", "สัปดาห์ที่ 43 จดหมายทั่วไป (2)", "สัปดาห์ที่ 44 วิวรณ์ (1)", "สัปดาห์ที่ 45 วิวรณ์ (2)"
+    ]
+  },
+  ko: {
+    eyebrow: "READ THE WHOLE BIBLE",
+    title: "성경통독",
+    description: "주일에는 그 주간 본문 설명 영상을 먼저 보고, 월요일부터 토요일까지 45주 통독표에 따라 성경을 읽습니다. 태국어로 통독하려면 언어를 태국어로 선택하세요.",
+    weekLabel: "주차",
+    dayLabel: "요일",
+    chooseWeek: "시작 주차 선택",
+    saveWeek: "저장",
+    savedWeek: "저장됨",
+    previousDay: "이전 날짜",
+    nextDay: "다음 날짜",
+    sundayTitle: "이번 주 성경본문 설명 영상",
+    sundayPlaceholder: "주일 설명 영상 재생목록을 연결하면, 해당 주차의 안내 영상이 여기에 자동으로 표시됩니다.",
+    readingTitle: "45주 성경 통독하기",
+    readingVideoPreparing: "오늘 읽을 본문 영상 준비 중",
+    readingVideoPreparingDescription: "이 주차·요일 영상은 아직 사이트에 직접 연결되지 않았습니다. 영상이 연결되면 이 자리에 표시됩니다.",
+    sundaySummaryTitle: "이번 주 통독 안내",
+    summaryTitle: "오늘 읽을 본문 요약",
+    summaryLoading: "요약을 바꾸는 중입니다...",
+    summaryPlaceholder: "이 주차·요일의 본문 안내를 불러오지 못했습니다. 페이지를 새로고침해 주세요.",
+    translationNotice: "",
+    translationFallbackNotice: "",
+    scheduleTitle: "45주 성경통독 일정표",
+    scheduleDescription: "45주 동안 성경을 순서대로 읽을 수 있도록 정리한 태국어 간편 일정표입니다.",
+    scheduleDownload: "태국어 통독표",
+    scheduleKoreanDownload: "한국어 통독표",
+    scheduleSource: "영상과 본문 내용 요약 등 원본 출처: https://www.wtskorea.org",
+    overviewHeading: "성경전체 내용 살피기",
+    overviewDescription: "구약과 신약의 각 권과 각 장의 내용을 애니메이션으로 설명합니다.",
+    playlistOpen: "재생목록 보기",
+    wholeBibleTitle: "성경 전체의 개요 (창세기부터 요한계시록까지)",
+    genreIntro: "성경의 장르에 따라 읽는 방법",
+    days: ["주일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+    shortDays: ["주일", "월", "화", "수", "목", "금", "토"],
+    weekOptionLabels: [
+      "1주차 창세기(1)", "2주차 창세기(2)", "3주차 출애굽기", "4주차 레위기", "5주차 민수기", "6주차 신명기", "7주차 여호수아", "8주차 사사기", "9주차 사무엘상·하(1)", "10주차 사무엘상·하(2)", "11주차 열왕기상·하(1)", "12주차 열왕기상·하(2)", "13주차 역대상·하", "14주차 유배기", "15주차 에스라·느헤미야·에스더", "16주차 욥기", "17주차 시편(1)", "18주차 시편(2)", "19주차 시편(3)", "20주차 시편(4)", "21주차 잠언", "22주차 전도서·아가", "23주차 이사야(1)", "24주차 이사야(2)", "25주차 예레미야(1)", "26주차 예레미야(2)", "27주차 에스겔(1)", "28주차 에스겔(2)", "29주차 다니엘", "30주차 소선지서(1)", "31주차 소선지서(2)", "32주차 복음서(1)", "33주차 복음서(2)", "34주차 복음서(3)", "35주차 복음서(4)", "36주차 사도행전(1)", "37주차 사도행전(2)", "38주차 로마서", "39주차 바울 서신(1)", "40주차 바울 서신(2)", "41주차 바울 서신(3)", "42주차 일반 서신(1)", "43주차 일반 서신(2)", "44주차 요한계시록(1)", "45주차 요한계시록(2)"
+    ]
+  },
+  en: {
+    eyebrow: "45 weeks · Read the whole Bible",
+    title: "Bible Reading",
+    description: "Begin each week on Sunday with an overview video, then read Scripture from Monday through Saturday according to the 45-week plan.",
+    weekLabel: "Week",
+    dayLabel: "Day",
+    chooseWeek: "Choose starting week",
+    saveWeek: "Save",
+    savedWeek: "Saved",
+    previousDay: "Previous day",
+    nextDay: "Next day",
+    sundayTitle: "This week’s Bible-passage overview video",
+    sundayPlaceholder: "When the Sunday overview playlist is connected, the video for this week will appear here automatically.",
+    readingTitle: "Read the Bible in 45 Weeks",
+    readingVideoPreparing: "Today’s reading video is being prepared",
+    readingVideoPreparingDescription: "The video for this week and day has not been connected yet. Once it is connected, it will appear here.",
+    sundaySummaryTitle: "This Week’s Reading Guide",
+    summaryTitle: "Today’s reading summary",
+    summaryLoading: "Updating the summary...",
+    summaryPlaceholder: "The reading guide for this week and day could not be loaded. Please refresh the page.",
+    translationNotice: "",
+    translationFallbackNotice: "",
+    scheduleTitle: "45-week Bible-reading schedule",
+    scheduleDescription: "A concise Thai schedule for completing the Bible-reading plan in 45 weeks.",
+    scheduleDownload: "Download Thai schedule PDF",
+    scheduleKoreanDownload: "Download Korean schedule PDF",
+    scheduleSource: "Original source for the Bible-reading program, videos, and passage summaries: https://www.wtskorea.org",
+    overviewHeading: "Explore the Whole Bible",
+    overviewDescription: "Animated explanations of the books and chapters of the Old and New Testaments.",
+    playlistOpen: "View playlist",
+    wholeBibleTitle: "Overview of the Whole Bible (Genesis to Revelation)",
+    genreIntro: "",
+    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    shortDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    weekOptionLabels: [
+      "Week 1 Genesis (1)", "Week 2 Genesis (2)", "Week 3 Exodus", "Week 4 Leviticus", "Week 5 Numbers", "Week 6 Deuteronomy", "Week 7 Joshua", "Week 8 Judges", "Week 9 Samuel (1)", "Week 10 Samuel (2)", "Week 11 Kings (1)", "Week 12 Kings (2)", "Week 13 Chronicles", "Week 14 Exile", "Week 15 Ezra·Nehemiah·Esther", "Week 16 Job", "Week 17 Psalms (1)", "Week 18 Psalms (2)", "Week 19 Psalms (3)", "Week 20 Psalms (4)", "Week 21 Proverbs", "Week 22 Ecclesiastes·Song of Songs", "Week 23 Isaiah (1)", "Week 24 Isaiah (2)", "Week 25 Jeremiah (1)", "Week 26 Jeremiah (2)", "Week 27 Ezekiel (1)", "Week 28 Ezekiel (2)", "Week 29 Daniel", "Week 30 Minor Prophets (1)", "Week 31 Minor Prophets (2)", "Week 32 Gospels (1)", "Week 33 Gospels (2)", "Week 34 Gospels (3)", "Week 35 Gospels (4)", "Week 36 Acts (1)", "Week 37 Acts (2)", "Week 38 Romans", "Week 39 Pauline Letters (1)", "Week 40 Pauline Letters (2)", "Week 41 Pauline Letters (3)", "Week 42 General Letters (1)", "Week 43 General Letters (2)", "Week 44 Revelation (1)", "Week 45 Revelation (2)"
+    ]
+  }
+} as const;
+
+const c = pageCopy[lang];
+const readingPlanCopy = {
+  th: {
+    heading: "เลือกแผนอ่านพระคัมภีร์",
+    fortyFiveTitle: "อ่านพระคัมภีร์ 45 สัปดาห์",
+    fortyFiveDescription: "อ่านพระคัมภีร์ตามแผนรายสัปดาห์ พร้อมวิดีโอแนะนำและสรุปเนื้อหา",
+    fortyFiveAction: "เปิดแผน 45 สัปดาห์",
+    annualTitle: "อ่านพระคัมภีร์ 365 วัน",
+    annualDescription: "ตารางนี้วางแผนให้อ่านพระคัมภีร์เดิมและพระคัมภีร์ใหม่วันละประมาณ 15 นาที เพื่ออ่านพระคัมภีร์ครบทั้งเล่มภายในหนึ่งปี โดยอ่านตามวันที่กำหนด",
+    annualAction: "เปิดการอ่านตามวันที่",
+    thaiDownload: "ดาวน์โหลดตารางภาษาไทย",
+    koreanDownload: "ดาวน์โหลดตารางภาษาเกาหลี"
+  },
+  ko: {
+    heading: "성경통독 방법 선택",
+    fortyFiveTitle: "45주 성경통독",
+    fortyFiveDescription: "주간 본문 안내 영상과 요약을 따라 45주 동안 성경 전체를 읽습니다.",
+    fortyFiveAction: "45주 통독 보기",
+    annualTitle: "365일 성경읽기",
+    annualDescription: "365일 매일 약 15분 분량의 구약과 신약 본문을 읽으며 1년에 성경전체를 통독하도록 계획된 성경읽기표입니다.",
+    annualAction: "오늘 본문 영상으로 읽기",
+    thaiDownload: "태국어 진도표",
+    koreanDownload: "한국어 진도표"
+  },
+  en: {
+    heading: "Choose a Bible-reading plan",
+    fortyFiveTitle: "Read the Bible in 45 Weeks",
+    fortyFiveDescription: "Read the whole Bible in 45 weeks with weekly overview videos and passage summaries.",
+    fortyFiveAction: "Open the 45-week plan",
+    annualTitle: "365-Day Bible Reading",
+    annualDescription: "This schedule is designed to take you through the whole Bible in one year by reading about 15 minutes of Old and New Testament passages each day, following the calendar date.",
+    annualAction: "Open daily reading",
+    thaiDownload: "Download Thai schedule",
+    koreanDownload: "Download Korean schedule"
+  }
+} as const;
+const planCopy = readingPlanCopy[lang];
+const thaiReadingPlaylistId = "PLT7MyT0j5723CA6aYOLxezU0LIgYnfkCb";
+const koreanReadingPlaylistId = "PLqie1n1CWRFiN-DQTeZE_v6szPJrye9qH";
+const readingPlaylistId = lang === "ko" ? koreanReadingPlaylistId : thaiReadingPlaylistId;
+const thaiSundayOverviewPlaylistId = "PLc7s0MuVw064";
+const koreanSundayOverviewPlaylistId = "PLOo_wK9k0voc";
+const sundayReadingLectureIndexes = [
+  1, 2, 3, 4, 5, 6, 7,
+  8, 9, 10, 11, 11, 12, 13, 14,
+  15, 16, 17, 18, 19, 20, 21,
+  22, 22, 23, 23, 24, 24, 25,
+  26, 26, 27, 28, 29, 30, 31, 32,
+  33, 34, 35, 36, 37, 38, 39, 40
+];
+const thaiSundayOverviewVideoIds = [
+  "X2lWd_O5QqM", // 1주차: เล่ม 1 บทที่ 1 | ปฐมกาล 1
+  "o3C0W8aFJUU", // 2주차: เล่ม 1 บทที่ 2 | ปฐมกาล 2
+  "WHSNy6niWnc", // 3주차: เล่ม 1 บทที่ 3 | อพยพ
+  "-h-ueibSPyI", // 4주차: เล่ม 1 บทที่ 4 | เลวีนิติ
+  "MOeP01mXEyk", // 5주차: เล่ม 1 บทที่ 5 | กันดารวิถี
+  "M8HbqnKM_vc", // 6주차: เล่ม 1 บทที่ 6 | เฉลยธรรมบัญญัติ
+  "64-cJRdZLa4", // 7주차: เล่ม 1 บทที่ 7 | โยชูวา
+  "ZH_V8Esm4jo", // 8주차: เล่ม 2 บทที่ 1 | ผู้วินิจฉัยและนางรูธ
+  "PiZIAywaRJk", // 9주차: เล่ม 2 บทที่ 2 | ซามูเอล 1–2 ตอนที่ 1
+  "sXM3CoYYZbA", // 10주차: เล่ม 2 บทที่ 3 | ซามูเอล 1–2 ตอนที่ 2
+  "e7uC-1h7ehA", // 11주차: เล่ม 2 บทที่ 4 | พงศ์กษัตริย์ 1–2
+  "e7uC-1h7ehA", // 12주차: เล่ม 2 บทที่ 4 | พงศ์กษัตริย์ 1–2
+  "LfhFPqKlKTg", // 13주차: เล่ม 2 บทที่ 5 | พงศาวดาร 1–2
+  "xQEDCUsskKc", // 14주차: เล่ม 2 บทที่ 6 | ยุคเชลย
+  "CwYrK6Lu2vQ", // 15주차: เล่ม 2 บทที่ 7 | เอสรา เนหะมีย์ และเอสเธอร์
+  "p0TU4ICMs_0", // 16주차: เล่ม 3 บทที่ 1 | โยบ
+  "n_PjzPs3kvs", // 17주차: เล่ม 3 บทที่ 2 | สดุดี 1
+  "3gFbIytzKGg", // 18주차: เล่ม 3 บทที่ 3 | สดุดี 2
+  "7wHLDM-fgqI", // 19주차: เล่ม 3 บทที่ 4 | สดุดี 3
+  "kFVeREmqMl0", // 20주차: เล่ม 3 บทที่ 5 | สดุดี 4
+  "aqn5LwCuvyA", // 21주차: เล่ม 3 บทที่ 6 | สุภาษิต
+  "10PchM1CQpU", // 22주차: เล่ม 3 บทที่ 7 | ปัญญาจารย์และเพลงซาโลมอน
+  "32w7TT3xqcQ", // 23주차: เล่ม 4 บทที่ 1 | อิสยาห์
+  "32w7TT3xqcQ", // 24주차: เล่ม 4 บทที่ 1 | อิสยาห์
+  "fZBKVFqLuxM", // 25주차: เล่ม 4 บทที่ 2 | เยเรมีย์
+  "fZBKVFqLuxM", // 26주차: เล่ม 4 บทที่ 2 | เยเรมีย์
+  "jQjrdSlMT7M", // 27주차: เล่ม 4 บทที่ 3 | เอเสเคียล
+  "jQjrdSlMT7M", // 28주차: เล่ม 4 บทที่ 3 | เอเสเคียล
+  "Phft36toiqs", // 29주차: เล่ม 4 บทที่ 4 | วรรณกรรมวิวรณ์และดาเนียล
+  "VCcCbcvpT4s", // 30주차: เล่ม 4 บทที่ 5 | ผู้เผยพระวจนะน้อย
+  "VCcCbcvpT4s", // 31주차: เล่ม 4 บทที่ 5 | ผู้เผยพระวจนะน้อย
+  "XOqf0CxQsFk", // 32주차: เล่ม 5 บทที่ 1 | พระกิตติคุณ ตอนที่ 1
+  "k7WUapq50S4", // 33주차: เล่ม 5 บทที่ 2 | พระกิตติคุณ ตอนที่ 2
+  "HB4M00fbI0A", // 34주차: เล่ม 5 บทที่ 3 | พระกิตติคุณ ตอนที่ 3
+  "y367RKySUiw", // 35주차: เล่ม 5 บทที่ 4 | พระกิตติคุณ ตอนที่ 4
+  "thKN9vqY-04", // 36주차: เล่ม 5 บทที่ 5 | กิจการของอัครทูต ตอนที่ 1
+  "FS5F0G-57lA", // 37주차: เล่ม 5 บทที่ 6 | กิจการของอัครทูต ตอนที่ 2
+  "CXNTZyVDo-c", // 38주차: เล่ม 5 บทที่ 7 | พระธรรมโรม
+  "p80SBg_XYMo", // 39주차: เล่ม 6 บทที่ 1 | จดหมายของเปาโล ตอนที่ 1
+  "nbpuLpQS5Us", // 40주차: เล่ม 6 บทที่ 2 | จดหมายของเปาโล ตอนที่ 2
+  "akQTbJOhWaY", // 41주차: เล่ม 6 บทที่ 3 | จดหมายของเปาโล ตอนที่ 3
+  "BCRDFpBuNJ8", // 42주차: เล่ม 6 บทที่ 4 | จดหมายทั่วไป ตอนที่ 1 — ฮีบรู
+  "dfxezuyAdYg", // 43주차: เล่ม 6 บทที่ 5 | จดหมายทั่วไป ตอนที่ 2 — 1 ยอห์น
+  "1R9WY74ykbs", // 44주차: เล่ม 6 บทที่ 6 | วิวรณ์ ตอนที่ 1
+  "1cEmK4VycYA" // 45주차: เล่ม 6 บทที่ 7 | วิวรณ์ ตอนที่ 2
+];
+const koreanSundayOverviewVideoIds = [
+  "LLu2xB_rIT4", // 1주차: 1권 1강 | 창세기 1
+  "yUeqd5_MsFY", // 2주차: 1권 2강 | 창세기 2
+  "nuumvEm2D9M", // 3주차: 1권 3강 | 출애굽기
+  "4Ttqlz3qR8Q", // 4주차: 1권 4강 | 레위기
+  "ODkCppuCsAA", // 5주차: 1권 5강 | 민수기
+  "nrGJvJz9WHI", // 6주차: 1권 6강 | 신명기
+  "Eb6jCXeDHCg", // 7주차: 1권 7강 | 여호수아
+  "A4BVjXOnJXY", // 8주차: 2권 1강 | 사사기
+  "YLuWUTeCltc", // 9주차: 2권 2강 | 사무엘상·하 1
+  "MVQgiGHrMec", // 10주차: 2권 3강 | 사무엘상·하 2
+  "OFxFwWNMEjw", // 11주차: 2권 4강 | 열왕기상·하
+  "OFxFwWNMEjw", // 12주차: 2권 4강 | 열왕기상·하
+  "DATMW23HVm4", // 13주차: 2권 5강 | 역대상·하
+  "BxFFHUtlaSM", // 14주차: 2권 6강 | 유배기
+  "MIZFwFNaFkk", // 15주차: 2권 7강 | 에스라·느헤미야·에스더
+  "py_S7ICqOyQ", // 16주차: 3권 1강 | 욥기
+  "dDzzD_vu0JI", // 17주차: 3권 2강 | 시편 1
+  "3js4uGzvsJY", // 18주차: 3권 3강 | 시편 2
+  "HlB72y13ork", // 19주차: 3권 4강 | 시편 3
+  "bDPOFSHgkQA", // 20주차: 3권 5강 | 시편 4
+  "l8uNGDL9T0w", // 21주차: 3권 6강 | 잠언
+  "QIATHwMWS-I", // 22주차: 3권 7강 | 전도서·아가
+  "kRhEyqzxqUs", // 23주차: 4권 1강 | 이사야
+  "kRhEyqzxqUs", // 24주차: 4권 1강 | 이사야
+  "MBoaA_5sid0", // 25주차: 4권 2강 | 예레미야
+  "MBoaA_5sid0", // 26주차: 4권 2강 | 예레미야
+  "t7MwSpxihPk", // 27주차: 4권 3강 | 에스겔
+  "t7MwSpxihPk", // 28주차: 4권 3강 | 에스겔
+  "ytn1zktdYzM", // 29주차: 4권 4강 | 묵시문학과 다니엘
+  "4jdhnOw9rLw", // 30주차: 4권 5강 | 소선지서
+  "4jdhnOw9rLw", // 31주차: 4권 5강 | 소선지서
+  "aV-7QO8KdnY", // 32주차: 5권 1강 | 복음서 1
+  "1AuD1F7RaDw", // 33주차: 5권 2강 | 복음서 2
+  "9j9RhkVMoKw", // 34주차: 5권 3강 | 복음서 3
+  "7AlFvpeVHXI", // 35주차: 5권 4강 | 복음서 4
+  "ovYiJ_q0aMg", // 36주차: 5권 5강 | 사도행전 1
+  "heD3yyHR77c", // 37주차: 5권 6강 | 사도행전 2
+  "cUYgRHn7lOk", // 38주차: 5권 7강 | 로마서
+  "w6Zsa0LU7AE", // 39주차: 6권 1강 | 바울 서신 1
+  "aP08iEL7vdQ", // 40주차: 6권 2강 | 바울 서신 2
+  "IvcfBnhTAGE", // 41주차: 6권 3강 | 바울 서신 3
+  "9coXCovH_Kc", // 42주차: 6권 4강 | 일반 서신 1
+  "yxTmK4m2ekM", // 43주차: 6권 5강 | 일반 서신 2
+  "imWjNPHxDyc", // 44주차: 6권 6강 | 요한계시록 1
+  "7hQSOYCETPE" // 45주차: 6권 7강 | 요한계시록 2
+];
+const sundayOverviewPlaylistId = lang === "ko" ? koreanSundayOverviewPlaylistId : thaiSundayOverviewPlaylistId;
+const sundayOverviewVideoIds = lang === "ko" ? koreanSundayOverviewVideoIds : thaiSundayOverviewVideoIds;
+const thaiOverviewPlaylists = [
+  {
+    title: "ภาพรวม: พันธสัญญาเดิม - Old Testament Overviews",
+    list: "PLZl6JGhBKq-7geeg61UvmssfOWm7-WCSe",
+    videos: ["O1-gHfN4IKM", "kOiGyv4YWy8", "Y9nWZ89eYEs", "8d2w8ltOBkk", "Gz80NEh1FiI", "_iwP0wAWqJQ", "rEfU20wTjdA", "NSIi6Bqh-vE", "o9Tpy_rpsp8", "9gm_bmlhzHE", "xZUfnJi4XM0", "VYdlVw9wdZg", "is2h-vnS3ds", "qo1CAilfL7c", "89YiW4SpDfA", "uC6fQL4RyUo", "lUTStn9DXQ0", "a_FeH9TmqU8", "E9pUer7RR98", "HT-3ht0U6JQ", "VJZ1QplYP_w", "clNZuij-x94", "9Y4IZowT1S8", "zdtW6-bedIA", "wCuXVoWRk8A", "YijEZ_APwbk", "rUEcEAoy-6M", "M2diLHzF_UQ", "BN8UeWS1fXc", "IbUC5ENFjcs", "PsPG5ldq5xg", "mZLmiSKEdDY", "IQgo30EE2d8", "FaRZMwRs5pY", "YcTdhYtr3Po", "nKLdQnXO1yM", "ph7J13hUDzI", "TDVlCtbvYvI", "hJNOcq3yIw8", "jZDCR50bHo0", "1B5EoLyssu8"]
+  },
+  {
+    title: "ภาพรวม: พันธสัญญาใหม่ - New Testament Overviews",
+    list: "PLZl6JGhBKq-4QtXfhnttL9j5epeaP8xBE",
+    videos: ["VzrUY-tyUSw", "YJmpA-LHabc", "6gxiPPnHgT8", "iXcYZtJhHLQ", "qZmPyvXIo7Q", "DzlliFTGdjw", "GKZF417Pbmc", "TkHAkQF0J_w", "_6TMDDrX0oY", "teh_A2gIP8M", "9fdkToBi-wI", "hH5fDUXGb7s", "U9JTp74ssGs", "bUgqNYk2Ujs", "SFQuV0OrVmc", "6SExoMxIfBQ", "70kROyeAUvk", "acdz_U9YdkA", "MWCwTvq0Whk", "4V0viP4Hz4g", "bAufPmab0RA", "WT4NXEvRVLE", "bdAfUCrqkfc", "vT3FCOOFF1Y", "_KRGU_EFoTM", "byvhGguLH-E", "npvqt1GiRko", "XE8NrvWeSNU", "h3fNhvgpMOw", "zA8OvH4J1cg", "mN0kKlEY3s4", "OibEyRt7dqw"]
+  }
+];
+const koreanOverviewPlaylists = [
+  {
+    title: "구약 개요 - Old Testament Overviews",
+    list: "PLdjM8wRcBQnmm-CLscqgP_T4dRwWqh9iZ",
+    videos: [] as string[],
+    randomCount: 39
+  },
+  {
+    title: "신약 개요 - New Testament Overviews",
+    list: "PLdjM8wRcBQnnTA1EG0T0Yem-QPvNpe99k",
+    videos: [] as string[],
+    randomCount: 27
+  }
+];
+const englishOverviewPlaylists = [
+  {
+    title: "Old Testament Overviews",
+    list: "PLH0Szn1yYNeeVFodkI9J_WEATHQCwRZ0u",
+    videos: [] as string[],
+    randomCount: 39
+  },
+  {
+    title: "New Testament Overviews",
+    list: "PLH0Szn1yYNecanpQqdixWAm3zHdhY2kPR",
+    videos: [] as string[],
+    randomCount: 27
+  }
+];
+const overviewPlaylists = lang === "ko" ? koreanOverviewPlaylists : lang === "en" ? englishOverviewPlaylists : thaiOverviewPlaylists;
+const genreReadingPlaylist = {
+  title: lang === "ko" ? "성경을 어떻게 읽을 것인가" : lang === "en" ? "" : "อ่านพระคัมภีร์อย่างไร",
+  list: lang === "ko" ? "PLdjM8wRcBQnmqI9vhJYD4UUySu4P36oTH" : lang === "en" ? "PLH0Szn1yYNedn4FbBMMtOlGN-BPLQ54IH" : "PLZl6JGhBKq-534rqCGskY4Bl73lvZ7pTD",
+  videos: [] as string[],
+  randomCount: lang === "th" ? 6 : 19,
+  introduction: c.genreIntro || (lang === "th" ? "วิธีอ่านพระคัมภีร์ตามประเภทวรรณกรรม" : "How to read the Bible according to its literary genres")
+};
+
+const todayParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Bangkok", year: "numeric", month: "2-digit", day: "2-digit"
+}).formatToParts(new Date());
+const part = (type: Intl.DateTimeFormatPartTypes) => todayParts.find((item) => item.type === type)?.value ?? "";
+const todayKey = `${part("year")}-${part("month")}-${part("day")}`;
+const isDateKey = (value: string | null) => !!value && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
+const dateKey = isDateKey(Astro.url.searchParams.get("date")) ? Astro.url.searchParams.get("date")! : todayKey;
+const shiftDate = (value: string, offset: number) => {
+  const shifted = new Date(`${value}T00:00:00Z`);
+  shifted.setUTCDate(shifted.getUTCDate() + offset);
+  return shifted.toISOString().slice(0, 10);
+};
+const dateToUTC = (value: string) => new Date(`${value}T00:00:00Z`);
+const dayDifference = (a: string, b: string) => Math.floor((dateToUTC(a).getTime() - dateToUTC(b).getTime()) / 86400000);
+const getSundayKey = (value: string) => shiftDate(value, -dateToUTC(value).getUTCDay());
+const wrapWeek = (value: number) => ((value - 1) % 45 + 45) % 45 + 1;
+const parsedWeek = Number(Astro.url.searchParams.get("week"));
+const baselineStart = "2026-07-26";
+const defaultWeek = wrapWeek(Math.floor(dayDifference(dateKey, baselineStart) / 7) + 1);
+const hasCustomBaseWeek = Number.isInteger(parsedWeek) && parsedWeek >= 1 && parsedWeek <= 45;
+const activeWeek = hasCustomBaseWeek ? parsedWeek : defaultWeek;
+const activeWeekParam = hasCustomBaseWeek ? `&week=${activeWeek}` : "";
+const selectedDate = dateToUTC(dateKey);
+const activeDay = selectedDate.getUTCDay();
+const selectedLabel = new Intl.DateTimeFormat(lang === "ko" ? "ko-KR" : lang === "th" ? "th-TH" : "en-US", {
+  timeZone: "UTC", year: "numeric", month: "long", day: "numeric"
+}).format(selectedDate);
+const weekStartKey = getSundayKey(dateKey);
+const dayLinks = Array.from({ length: 7 }, (_, index) => ({
+  index,
+  href: `/${lang}/bible-reading/?date=${shiftDate(weekStartKey, index)}${activeWeekParam}`,
+  label: c.shortDays[index],
+  full: c.days[index]
+}));
+const readingVideoIds = weekdayReadingVideoIds[lang];
+const activeReadingVideoId = getWeekdayReadingVideoId(lang, activeWeek, activeDay);
+const activeReadingEmbed = activeReadingVideoId
+  ? `https://www.youtube-nocookie.com/embed/${activeReadingVideoId}?rel=0`
+  : "";
+const activeSundayVideoIndex = sundayReadingLectureIndexes[activeWeek - 1] ?? activeWeek;
+const activeSundayVideoId = sundayOverviewVideoIds[activeWeek - 1] ?? "";
+const activeSundayEmbed = activeSundayVideoId
+  ? `https://www.youtube-nocookie.com/embed/${activeSundayVideoId}?rel=0`
+  : `https://www.youtube-nocookie.com/embed/videoseries?list=${sundayOverviewPlaylistId}&index=${activeSundayVideoIndex}&rel=0`;
+const readingSummaryLang = lang === "en" ? "th" : lang;
+const activeReadingSummary = await getLocalizedReadingSummary(readingSummaryLang, activeWeek, activeDay);
+const selectedPlan = lang === "ko" && Astro.url.searchParams.get("plan") === "365" ? "365" : "45";
+
+Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, stale-while-revalidate=86400");
+---
+
+<SiteLayout lang={lang} current="bibleReading" title={c.title} description={c.description}>
+  <header class:list={{ "page-heading": true, container: true, "bible-reading-page-heading": true, "compact-reading-heading": lang === "ko" }}>
+    <p class="eyebrow">{c.eyebrow}</p>
+    {lang !== "ko" && <h1>{c.title}</h1>}
+    {lang !== "ko" && <p>{c.description}</p>}
+  </header>
+
+  <section class="container section bible-reading-page" style="padding-top:0">
+    {lang === "ko" && (
+      <nav class="reading-plan-tabs" aria-label="성경통독 방법 선택" data-reading-plan-tabs>
+        <a class:list={{ active: selectedPlan === "45" }} href="/ko/bible-reading/?plan=45" data-reading-plan-button="45" aria-pressed={selectedPlan === "45"}>45주 성경통독</a>
+        <a class:list={{ active: selectedPlan === "365" }} href="/ko/bible-reading/?plan=365" data-reading-plan-button="365" aria-pressed={selectedPlan === "365"}>365일 성경통독</a>
+      </nav>
+    )}
+
+    <div data-reading-plan-panel="45" hidden={lang === "ko" && selectedPlan !== "45"}>
+    <section class="reading-today-panel" id="reading-45-week" aria-labelledby="reading-today-title">
+      <div class="reading-today-header">
+        <div>
+          <h2 id="reading-today-title">{selectedLabel}</h2>
+          <p class="schedule-source reading-source-note"><a href="https://www.wtskorea.org" target="_blank" rel="noopener noreferrer">{c.scheduleSource} ↗</a></p>
+        </div>
+        <form class="week-selector" method="get" action={`/${lang}/bible-reading/`} data-week-selector-form>
+          <input type="hidden" name="date" value={dateKey} />
+          <label for="week-select">{c.chooseWeek}</label>
+          <div>
+            <select id="week-select" name="week" data-auto-submit-week>
+              {Array.from({ length: 45 }, (_, index) => index + 1).map((week, index) => (
+                <option value={week} selected={week === activeWeek}>{c.weekOptionLabels[index]}</option>
+              ))}
+            </select>
+            <button class="button compact-button save-week-button" type="button" data-save-reading-week>{c.saveWeek}</button>
+          </div>
+        </form>
+      </div>
+
+      <nav class="reading-day-strip" aria-label={c.dayLabel}>
+        {dayLinks.map((day) => (
+          <a class:list={{ active: day.index === activeDay }} href={day.href} aria-label={day.full} data-reading-date-link data-date-key={shiftDate(weekStartKey, day.index)}>
+            <span>{day.label}</span>
+          </a>
+        ))}
+      </nav>
+
+      {activeDay === 0 ? (
+        <article class="reading-video-card sunday-reading-card">
+          <p class="reading-video-subtitle">{c.sundayTitle}</p>
+          <div class="video-frame">
+            <iframe
+              data-active-reading-frame
+              src={activeSundayEmbed}
+              title={`${c.sundayTitle} · ${c.weekLabel} ${activeWeek}`}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </article>
+      ) : (
+        <article class="reading-video-card" id={readingPlaylistId}>
+          <div class="reading-video-slot" data-active-reading-slot>
+            <div class="video-frame">
+              <iframe
+                data-active-reading-frame
+                data-reading-week={activeWeek}
+                data-reading-day={activeDay}
+                data-reading-video-id={activeReadingVideoId}
+                src={activeReadingEmbed}
+                title={`${c.readingTitle} · ${c.weekLabel} ${activeWeek} · ${c.days[activeDay]}`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </article>
+      )}
+
+      <article class="reading-summary-card" data-reading-summary-card>
+        {activeDay !== 0 && <h3 data-summary-heading>{c.summaryTitle}</h3>}
+        {activeReadingSummary ? (
+          <>
+            <h4 data-summary-title>{activeReadingSummary.title}</h4>
+            <p class:list={{ "translation-note": true, hidden: !(lang === "en" && activeReadingSummary.translated) }} data-translation-note>{c.translationNotice}</p>
+            <p class:list={{ "translation-note": true, hidden: !(lang === "en" && activeReadingSummary.translated === false) }} data-translation-fallback-note>{c.translationFallbackNotice}</p>
+            <div class="reading-summary-body" data-summary-body>{activeReadingSummary.body}</div>
+            <p class="hidden" data-summary-placeholder>{c.summaryPlaceholder}</p>
+          </>
+        ) : (
+          <>
+            <h4 class="hidden" data-summary-title></h4>
+            <p class="translation-note hidden" data-translation-note>{c.translationNotice}</p>
+            <p class="translation-note hidden" data-translation-fallback-note>{c.translationFallbackNotice}</p>
+            <div class="reading-summary-body hidden" data-summary-body></div>
+            <p data-summary-placeholder>{c.summaryPlaceholder}</p>
+          </>
+        )}
+      </article>
+
+      <div class="reading-plan-tools" aria-labelledby="reading-schedule-title">
+        <h3 id="reading-schedule-title">{c.scheduleTitle}</h3>
+        <div class="schedule-actions schedule-plan-actions">
+          <a class="button download-button" href="/downloads/bible-reading-45-week-schedule-th.pdf" data-pdf-preview data-pdf-preview-title={c.scheduleDownload} download="bible-reading-45-week-schedule-th.pdf">{c.scheduleDownload}</a>
+          {lang === "ko" && <a class="button secondary download-button" href="/downloads/bible-reading-45-week-schedule-ko.pdf" data-pdf-preview data-pdf-preview-title={c.scheduleKoreanDownload} download="bible-reading-45-week-schedule-ko.pdf">{c.scheduleKoreanDownload}</a>}
+        </div>
+      </div>
+    </section>
+    </div>
+
+    {lang === "ko" ? (
+      <div data-reading-plan-panel="365" hidden={selectedPlan !== "365"}>
+        <AnnualBibleReadingPanel requestedKey={dateKey} todayKey={todayKey} />
+      </div>
+    ) : (
+    <section class="annual-plan-card" id="annual-reading" aria-labelledby="annual-reading-title">
+      <div class="annual-plan-card-copy">
+        <p class="eyebrow">365 DAY</p>
+        <h2 id="annual-reading-title">{planCopy.annualTitle}</h2>
+        <p>{planCopy.annualDescription}</p>
+      </div>
+      <div class="annual-plan-card-actions">
+        <div class="annual-plan-download-row">
+          <a class="button secondary download-button" href="/downloads/bible-reading-365-schedule-ko.pdf" data-pdf-preview data-pdf-preview-title={planCopy.koreanDownload} download="bible-reading-365-schedule-ko.pdf">{planCopy.koreanDownload}</a>
+          <a class="button secondary download-button" href="/downloads/bible-reading-365-schedule-th.pdf" data-pdf-preview data-pdf-preview-title={planCopy.thaiDownload} download="bible-reading-365-schedule-th.pdf">{planCopy.thaiDownload}</a>
+        </div>
+      </div>
+    </section>
+    )}
+
+    <section class="bible-reading-feature standalone-overview-feature" aria-labelledby="bible-overview-heading">
+      <header class="bible-reading-copy bible-overview-heading">
+        <h2 id="bible-overview-heading">{c.overviewHeading}</h2>
+        <p>{c.overviewDescription}</p>
+      </header>
+      <div class="bible-reading-playlist-grid additional-playlists">
+        {overviewPlaylists.map((playlist) => (
+          <article id={playlist.list}>
+            <h3>{playlist.title}</h3>
+            <div class="video-frame">
+              {playlist.videos.length ? (
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${playlist.videos[0]}?list=${playlist.list}&index=1&rel=0`}
+                  title={playlist.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  data-random-playlist={playlist.list}
+                  data-video-ids={playlist.videos.join(",")}
+                ></iframe>
+              ) : (
+                <iframe
+                  src={`https://www.youtube.com/embed/videoseries?list=${playlist.list}&rel=0`}
+                  title={playlist.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  data-random-playlist={playlist.list}
+                  data-random-count={"randomCount" in playlist ? playlist.randomCount : playlist.videos.length}
+                ></iframe>
+              )}
+            </div>
+            <div class="video-action-row">
+              <a class="button secondary playlist-link-button playlist-open-button" href={playlist.videos.length ? `https://www.youtube.com/watch?v=${playlist.videos[0]}&list=${playlist.list}&index=1` : `https://www.youtube.com/playlist?list=${playlist.list}`} target="_blank" rel="noopener noreferrer" data-playlist-open={playlist.videos.length ? true : undefined}>{c.playlistOpen} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        ))}
+        <article class="featured bible-overview-video" id="whole-bible-overview">
+          <h3>{c.wholeBibleTitle}</h3>
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/SQ0c5aEzYkw?rel=0&list=PLxUrp4sYoRfQKfC_5HTqzn7yvYdQdcXoP" title={c.wholeBibleTitle} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-action-row">
+            <a class="button secondary playlist-link-button playlist-open-button" href="https://www.youtube.com/playlist?list=PLxUrp4sYoRfQKfC_5HTqzn7yvYdQdcXoP" target="_blank" rel="noopener noreferrer">{c.playlistOpen} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="genre-reading-feature" aria-labelledby="genre-reading-heading">
+      <div class="genre-reading-copy">
+        <p class="eyebrow">Bible Reading Guide</p>
+        {genreReadingPlaylist.introduction && <p class="playlist-introduction">{genreReadingPlaylist.introduction}</p>}
+        {genreReadingPlaylist.title && <h2 id="genre-reading-heading">{genreReadingPlaylist.title}</h2>}
+      </div>
+      <div class="video-frame">
+        <iframe
+          src={`https://www.youtube.com/embed/videoseries?list=${genreReadingPlaylist.list}&rel=0`}
+          title={genreReadingPlaylist.title || genreReadingPlaylist.introduction || "Bible reading video"}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          data-random-playlist={genreReadingPlaylist.list}
+          data-random-count={genreReadingPlaylist.randomCount}
+        ></iframe>
+      </div>
+      <div class="video-action-row">
+        <a class="button secondary playlist-link-button playlist-open-button" href={`https://www.youtube.com/playlist?list=${genreReadingPlaylist.list}`} target="_blank" rel="noopener noreferrer">{c.playlistOpen} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </section>
+
+  <script is:inline define:vars={{
+    lang,
+    dateKey,
+    todayKey,
+    activeDay,
+    readingPlaylistId,
+    readingVideoIds,
+    sundayOverviewPlaylistId,
+    sundayOverviewVideoIds,
+    sundayReadingLectureIndexes,
+    weekLabel: c.weekLabel,
+    days: c.days,
+    sundaySummaryTitle: c.sundaySummaryTitle,
+    summaryTitle: c.summaryTitle,
+    summaryLoading: c.summaryLoading,
+    summaryPlaceholder: c.summaryPlaceholder,
+    translationNotice: c.translationNotice,
+    translationFallbackNotice: c.translationFallbackNotice,
+    readingTitle: c.readingTitle,
+    sundayTitle: c.sundayTitle,
+    readingVideoPreparing: c.readingVideoPreparing,
+    readingVideoPreparingDescription: c.readingVideoPreparingDescription,
+    saveWeekLabel: c.saveWeek,
+    savedWeekLabel: c.savedWeek,
+    hasCustomBaseWeek,
+    selectedPlan
+  }}>
+    const readingPlanStorageKey = "truthForLifeMissionReadingPlan:ko";
+    const annualDateNavStorageKey = "truthForLifeMissionAnnualDateNav:ko";
+    if (lang === "ko") {
+      const currentUrl = new URL(window.location.href);
+      const isAnnualPlan = currentUrl.searchParams.get("plan") === "365";
+      const dateParam = currentUrl.searchParams.get("date");
+      const cameFromAnnualDateNav = sessionStorage.getItem(annualDateNavStorageKey) === "1";
+      sessionStorage.removeItem(annualDateNavStorageKey);
+      if (isAnnualPlan && dateParam && dateParam !== todayKey && !cameFromAnnualDateNav) {
+        currentUrl.searchParams.delete("date");
+        currentUrl.searchParams.delete("week");
+        window.location.replace(currentUrl.toString());
+      }
+    }
+    const activateReadingPlan = (plan, updateUrl = false) => {
+      if (lang !== "ko" || (plan !== "45" && plan !== "365")) return;
+      document.querySelectorAll("[data-reading-plan-panel]").forEach((panel) => {
+        if (!(panel instanceof HTMLElement)) return;
+        panel.hidden = panel.dataset.readingPlanPanel !== plan;
+      });
+      document.querySelectorAll("[data-reading-plan-button]").forEach((button) => {
+        const active = button.dataset.readingPlanButton === plan;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      localStorage.setItem(readingPlanStorageKey, plan);
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("plan", plan);
+        if (plan === "365") {
+          url.searchParams.delete("date");
+          url.searchParams.delete("week");
+          window.location.assign(url.toString());
+          return;
+        }
+        window.history.replaceState({}, "", url);
+      }
+    };
+
+    document.querySelectorAll("[data-annual-date-nav]").forEach((link) => {
+      link.addEventListener("click", () => {
+        sessionStorage.setItem(annualDateNavStorageKey, "1");
+      });
+    });
+
+    document.querySelectorAll("[data-reading-plan-button]").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const plan = button.dataset.readingPlanButton;
+        if (plan !== "45" && plan !== "365") return;
+        event.preventDefault();
+        activateReadingPlan(plan, true);
+      });
+    });
+
+    if (lang === "ko") {
+      const hasPlanInUrl = new URL(window.location.href).searchParams.has("plan");
+      const savedPlan = localStorage.getItem(readingPlanStorageKey);
+      activateReadingPlan(!hasPlanInUrl && (savedPlan === "45" || savedPlan === "365") ? savedPlan : selectedPlan);
+    }
+
+    const savedWeekStorageKey = `truthForLifeMissionBibleReadingBaseWeek:${lang}`;
+    const dateToUTC = (value) => new Date(`${value}T00:00:00Z`);
+    const shiftDate = (value, offset) => {
+      const shifted = dateToUTC(value);
+      shifted.setUTCDate(shifted.getUTCDate() + offset);
+      return shifted.toISOString().slice(0, 10);
+    };
+    const dayDifference = (a, b) => Math.floor((dateToUTC(a).getTime() - dateToUTC(b).getTime()) / 86400000);
+    const getSundayKey = (value) => shiftDate(value, -dateToUTC(value).getUTCDay());
+    const wrapWeek = (value) => ((value - 1) % 45 + 45) % 45 + 1;
+    const weekDeltaFromToday = Math.floor(dayDifference(getSundayKey(dateKey), getSundayKey(todayKey)) / 7);
+    document.querySelectorAll("[data-auto-submit-week]").forEach((element) => {
+      if (!(element instanceof HTMLSelectElement)) return;
+      element.addEventListener("change", () => {
+        const selectedWeek = Number(element.value);
+        if (!Number.isInteger(selectedWeek) || selectedWeek < 1 || selectedWeek > 45) return;
+        window.location.assign(`/${lang}/bible-reading/?date=${dateKey}&week=${selectedWeek}`);
+      });
+    });
+
+    document.querySelectorAll("[data-save-reading-week]").forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      button.addEventListener("click", () => {
+        const select = document.querySelector("[data-auto-submit-week]");
+        if (!(select instanceof HTMLSelectElement)) return;
+        const selectedWeek = Number(select.value);
+        if (!Number.isInteger(selectedWeek) || selectedWeek < 1 || selectedWeek > 45) return;
+        const baseWeekForToday = wrapWeek(selectedWeek - weekDeltaFromToday);
+        localStorage.setItem(savedWeekStorageKey, String(baseWeekForToday));
+        button.textContent = savedWeekLabel;
+        window.setTimeout(() => {
+          button.textContent = saveWeekLabel;
+        }, 1400);
+      });
+    });
+
+    if (!hasCustomBaseWeek) {
+      const savedWeek = Number(localStorage.getItem(savedWeekStorageKey));
+      const select = document.querySelector("[data-auto-submit-week]");
+      if (select instanceof HTMLSelectElement && Number.isInteger(savedWeek) && savedWeek >= 1 && savedWeek <= 45) {
+        const selectedWeek = wrapWeek(savedWeek + weekDeltaFromToday);
+        window.location.replace(`/${lang}/bible-reading/?date=${dateKey}&week=${selectedWeek}`);
+      }
+    }
+
+    document.querySelectorAll("[data-random-playlist]").forEach((element) => {
+      if (!(element instanceof HTMLIFrameElement)) return;
+      const playlistId = element.dataset.randomPlaylist;
+      const videoIds = element.dataset.videoIds?.split(",").filter(Boolean) ?? [];
+      const randomCount = Number(element.dataset.randomCount || videoIds.length || 0);
+      if (!playlistId || !Number.isFinite(randomCount) || randomCount < 1) return;
+      const randomIndex = Math.floor(Math.random() * randomCount);
+      const videoId = videoIds[randomIndex];
+      element.src = videoId
+        ? `https://www.youtube-nocookie.com/embed/${videoId}?list=${playlistId}&index=${randomIndex + 1}&rel=0`
+        : `https://www.youtube-nocookie.com/embed/videoseries?list=${playlistId}&index=${randomIndex + 1}&rel=0`;
+      const openLink = element.closest("article")?.querySelector("[data-playlist-open]");
+      if (openLink instanceof HTMLAnchorElement) {
+        openLink.href = videoId
+          ? `https://www.youtube.com/watch?v=${videoId}&list=${playlistId}&index=${randomIndex + 1}`
+          : `https://www.youtube.com/playlist?list=${playlistId}&index=${randomIndex + 1}`;
+      }
+    });
+  </script>
+</SiteLayout>

@@ -1,0 +1,175 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import ShareButtons from "../../../components/ShareButtons.astro";
+import {
+  formatDateKey,
+  getAnnualReadingDay,
+  getBangkokDateKey,
+  parseDateKey,
+  shiftDateKey
+} from "../../../lib/annual-bible-reading";
+
+const todayKey = getBangkokDateKey();
+const requestedKey = Astro.url.searchParams.get("date") ?? todayKey;
+const today = parseDateKey(todayKey)!;
+const requested = parseDateKey(requestedKey);
+const minDate = parseDateKey(shiftDateKey(todayKey, -7))!;
+const maxDate = parseDateKey(shiftDateKey(todayKey, 7))!;
+const selectedDate = requested && requested >= minDate && requested <= maxDate ? requested : today;
+const selectedKey = formatDateKey(selectedDate);
+const year = selectedDate.getUTCFullYear();
+const month = selectedDate.getUTCMonth() + 1;
+const day = selectedDate.getUTCDate();
+const reading = getAnnualReadingDay(year, month, day);
+
+if (!reading) return Astro.redirect(`/ko/bible-reading/365/?date=${todayKey}`);
+
+const weekday = new Intl.DateTimeFormat("ko-KR", { weekday: "long", timeZone: "UTC" }).format(selectedDate).replace("일요일", "주일");
+const dateLabel = `${year}년 ${month}월 ${day}일 ${weekday}`;
+const activeReading = {
+  dateKey: selectedKey,
+  dateLabel,
+  reading,
+  videoEmbed: reading.videoId ? `https://www.youtube-nocookie.com/embed/${reading.videoId}?rel=0` : null
+};
+
+const previousKey = shiftDateKey(selectedKey, -1);
+const nextKey = shiftDateKey(selectedKey, 1);
+const canGoPrevious = selectedDate > minDate;
+const canGoNext = selectedDate < maxDate;
+const shareUrl = `/ko/bible-reading/365/?date=${selectedKey}`;
+const shareTitle = `365일 성경통독 · ${dateLabel}`;
+const shareDescription = `오늘 본문: 구약 ${reading.oldTestament}, 신약 ${reading.newTestament}`;
+---
+
+<SiteLayout
+  lang="ko"
+  current="bibleReading"
+  title="365일 성경읽기"
+  description="365일 매일 약 15분 분량의 구약과 신약 본문을 읽으며 1년에 성경전체를 통독하도록 계획된 성경읽기표입니다."
+>
+  <header class="page-heading container annual-heading">
+    <p class="eyebrow">날짜에 맞춰 읽는 1년 1독</p>
+    <h1>365일 성경읽기</h1>
+  </header>
+
+  <div class="container section annual-reading-page" style="padding-top:0">
+    <section class="reading-today-panel annual-today-panel" aria-labelledby="annual-date-heading">
+      <div class="annual-title-row">
+        <div class="annual-share-cluster" aria-label="365일 성경통독 공유">
+          <img class="annual-share-logo" src="/images/annual-bible-reading-365-logo.png" alt="365 성경통독" loading="lazy" />
+          <ShareButtons lang="ko" url={shareUrl} title={shareTitle} description={shareDescription} />
+        </div>
+        <div>
+          <h2 id="annual-date-heading">{activeReading.dateLabel}</h2>
+        </div>
+      </div>
+
+      <div class="reading-day-navigation annual-navigation">
+        {canGoPrevious ? <a class="button secondary" href={`/ko/bible-reading/365/?date=${previousKey}`}>← 전날</a> : <span class="button secondary disabled" aria-disabled="true">← 전날</span>}
+        {canGoNext ? <a class="button secondary" href={`/ko/bible-reading/365/?date=${nextKey}`}>다음날 →</a> : <span class="button secondary disabled" aria-disabled="true">다음날 →</span>}
+      </div>
+
+      <article class="reading-video-card annual-video-card">
+        <h3>오늘의 성경읽기 영상</h3>
+        {activeReading.videoEmbed ? (
+          <>
+            <div class="video-frame">
+              <iframe
+                src={activeReading.videoEmbed}
+                title={`${activeReading.dateLabel} 성경읽기 영상`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </>
+        ) : (
+          <div class="reading-video-placeholder">
+            <strong>이 날짜의 영상은 준비 중입니다.</strong>
+            <p>영상이 재생목록에 올라오면 날짜에 맞춰 이 자리에 연결됩니다.</p>
+          </div>
+        )}
+      </article>
+
+      <article class="reading-summary-card annual-summary-card">
+        <h3>읽기 전에 살펴보는 핵심 내용</h3>
+        <div class="annual-summary-list">
+          <section class="annual-summary-section">
+            <p class="annual-summary-label">구약 · {activeReading.reading.oldTestament}</p>
+            <p>{activeReading.reading.firstSummary}</p>
+          </section>
+          <section class="annual-summary-section">
+            <p class="annual-summary-label">신약 · {activeReading.reading.newTestament}</p>
+            <p>{activeReading.reading.secondSummary}</p>
+          </section>
+        </div>
+      </article>
+
+      <aside class="reading-plan-tools annual-downloads" aria-labelledby="annual-download-title">
+        <h3 id="annual-download-title">365일 성경읽기 진도표</h3>
+        <p>진도표를 내려받아 매일 읽은 날짜를 표시하며 사용할 수 있습니다.</p>
+        <div class="schedule-actions schedule-plan-actions">
+          <a class="button download-button" href="/downloads/bible-reading-365-schedule-ko.pdf" data-pdf-preview data-pdf-preview-title="한국어 365일 진도표" download="bible-reading-365-schedule-ko.pdf">한국어 진도표</a>
+          <a class="button secondary download-button" href="/downloads/bible-reading-365-schedule-th.pdf" data-pdf-preview data-pdf-preview-title="태국어 365일 진도표" download="bible-reading-365-schedule-th.pdf">태국어 진도표</a>
+        </div>
+      </aside>
+    </section>
+
+    <p class="annual-back-link"><a href="/ko/bible-reading/">← 성경통독 메뉴로 돌아가기</a></p>
+  </div>
+</SiteLayout>
+
+<style>
+  .annual-heading { max-width: 920px; }
+  .annual-reading-page { max-width: 1120px; }
+  .annual-today-panel { padding: clamp(22px, 4vw, 42px); }
+  .annual-title-row { display:grid; gap:16px; }
+  .annual-title-row h2 { margin:4px 0 0; font-family:Georgia,"Noto Serif KR",serif; font-size:clamp(27px,4vw,42px); }
+  .annual-share-cluster {
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .annual-share-logo {
+    width:clamp(62px, 10vw, 92px);
+    height:auto;
+    display:block;
+    border-radius:18px;
+    box-shadow:0 12px 24px rgba(23,63,53,.12);
+  }
+  .annual-navigation { margin-top:24px; }
+  .annual-navigation .disabled { opacity:.42; pointer-events:none; }
+  .annual-video-card {
+    margin-top: 18px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .annual-video-card h3 { margin-bottom: 14px; }
+  .annual-video-card .video-frame { border-radius: 18px; }
+  .annual-summary-card h3 { margin-bottom:16px; }
+  .annual-summary-list { display:grid; gap:0; }
+  .annual-summary-section {
+    padding:18px 0;
+    border-top:1px solid rgba(23,63,53,.14);
+  }
+  .annual-summary-section:first-child { padding-top:4px; border-top:0; }
+  .annual-summary-section p:last-child {
+    max-width:74ch;
+    margin:0;
+    line-height:1.82;
+  }
+  .annual-summary-card .annual-summary-label { margin:0 0 7px; color:var(--forest); font-size:15px; font-weight:900; }
+  .annual-downloads { margin-top:18px; }
+  .annual-back-link { margin:22px 0 0; text-align:center; font-weight:800; }
+  @media (max-width:760px) {
+    .annual-share-cluster {
+      align-items:center;
+    }
+    .annual-summary-section { padding:16px 0; }
+  }
+</style>

@@ -1,0 +1,4504 @@
+:root {
+  color-scheme: light;
+  --ink: #18312b;
+  --muted: #63736e;
+  --paper: #fbfaf5;
+  --paper-warm: #fffdf8;
+  --paper-cool: #f2f7f3;
+  --surface: #ffffff;
+  --surface-soft: #fffefa;
+  --forest: #173f35;
+  --forest-2: #245b4c;
+  --forest-3: #1f6a59;
+  --sage: #dfe9df;
+  --sage-2: #eef5ef;
+  --gold: #c79b4b;
+  --gold-soft: #f3e6c7;
+  --line: #dce4df;
+  --shadow: 0 18px 48px rgba(24, 49, 43, 0.08);
+  --shadow-soft: 0 10px 28px rgba(24, 49, 43, 0.06);
+  --shadow-lift: 0 18px 42px rgba(24, 49, 43, 0.12);
+  --radius: 18px;
+  --intro-copy-size: clamp(14.2px, 1.25vw, 15.2px);
+  --intro-copy-line-height: 1.65;
+  --site-header-height: 62px;
+  --library-filter-top: var(--site-header-height);
+  font-family: "Noto Sans Thai", "Leelawadee UI", "Thonburi", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% -8%, rgba(54, 174, 151, 0.14), transparent 28rem),
+    radial-gradient(circle at 96% 2%, rgba(199, 155, 75, 0.13), transparent 24rem),
+    linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 46%, var(--paper-cool) 100%);
+  font-size: 16px;
+  line-height: 1.7;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+iframe,
+video {
+  max-width: 100%;
+}
+
+html[lang="th"] body,
+html[lang="th"] button,
+html[lang="th"] input,
+html[lang="th"] textarea,
+html[lang="th"] select {
+  font-family: "Sarabun", "Noto Sans Thai", "Leelawadee UI", sans-serif;
+}
+html[lang="th"] h1,
+html[lang="th"] h2,
+html[lang="th"] h3,
+html[lang="th"] .brand strong {
+  font-family: "Chonburi", "Noto Serif Thai", serif;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid rgba(199, 155, 75, 0.55);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  transform: translateY(-160%);
+  background: var(--surface);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+.skip-link:focus { transform: none; }
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  border-bottom: 1px solid rgba(23, 63, 53, 0.08);
+  background: rgba(255, 253, 248, 0.98);
+  box-shadow: 0 8px 28px rgba(24, 49, 43, 0.055);
+  transition: box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.site-header,
+.site-footer {
+  max-width: 100%;
+}
+
+main {
+  max-width: 100%;
+  padding-top: var(--site-header-space, var(--site-header-height, 84px));
+  overflow: visible;
+}
+
+.header-inner, .site-footer {
+  width: min(1160px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.header-inner {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 92px;
+  align-items: center;
+  gap: 0;
+  transition: min-height 180ms ease;
+}
+
+.brand {
+  display: inline-flex;
+  min-width: 0;
+  width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-right: 1px solid rgba(23,63,53,.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 160ms ease, color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.brand:hover {
+  transform: none;
+  background: transparent;
+  box-shadow: none;
+}
+.brand.active,
+.brand:active {
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: inset 0 -3px 0 rgba(212,169,74,.72);
+}
+.brand > span { min-width: 0; }
+.brand-logo-stack {
+  position: relative;
+  display: grid;
+  width: 58px;
+  height: 44px;
+  place-items: center;
+  transition: width 180ms ease, height 180ms ease;
+}
+.brand-logo {
+  position: absolute;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0;
+  object-fit: contain;
+  box-shadow: none;
+  transition: opacity 140ms ease, width 180ms ease, height 180ms ease, border-radius 180ms ease, box-shadow 180ms ease;
+}
+.brand-logo-default {
+  width: 44px;
+  height: 44px;
+}
+.brand-logo-active {
+  width: 44px;
+  height: 44px;
+  opacity: 0;
+}
+.brand.active .brand-logo-default,
+.brand:active .brand-logo-default { opacity: 0; }
+.brand.active .brand-logo-active,
+.brand:active .brand-logo-active { opacity: 1; }
+.brand strong, .brand small { display: block; line-height: 1.25; }
+.brand strong { font-size: 15px; letter-spacing: -0.01em; }
+.brand strong.thai-brand-title { font-size: 16px; line-height: 1.25; white-space: nowrap; }
+.brand strong.thai-brand-title span { display: block; }
+.brand strong.korean-brand-title {
+  white-space: nowrap;
+  font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.045em;
+  transform: scaleY(1.12);
+  transform-origin: left center;
+}
+.brand strong.english-brand-title { font-family: "Playfair Display", Georgia, serif; font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+.brand small { color: var(--muted); font-size: 10px; letter-spacing: 0.04em; }
+
+.main-nav {
+  grid-column: 2 / span 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.main-nav a {
+  position: relative;
+  overflow: hidden;
+  min-height: 56px;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border: 0;
+  border-right: 1px solid rgba(23,63,53,.16);
+  border-radius: 0;
+  color: var(--forest);
+  font-size: 15.5px;
+  font-weight: 720;
+  letter-spacing: -.018em;
+  line-height: 1.06;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 160ms ease, color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.main-nav a:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  transform: none;
+  box-shadow: inset 0 -3px 0 rgba(212,169,74,.72);
+}
+.main-nav a.active {
+  color: #fff;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 42%),
+    linear-gradient(135deg, #11392f 0%, var(--forest) 52%, var(--forest-3) 100%);
+  box-shadow: inset 0 -3px 0 rgba(212,169,74,.72);
+}
+.main-nav a.recommend-nav-link {
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.02;
+  white-space: normal;
+}
+html[lang="en"] .main-nav a { font-family: "Playfair Display", Georgia, serif; font-weight: 600; letter-spacing: -.025em; }
+html[lang="en"] .main-nav a.recommend-nav-link { padding-inline: 11px; font-size: 13px; letter-spacing: -.045em; line-height: 1.02; }
+html[lang="en"] .main-nav a.bible-reading-nav-link { padding-inline: 10px; font-size: 12.5px; letter-spacing: -.05em; line-height: 1.02; }
+html[lang="th"] .main-nav a,
+html[lang="th"] .filter-row a {
+  font-family: "Kanit", "Mitr", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+}
+html[lang="th"] .main-nav a.bible-reading-nav-link,
+html[lang="th"] .main-nav a.recommend-nav-link { padding-inline: 9px; font-size: 13px; letter-spacing: -.035em; line-height: 1.02; }
+.language-switch a:hover, .language-switch a.active { color: var(--forest); }
+.language-switch {
+  position: relative;
+  display: flex;
+  grid-column: 5;
+  justify-content: flex-end;
+  min-width: 0;
+}
+.language-toggle,
+.language-switch a {
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 720;
+  cursor: pointer;
+  box-shadow: none;
+}
+.language-toggle {
+  width: 100%;
+  color: var(--forest);
+  white-space: nowrap;
+  letter-spacing: -.02em;
+}
+.brand,
+.main-nav a,
+.language-toggle { transition: min-height 180ms ease, padding 180ms ease, transform 160ms ease, color 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+.site-header.is-compact { background: rgba(255,253,248,.965); box-shadow: 0 6px 20px rgba(24,49,43,.08); }
+.site-header.is-compact .header-inner { min-height: 44px; }
+.site-header.is-compact .brand,
+.site-header.is-compact .main-nav a,
+.site-header.is-compact .language-toggle { min-height: 40px; }
+.site-header.is-compact .brand-logo-stack { width: 42px; height: 30px; }
+.site-header.is-compact .brand-logo-default { width: 30px; height: 30px; }
+.site-header.is-compact .brand-logo-active { width: 30px; height: 30px; }
+.site-header.is-compact .brand-logo { border-radius: 0; box-shadow: none; }
+.language-toggle:hover,
+.language-switch a:hover {
+  transform: none;
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: inset 0 -3px 0 rgba(212,169,74,.72);
+}
+.language-popover {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  z-index: 60;
+  display: grid;
+  gap: 7px;
+  min-width: 126px;
+  padding: 8px;
+  border: 0;
+  border-radius: 0;
+  background: rgba(255,253,248,.98);
+  box-shadow: 0 14px 30px rgba(24,49,43,.14);
+}
+.language-popover[hidden] { display: none !important; }
+.language-popover a {
+  min-height: 42px;
+  width: 100%;
+  justify-content: flex-start;
+  border-radius: 0;
+  box-shadow: none;
+}
+.language-popover a.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+}
+.language-switch img { width: 30px; height: 20px; display: block; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,.12); }
+
+.container { width: min(1200px, calc(100% - 40px)); margin: 0 auto; }
+.narrow { width: min(760px, calc(100% - 32px)); margin: 0 auto; }
+
+.gospel-hero {
+  overflow: hidden;
+  padding: 82px 0 100px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(97, 210, 187, .22), transparent 30rem),
+    linear-gradient(128deg, #0f332c 0%, #174d40 54%, #276b5a 100%);
+}
+.gospel-hero-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr); align-items: center; gap: clamp(0px, 1.6vw, 18px); }
+.gospel-hero-grid > * { min-width: 0; }
+.gospel-copy h1 { margin: 0; max-width: 650px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(42px, 6vw, 72px); font-weight: 500; line-height: 1.12; letter-spacing: -0.035em; }
+html[lang="th"] .gospel-copy h1 { font-family: "Chonburi", "Noto Serif Thai", serif; font-weight: 400; letter-spacing: 0; }
+html[lang="ko"] .gospel-copy h1 { max-width: none; font-size: clamp(30px, 4.1vw, 50px); letter-spacing: -.045em; white-space: nowrap; }
+.gospel-copy > p:not(.eyebrow) { margin: 22px 0 0; color: #dfeae5; font-size: 19px; }
+html[lang="ko"] .gospel-copy > p:not(.eyebrow) {
+  font-size: clamp(15px, 1.55vw, 17px);
+  line-height: 1.75;
+}
+.hero-video-share .share-buttons { border-top-color: rgba(255,255,255,.18); }
+.video-frame { position: relative; overflow: hidden; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 22px; background: #0d1f1a; box-shadow: 0 20px 54px rgba(0,0,0,.18); }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-frame.compact { margin-top: 16px; border-radius: 14px; box-shadow: none; }
+.home-search { margin-top: -30px; }
+.video-feature-grid { display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; gap: clamp(0px, 1.6vw, 18px); }
+.video-feature-grid h2, .about-support h2 { margin: 0; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(32px, 4vw, 48px); font-weight: 500; line-height: 1.2; }
+.video-feature-grid > div:first-child > p:not(.eyebrow) { margin-bottom: 0; color: var(--muted); font-size: 18px; }
+html[lang="ko"] .video-feature-grid > div:first-child > p:not(.eyebrow) {
+  font-size: clamp(15px, 1.45vw, 16.5px);
+  line-height: 1.75;
+}
+.video-feature-media > .button { margin-top: 18px; }
+.about-card > p:not(.eyebrow), .support-card p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+.line-contact-banner { display: grid; width: 100%; grid-template-columns: 52px 1fr auto; align-items: center; gap: 14px; margin-top: 22px; padding: 13px 16px; border: 0; border-radius: 18px; color: #fff; background: #06c755; box-shadow: 0 12px 28px rgba(6,199,85,.22); font: inherit; text-align: left; cursor: pointer; }
+.line-contact-banner:hover { background: #05b94e; transform: translateY(-2px); box-shadow: 0 16px 34px rgba(6,199,85,.28); }
+.line-chat-icon { position: relative; display: grid; place-items: center; width: 52px; height: 44px; border-radius: 50%; color: #06c755; background: #fff; font-size: 12px; font-weight: 900; letter-spacing: -.04em; }
+.line-chat-icon::after { content: ""; position: absolute; right: 5px; bottom: -4px; width: 12px; height: 12px; background: #fff; transform: rotate(32deg); }
+.line-contact-copy { min-width: 0; }
+.line-contact-copy small, .line-contact-copy strong { display: block; color: #fff; line-height: 1.35; }
+.line-contact-copy small { font-size: 12px; opacity: .9; }
+.line-contact-copy strong { margin-top: 3px; font-size: 16px; letter-spacing: .01em; }
+.line-contact-arrow { font-size: 32px; line-height: 1; }
+.compact-contact-section { padding: 46px 0; background: #fffdf8; }
+.compact-contact-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.compact-contact-card { display: grid; min-width: 0; min-height: 142px; grid-template-columns: 54px minmax(0,1fr) auto; align-items: center; gap: 14px; padding: 20px; border: 0; border-radius: 20px; box-shadow: 0 10px 28px rgba(24,49,43,.11); font: inherit; text-align: left; cursor: pointer; }
+.compact-contact-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(24,49,43,.16); }
+.compact-contact-card:focus-visible { outline: 3px solid rgba(69,186,225,.65); outline-offset: 4px; }
+.facebook-contact-card { color: #fff; background: linear-gradient(120deg,#1877f2,#0d5fc5); }
+.youtube-contact-card { color: #fff; background: linear-gradient(120deg,#ff0033,#c90028); }
+.line-contact-card { color: #fff; background: #06c755; }
+.support-contact-card { color: var(--ink); background: #fff; border: 1px solid var(--line); }
+.compact-facebook-icon { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 50%; color: #1877f2; background: #fff; font-family: Arial,Helvetica,sans-serif; font-size: 42px; font-weight: 800; line-height: 1; }
+.compact-youtube-icon { display: grid; width: 52px; height: 38px; place-items: center; border-radius: 11px; color: #ff0033; background: #fff; font-size: 20px; line-height: 1; }
+.compact-support-image { display: block; width: 52px; height: 52px; border-radius: 11px; object-fit: cover; object-position: center 35%; }
+.compact-contact-copy { min-width: 0; }
+.compact-contact-copy small, .compact-contact-copy strong, .compact-contact-copy > span { display: block; line-height: 1.4; }
+.facebook-contact-card .compact-contact-copy > *, .line-contact-card .compact-contact-copy > *, .youtube-contact-card .compact-contact-copy > * { color: #fff; }
+.compact-contact-copy small { margin-bottom: 4px; font-size: 11px; font-weight: 800; opacity: .86; }
+.compact-contact-copy strong { font-size: 15px; font-weight: 800; }
+.compact-contact-copy > span { margin-top: 6px; font-size: 12px; opacity: .88; }
+.compact-contact-arrow { font-size: 23px; line-height: 1; }
+.line-qr-dialog { width: min(25vw, 360px); max-width: none; margin: auto; padding: 20px; border: 0; border-radius: 22px; color: var(--ink); background: #fff; box-shadow: 0 24px 80px rgba(7,24,54,.3); text-align: center; }
+.line-qr-dialog::backdrop { background: rgba(4,17,38,.58); backdrop-filter: blur(3px); }
+.line-qr-dialog img { display: block; width: 100%; height: auto; border-radius: 14px; }
+.line-qr-dialog strong { display: block; margin-top: 14px; font-size: 17px; letter-spacing: .01em; }
+.qr-download-button { width: 100%; margin-top: 14px; border: 1px solid rgba(23,63,53,.36); color: var(--forest); background: transparent; box-shadow: none; }
+.qr-download-button:hover { color: var(--forest); background: rgba(23,63,53,.07); box-shadow: none; }
+.support-qr-dialog img { max-height: 62vh; object-fit: contain; }
+.line-qr-close { position: absolute; top: 7px; right: 8px; display: grid; width: 34px; height: 34px; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #fff; background: rgba(6,27,56,.82); font-size: 24px; line-height: 1; cursor: pointer; }
+.today-heading { align-items: center; }
+.today-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.today-card { min-height: 0; padding: clamp(22px, 2.8vw, 26px); border: 1px solid var(--line); border-radius: 24px; background: var(--surface); box-shadow: 0 8px 28px rgba(24,49,43,.05); }
+.today-card h3 { margin: 10px 0 18px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 28px; font-weight: 550; line-height: 1.35; }
+.daily-entry { display: grid; gap: 3px; padding: 15px 0; border-top: 1px solid var(--line); }
+.daily-entry strong { font-size: 17px; }
+.daily-entry span, .empty-copy { color: var(--muted); font-size: 14px; }
+
+.movie-hub { display: grid; gap: 24px; }
+.video-library-movies { margin-top: 42px; padding-top: 38px; border-top: 1px solid var(--line); }
+.devotional-living-video { margin-top: 42px; }
+.movie-heading { max-width: 760px; }
+.movie-heading > p:last-child { color: var(--muted); }
+.movie-player { max-width: 980px; }
+.movie-choose-heading { margin: 8px 0 0; }
+.movie-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.movie-card { display: grid; gap: 12px; padding: 10px; color: var(--ink); border: 2px solid transparent; border-radius: 18px; background: #fff; box-shadow: 0 12px 35px rgba(25, 54, 44, .08); text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.movie-card:hover { transform: translateY(-3px); }
+.movie-card.active { border-color: var(--brand); }
+.movie-card strong { padding: 0 6px 8px; line-height: 1.45; }
+.movie-thumbnail { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 9; border-radius: 12px; background: #0d1f1a; }
+.movie-thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.movie-thumbnail span { position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 52px; height: 52px; color: #fff; border-radius: 50%; background: rgba(186, 26, 26, .92); transform: translate(-50%, -50%); }
+.video-playlist-hub { padding-bottom: 24px; }
+.video-playlist-list { display: grid; gap: 30px; }
+.video-playlist-card { padding: clamp(24px, 3vw, 30px); border: 1px solid rgba(23,63,53,.1); border-radius: 26px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); content-visibility: auto; contain-intrinsic-size: 520px; }
+.video-playlist-heading { max-width: 800px; margin-bottom: 22px; }
+.video-playlist-heading h2 { margin: 8px 0 10px; font-family: Georgia,"Noto Serif Thai",serif; font-size: clamp(25px,3.2vw,36px); font-weight: 550; line-height: 1.3; }
+.video-playlist-heading > p:not(.type-pill) { margin: 0; color: var(--muted); font-size: 17px; }
+.video-playlist-hub:not(.audiobook-playlist-hub) .video-playlist-heading > p:not(.type-pill) {
+  font-size: clamp(12px, 1.25vw, 13px);
+  line-height: 1.6;
+}
+.audiobook-playlist-card .video-playlist-heading > p:not(.type-pill) {
+  font-size: clamp(12px, 1.25vw, 13px);
+  line-height: 1.6;
+}
+.audiobook-narrator { margin-top: 12px !important; color: var(--forest) !important; font-size: 15px !important; font-weight: 800; }
+.audiobook-narrator a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+.video-playlist-open { display: inline-flex; margin-top: 18px; }
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(97, 210, 187, .18), transparent 28rem),
+    linear-gradient(130deg, #102f29 0%, var(--forest) 58%, #246354 100%);
+  color: #fff;
+}
+.hero::before, .hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.hero::before { width: 460px; height: 460px; top: -250px; right: -80px; }
+.hero::after { width: 270px; height: 270px; bottom: -190px; left: 12%; }
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  min-height: 540px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  align-items: center;
+  gap: 70px;
+  padding: 86px 0;
+}
+.eyebrow { margin: 0 0 18px; color: #cbdcd4; font-size: 13px; font-weight: 750; letter-spacing: 0.14em; text-transform: uppercase; }
+.hero h1, .page-heading h1, .article-heading h1 {
+  margin: 0;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.hero h1 { max-width: 760px; font-size: clamp(42px, 6.4vw, 78px); }
+.hero-copy > p:not(.eyebrow) { max-width: 690px; margin: 24px 0 32px; color: #dfeae5; font-size: clamp(17px, 2vw, 21px); }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #d7b15e, var(--gold));
+  color: #17332c;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(199, 155, 75, .18);
+}
+.button:hover { filter: brightness(1.04); transform: translateY(-1px); box-shadow: 0 9px 20px rgba(199, 155, 75, .22); }
+.button.secondary { border-color: rgba(23,63,53,.14); background: linear-gradient(180deg, #fff, #f7faf7); color: var(--forest); box-shadow: 0 5px 14px rgba(24,49,43,.06); }
+.button.danger { background: #842f2f; color: white; }
+.button.download-button {
+  position: relative;
+  min-width: 0;
+  padding-inline: 14px;
+  white-space: nowrap;
+  font-size: clamp(12px, 1.7vw, 14px);
+  letter-spacing: -.025em;
+  border-radius: 10px;
+  box-shadow: 0 4px 0 rgba(23, 63, 53, .28), 0 9px 18px rgba(24, 49, 43, .14);
+  transform: translateY(-1px);
+}
+.button.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 rgba(23, 63, 53, .3), 0 12px 22px rgba(24, 49, 43, .17);
+}
+.button.download-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(23, 63, 53, .3), 0 4px 9px rgba(24, 49, 43, .12);
+}
+html[lang="th"] .button.download-button {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-size: clamp(11px, 2.6vw, 13px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+}
+
+.hero-card {
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.14);
+}
+.hero-card blockquote { margin: 0 0 18px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 23px; line-height: 1.55; }
+.hero-card cite { color: #cbdcd4; font-style: normal; font-size: 14px; }
+
+.search-band { position: relative; z-index: 4; margin-top: -32px; }
+.search-form {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.search-form input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 0 16px; color: var(--ink); font: inherit; }
+.search-form input:focus { outline: none; }
+
+.section { padding: 90px 0; }
+.section.soft {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(199,155,75,.08), transparent 24rem),
+    linear-gradient(180deg, #f5f7f1, #eef5ef);
+}
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+.section-heading h2 { margin: 0; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px, 4vw, 44px); font-weight: 500; line-height: 1.2; }
+.section-heading p { max-width: 600px; margin: 8px 0 0; color: var(--muted); }
+
+.resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.resource-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.4vw, 24px);
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fff, var(--surface-soft));
+  box-shadow: var(--shadow-soft);
+  content-visibility: auto;
+  contain-intrinsic-size: 260px;
+}
+.resource-card:hover { border-color: #b8c9c0; box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.resource-card-top { display: flex; justify-content: space-between; gap: 12px; }
+.type-pill { color: var(--forest-2); font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.media-hint { color: var(--muted); font-size: 11px; }
+.resource-card h3 { margin: 18px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 25px; font-weight: 550; line-height: 1.35; }
+.resource-card p { margin: 0 0 18px; color: var(--muted); white-space: pre-line; }
+.text-link { margin-top: auto; color: var(--forest-2); font-weight: 750; }
+.resource-card-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: auto;
+}
+.resource-card-link-row .text-link { margin-top: 0; }
+
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 63, 53, .1);
+}
+.share-button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid rgba(23, 63, 53, .14);
+  border-radius: 10px;
+  color: var(--forest);
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(24, 49, 43, .06);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+.share-button:hover { transform: translateY(-1px); box-shadow: 0 7px 14px rgba(24, 49, 43, .1); }
+.facebook-share-button { color: #0d5fc5; }
+.facebook-share-button > span:first-child {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #1877f2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1;
+}
+.line-share-button { color: #078f3f; }
+.line-share-button > span {
+  padding: 3px 6px;
+  border-radius: 999px;
+  color: #fff;
+  background: #06c755;
+  font-size: 10px;
+  letter-spacing: -.03em;
+}
+.copy-share-button { color: var(--forest); }
+.article-heading .share-buttons { justify-content: center; margin-top: 18px; }
+.recommendation-share-card > .share-buttons,
+.commentary-recommendation > .share-buttons { margin-top: 6px; margin-bottom: 8px; padding: 7px 4px 0; }
+.home-devotional-entry .share-buttons { margin-top: 12px; }
+.video-action-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.video-action-row .playlist-link-button {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+.home-prayer-video .cgn-playlist-link-button {
+  min-height: 38px;
+  padding-inline: 12px;
+  font-size: 13px;
+}
+html[lang="th"] .home-prayer-video .cgn-playlist-link-button,
+html[lang="ko"] .home-prayer-video .cgn-playlist-link-button {
+  padding-inline: 10px;
+  font-size: clamp(10.5px, 2.5vw, 12.5px);
+  letter-spacing: -.045em;
+}
+.video-action-row .share-buttons {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.video-action-row .share-button {
+  flex: 0 0 auto;
+}
+.video-action-row .facebook-share-button {
+  padding-inline: 8px;
+}
+
+.mission-panel {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 56px;
+  padding: 54px;
+  border-radius: 30px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(255,255,255,.12), transparent 22rem),
+    linear-gradient(120deg, #204f43, #173f35);
+}
+.mission-panel h2 { margin: 0; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px, 4vw, 48px); font-weight: 500; line-height: 1.22; }
+.mission-panel p { margin: 0; color: #dce8e2; font-size: 19px; }
+
+.page-heading { padding: 72px 0 46px; }
+.page-heading h1 { font-size: clamp(40px, 6vw, 64px); }
+.page-heading p { max-width: 680px; margin: 18px 0 0; color: var(--muted); font-size: 18px; }
+.page-heading .course-language-note {
+  margin-top: 8px;
+  color: var(--forest);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 850;
+  line-height: 1.25;
+}
+html[lang="th"] .page-heading .course-language-note {
+  font-family: "Mitr", "Kanit", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+}
+.filter-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 34px; }
+.filter-row a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.06;
+  box-shadow: none;
+  transition: transform 160ms ease, color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.filter-row a:hover {
+  color: #fff;
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: 0 8px 18px rgba(23,63,53,.16);
+}
+.filter-row a.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: 0 8px 18px rgba(23,63,53,.16);
+}
+.library-filter-row {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--library-filter-top, var(--site-header-height, 62px));
+  z-index: 39;
+  align-self: start;
+  margin: 0 0 26px;
+  padding: 8px 0 10px;
+  border-bottom: 0;
+  background: rgba(255,253,248,.98);
+  box-shadow: 0 8px 18px rgba(24, 49, 43, 0.035);
+}
+.library-filter-row a {
+  position: relative;
+}
+.library-filter-row a:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 1px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(23, 63, 53, 0.2);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.library-filter-row a:hover::after,
+.library-filter-row a.active::after {
+  opacity: .45;
+}
+.library-filter-row a {
+  min-height: 38px;
+  padding: 7px 14px;
+  border-radius: 13px;
+  font-size: 14.5px;
+  line-height: 1.04;
+}
+html[lang="en"] .filter-row a {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+.archive-date-form { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: -10px 0 30px; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.archive-date-form label { font-weight: 750; }
+.archive-date-form input { min-height: 46px; padding: 8px 12px; border: 1px solid #cdd8d2; border-radius: 10px; font: inherit; }
+.empty-state { padding: 56px; border: 1px dashed #b9c6bf; border-radius: var(--radius); text-align: center; color: var(--muted); }
+.daily-source-section { margin: 0 0 38px; }
+.devotional-day-browser + .daily-source-section { margin-top: 44px; padding-top: 40px; border-top: 1px solid var(--line); }
+.daily-source-section > h2 { margin: 0 0 16px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(28px,4vw,38px); font-weight: 550; }
+.daily-source-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.daily-source-card { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(22px, 2.6vw, 24px); border: 1px solid #c9d8d0; border-top: 5px solid var(--gold); border-radius: var(--radius); background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.daily-source-card h3 { margin: 8px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 25px; line-height: 1.35; }
+.daily-source-card > p:not(.type-pill) { margin: 0 0 22px; color: var(--muted); }
+.daily-source-card .daily-item-title { margin-bottom: 10px; color: var(--ink); font-size: 17px; font-weight: 700; line-height: 1.5; }
+.daily-source-excerpt, .daily-source-summary { width: 100%; margin: 8px 0 16px; }
+.daily-source-excerpt > strong, .daily-source-summary > strong { display: block; margin-bottom: 7px; color: var(--ink); font-size: 14px; letter-spacing: .02em; }
+.daily-source-excerpt blockquote { margin: 0; padding: 13px 16px; border-left: 3px solid var(--gold); background: #f7f5ee; color: var(--muted); font-style: italic; line-height: 1.65; }
+.daily-source-summary p { margin: 0; color: var(--ink); line-height: 1.7; }
+.daily-source-card .translation-rights-note { margin: 0 0 14px; font-size: 12px; line-height: 1.55; }
+.daily-source-card .source-attribution { margin: 0 0 18px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.daily-source-card .button { margin-top: auto; }
+.devotional-archive-list { display: grid; gap: 22px; margin-top: 34px; }
+.devotional-day-browser { margin-top: 42px; }
+.devotional-day-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.devotional-day-heading h2,
+.devotional-day-heading h3 { margin: 6px 0 0; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px, 4vw, 44px); font-weight: 650; }
+.devotional-day-navigation { display: flex; gap: 10px; }
+.devotional-day-navigation .disabled { cursor: not-allowed; opacity: .45; }
+.devotional-bottom-navigation {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.devotional-reading-card { padding: 32px; border: 1px solid rgba(23,63,53,.1); border-radius: 22px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.devotional-reading-card h2 { margin: 8px 0 12px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(27px,4vw,38px); font-weight: 550; }
+.devotional-reading-card .devotional-entry-title {
+  margin: 4px 0 18px;
+  color: var(--ink);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(30px, 4.5vw, 46px);
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.devotional-summary { color: var(--muted); font-size: 18px; }
+.devotional-body { overflow: visible; max-height: none; margin: 22px 0 0; white-space: pre-line; font-size: 17px; line-height: 1.85; }
+.dering-prayer-section {
+  margin: 44px 0 38px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.dering-prayer-heading {
+  max-width: 860px;
+  margin-bottom: 20px;
+}
+.dering-prayer-heading h2 {
+  margin: 7px 0 12px;
+  color: var(--ink);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 650;
+  line-height: 1.25;
+}
+.dering-prayer-heading p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.dering-prayer-card {
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(212,165,74,.16), transparent 34%),
+    linear-gradient(180deg, #fff, var(--surface-soft));
+  box-shadow: var(--shadow-soft);
+}
+.dering-prayer-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 12px;
+}
+.dering-prayer-card .source-attribution {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.dering-prayer-card h3 {
+  margin: 0 0 18px;
+  color: var(--ink);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.dering-prayer-body {
+  max-width: 900px;
+  margin: 0;
+  white-space: pre-line;
+  color: var(--ink);
+  font-size: clamp(17px, 2.2vw, 20px);
+  line-height: 1.9;
+}
+.dering-prayer-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.dering-prayer-navigation .button {
+  justify-content: center;
+}
+.dering-prayer-author-note {
+  margin: 22px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.dering-prayer-download {
+  margin-top: 12px;
+  min-height: 38px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+.home-reflection-section { margin-top: 18px; }
+.home-devotional-stack { display: grid; gap: 26px; }
+.home-devotional-archive-list { margin-top: 24px; }
+.home-dering-prayer-section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.home-reflection-grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(340px, .82fr); gap: 26px; align-items: start; }
+.home-devotional-full {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.home-devotional-full .home-devotional-archive-list {
+  margin-top: 0;
+}
+.home-devotional-full .devotional-reading-card {
+  padding: clamp(24px, 4vw, 36px);
+}
+.home-devotional-entry + .home-devotional-entry { margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line); }
+.home-devotional-entry h4 { margin: 18px 0 14px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px, 4vw, 44px); font-weight: 750; line-height: 1.28; letter-spacing: -0.025em; }
+.home-devotional-summary { margin: 0 0 20px; color: var(--muted); font-size: 17px; font-weight: 600; }
+.home-devotional-body { white-space: pre-line; font-size: 17px; line-height: 1.9; }
+.home-prayer-video > p { margin: 0 0 18px; color: var(--muted); }
+.machine-translation-note { display: inline-flex; margin: 8px 0 0; padding: 5px 9px; border-radius: 999px; background: #fff3cd; color: #725719; font-size: 12px; font-weight: 800; }
+.bible-reading-feature { margin: 0 0 34px; padding: clamp(26px, 3vw, 30px); border-radius: 26px; color: #fff; background: var(--forest); }
+.bible-reading-copy { max-width: 760px; margin-bottom: 26px; }
+.bible-reading-feature h2 { margin: 0 0 12px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px,4vw,42px); font-weight: 500; }
+.bible-reading-feature p:not(.eyebrow) { color: #dce8e2; }
+.bible-reading-playlist-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.bible-reading-playlist-grid article { min-width: 0; }
+.bible-reading-playlist-grid article.featured { grid-column: 1 / -1; }
+.bible-reading-playlist-grid h3 { margin: 0 0 12px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 20px; font-weight: 550; }
+html[lang="ko"] .bible-reading-playlist-grid .bible-overview-video > h3 {
+  font-family: "Noto Serif KR", Georgia, serif;
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.035em;
+}
+.bible-reading-playlist-grid .playlist-introduction { margin: 0 0 10px; color: #dce8e2; }
+.reading-program-share-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.reading-program-share-heading h3 {
+  margin: 0;
+}
+.reading-program-share-heading .share-buttons {
+  flex: 0 0 auto;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.reading-video-subtitle {
+  margin: -4px 0 14px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.playlist-open-button { margin-top: 14px; }
+.reading-schedule { display: block; margin-top: 26px; padding: clamp(22px, 2.8vw, 24px); border-radius: 20px; color: var(--ink); background: #fff; }
+.reading-schedule h3 { margin: 7px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 26px; }
+.reading-schedule p:not(.type-pill) { color: var(--muted); }
+.schedule-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.schedule-actions .button { white-space: nowrap; }
+.schedule-plan-actions { align-items: center; }
+.reading-schedule .schedule-source { margin: 16px 0 0; font-size: 13px; }
+
+.bible-reading-page-heading h1 { font-size: clamp(38px, 5vw, 62px); }
+.bible-reading-page-heading p:not(.eyebrow) {
+  max-width: 1120px;
+}
+.bible-reading-page-heading.compact-reading-heading { padding-bottom: 18px; }
+.reading-plan-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 24px;
+}
+.reading-plan-tabs a {
+  display: grid;
+  place-items: center;
+  min-height: 92px;
+  padding: 18px;
+  border: 1px solid rgba(23, 63, 53, .16);
+  border-radius: 22px;
+  color: var(--forest);
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(24, 49, 43, .07);
+  font-family: Georgia, "Noto Serif KR", serif;
+  font-size: clamp(22px, 3vw, 31px);
+  font-weight: 700;
+  text-align: center;
+}
+.reading-plan-tabs a.active {
+  border-color: var(--forest);
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: 0 14px 32px rgba(23, 63, 53, .2), inset 0 -4px var(--gold);
+}
+[data-reading-plan-panel][hidden] { display: none !important; }
+.reading-today-panel {
+  margin-bottom: 28px;
+  padding: 30px;
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(199,155,75,.12), transparent 22rem),
+    linear-gradient(180deg,#fff,#fbfaf4);
+  box-shadow: 0 16px 42px rgba(24,49,43,.08);
+}
+
+.annual-plan-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  margin: 0 0 28px;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid rgba(199, 155, 75, .34);
+  border-radius: 28px;
+  background: linear-gradient(145deg, #f3f8f4, #fffaf0);
+  box-shadow: 0 16px 42px rgba(24, 49, 43, .08);
+}
+.annual-plan-card h2 { margin: 4px 0 10px; font-family: Georgia, "Noto Serif KR", serif; font-size: clamp(27px, 3vw, 36px); }
+.annual-plan-card p:not(.eyebrow) { max-width: 760px; margin: 0; color: var(--muted); line-height: 1.75; }
+.annual-plan-card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.annual-plan-download-row { display: flex; flex-wrap: nowrap; gap: 10px; }
+.annual-plan-download-row .button { white-space: nowrap; }
+
+@media (max-width: 760px) {
+  .reading-plan-tabs { gap: 8px; }
+  .reading-plan-tabs a { min-height: 74px; padding: 12px 8px; border-radius: 16px; font-size: clamp(17px, 5vw, 22px); }
+  .annual-plan-card { grid-template-columns: 1fr; gap: 20px; }
+  .annual-plan-card-actions { align-items: stretch; }
+  .annual-plan-download-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .annual-plan-download-row .button { min-width: 0; padding-inline: 10px; white-space: normal; text-align: center; }
+}
+.reading-today-header {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(260px,360px);
+  gap: 22px;
+  align-items: end;
+}
+.reading-today-header h2 {
+  margin: 4px 0 8px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(28px,4vw,44px);
+  font-weight: 550;
+  color: var(--forest);
+  letter-spacing: -.035em;
+}
+.reading-today-header p:not(.eyebrow) { margin: 0; color: var(--muted); font-weight: 700; }
+.reading-source-note { max-width: 620px; font-size: 13px; line-height: 1.55; }
+.week-selector {
+  display: grid;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+.week-selector label { color: var(--forest); font-size: 13px; font-weight: 850; }
+.week-selector > div { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; align-items: center; }
+.week-selector select {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  background: #fff;
+  font: inherit;
+  font-weight: 750;
+}
+.button.compact-button { min-height: 40px; padding: 8px 13px; font-size: 13px; }
+.save-week-button { white-space: nowrap; min-width: 72px; }
+.reading-day-strip {
+  display: grid;
+  grid-template-columns: repeat(7,minmax(0,1fr));
+  gap: 7px;
+  margin: 22px 0 16px;
+}
+.reading-day-strip a {
+  display: grid;
+  place-items: center;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  color: var(--forest);
+  background: #fff;
+  font-weight: 900;
+  box-shadow: 0 5px 14px rgba(24,49,43,.06);
+}
+.reading-day-strip a.active {
+  color: #fff;
+  border-color: var(--forest);
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: 0 8px 20px rgba(23,63,53,.2), inset 0 -3px var(--gold);
+}
+.reading-day-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  margin: 0 0 20px;
+}
+.reading-video-card,
+.reading-summary-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+}
+.reading-video-card h3,
+.reading-summary-card h3 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(22px,3vw,30px);
+  font-weight: 550;
+  color: var(--forest);
+}
+.reading-video-slot {
+  margin-top: 0;
+}
+.reading-video-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: min(52vw, 360px);
+  padding: clamp(28px, 5vw, 48px);
+  border: 1px dashed rgba(23,63,53,.24);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(23,63,53,.08), rgba(199,155,75,.12));
+  color: var(--forest);
+  text-align: center;
+}
+.reading-video-placeholder strong {
+  display: block;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 650;
+  line-height: 1.35;
+}
+.reading-video-placeholder p {
+  max-width: 560px;
+  margin: 10px auto 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 700;
+}
+.reading-summary-card { margin-top: 18px; }
+.reading-summary-card p:not(.eyebrow) { margin: 0; color: var(--ink); font-size: 18px; line-height: 1.8; }
+.reading-summary-card h4 {
+  margin: 4px 0 12px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(21px, 3vw, 28px);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--forest);
+}
+.reading-summary-body {
+  white-space: pre-line;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.85;
+}
+.reading-summary-card .translation-note {
+  margin: -2px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.reading-plan-tools {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.reading-plan-tools h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(21px, 3vw, 28px);
+  font-weight: 650;
+  color: var(--forest);
+}
+.reading-plan-tools p { margin: 0 0 13px; color: var(--muted); line-height: 1.7; }
+.sunday-placeholder-box {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 16px;
+  align-items: center;
+  min-height: 150px;
+  padding: 24px;
+  border: 1px dashed rgba(23,63,53,.25);
+  border-radius: 20px;
+  background: #f7f6ef;
+}
+.sunday-placeholder-box span {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--forest);
+  box-shadow: 0 10px 22px rgba(23,63,53,.2);
+}
+.sunday-placeholder-box p { margin: 0; color: var(--muted); font-weight: 700; line-height: 1.65; }
+.standalone-overview-feature { margin-top: 32px; }
+.genre-reading-feature {
+  margin-top: 34px;
+  padding: 32px;
+  border: 1px solid rgba(202,154,62,.46);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(202,154,62,.18), transparent 34%),
+    linear-gradient(135deg,#fffdf7,#f4efe3);
+  box-shadow: 0 18px 46px rgba(24,49,43,.11);
+}
+.genre-reading-copy { max-width: 840px; margin-bottom: 22px; }
+.genre-reading-copy .playlist-introduction {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font-size: clamp(18px,2.2vw,24px);
+  font-weight: 900;
+  line-height: 1.45;
+}
+.genre-reading-feature h2 {
+  margin: 0;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(30px,4.2vw,48px);
+  font-weight: 650;
+  line-height: 1.18;
+  color: var(--forest);
+  letter-spacing: -.035em;
+}
+.genre-reading-feature .video-frame { margin-top: 18px; }
+.schedule-source a { color: inherit; text-underline-offset: 3px; }
+.bible-overview-heading { margin: 0 0 24px; padding-top: 0; border-top: 0; }
+.additional-playlists { margin-top: 30px; }
+.video-resource-feature { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 28px; margin-bottom: 30px; padding: clamp(24px, 3vw, 30px); border: 1px solid rgba(23,63,53,.1); border-radius: 24px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.video-resource-feature h2 { margin: 10px 0 12px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(27px, 3vw, 38px); font-weight: 550; line-height: 1.25; }
+.video-resource-feature > div:first-child > p:not(.type-pill) { color: var(--muted); font-size: clamp(12px, 1.25vw, 13px); line-height: 1.6; }
+.video-resource-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+.external-site-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 20px; padding-bottom: 90px; }
+.useful-sites-intro { grid-column: 1 / -1; }
+.recommendation-share-card,
+.commentary-recommendation { min-width: 0; }
+.recommendation-share-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 240px;
+}
+.commentary-recommendation {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.commentary-recommendation .external-site-card {
+  margin: 0;
+}
+.commentary-pdf-download { justify-self: start; }
+.external-site-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 16px;
+  min-height: 0;
+  padding: clamp(20px, 2.2vw, 24px);
+  height: auto;
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #fff, var(--surface-soft));
+  box-shadow: var(--shadow-soft);
+}
+.external-site-card-no-action {
+  grid-template-columns: 1fr;
+}
+.external-site-card h2 { margin: 0 0 7px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 23px; font-weight: 550; line-height: 1.14; }
+.external-site-card p { max-width: 760px; margin: 0; color: var(--muted); font-size: 14.2px; line-height: 1.55; }
+.external-site-card-copy > p:first-of-type {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.useful-sites-intro {
+  margin: 0 0 18px;
+  padding: 15px 18px;
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: 16px;
+  color: var(--forest-2);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 8px 24px rgba(24,49,43,.05);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.clickable-site-card { cursor: pointer; transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+.clickable-site-card:hover { transform: translateY(-2px); border-color: rgba(52, 132, 173, .38); box-shadow: var(--shadow-lift); }
+.clickable-site-card:focus-visible { outline: 3px solid rgba(69, 186, 225, .55); outline-offset: 4px; }
+.commentary-site-card { grid-template-columns: 1fr auto; }
+.commentary-site-card .external-site-card-copy { display: grid; grid-template-columns: 64px minmax(0,1fr); align-items: center; gap: 0 14px; }
+.commentary-site-card .external-site-card-copy > p { grid-column: 1 / -1; }
+.commentary-site-icon { display: block; width: 64px; height: 64px; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 24px rgba(4,35,69,.18); }
+.commentary-recommendation .commentary-site-icon { border-radius: 5px; object-fit: contain; background: #eef5ff; }
+.wide-logo-site-card .external-site-card-copy { grid-template-columns: 140px minmax(0,1fr); }
+.wide-site-logo { width: 140px; object-fit: contain; padding: 8px; background: #fff; }
+.wide-site-logo[src*="thirdmill-logo-cropped.svg"] { width: 112px; height: 56px; padding: 0; background: transparent; }
+.emoji-site-icon {
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  line-height: 1;
+  background:
+    radial-gradient(circle at 28% 20%, rgba(255,255,255,.95), rgba(255,255,255,.45) 34%, transparent 35%),
+    linear-gradient(145deg, #fffaf0, #d7e8df 52%, #0f4b3d);
+  border: 1px solid rgba(214,172,78,.34);
+  box-shadow: 0 12px 28px rgba(24,49,43,.16), inset 0 -5px 0 rgba(15,75,61,.14);
+}
+.commentary-site-card h2 { margin: 0; line-height: 1.1; }
+.two-line-site-title span { display: block; }
+.commentary-site-card .external-site-card-copy > p:first-of-type {
+  margin-top: 14px;
+}
+.external-site-card-copy { min-width: 0; }
+.external-site-meta { margin-top: 10px !important; color: var(--forest-2) !important; font-size: 12.5px !important; font-weight: 750; }
+.external-note { margin: 0 0 28px; padding: 18px 20px; border-left: 4px solid var(--gold); background: #f1f4ef; color: var(--muted); }
+.recommended-video-feature { display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; gap: 30px; margin: 0 0 26px; padding: clamp(24px, 3vw, 30px); border-radius: 26px; color: #fff; background: linear-gradient(130deg, var(--forest), var(--forest-3)); box-shadow: 0 16px 42px rgba(24,49,43,.14); }
+.recommended-video-feature h2 { margin: 0 0 12px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 34px; font-weight: 500; line-height: 1.25; }
+.recommended-video-feature > div:first-child > p:not(.eyebrow) { color: #dce8e2; }
+.pdf-source-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  margin: 0 0 26px;
+  padding: clamp(24px, 3vw, 30px);
+  border: 1px solid #c9d8d0;
+  border-left: 5px solid var(--gold);
+  border-radius: var(--radius);
+  background: linear-gradient(120deg, #edf4ef, #fffdf7);
+  box-shadow: var(--shadow-soft);
+}
+.pdf-source-card .type-pill { margin: 0 0 7px; }
+.pdf-source-card h2 { margin: 0 0 8px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 27px; font-weight: 550; }
+.pdf-source-card p:not(.type-pill) { max-width: 760px; margin: 0; color: var(--muted); }
+.free-book-section { margin-bottom: 34px; }
+.free-book-recommendations { display: grid; gap: 16px; margin-bottom: 26px; }
+.free-book-recommendations-after-grace { margin: 8px 0 34px; }
+.grace-ebook-collection-card {
+  margin: 20px 0 30px;
+  padding: clamp(24px, 3.2vw, 36px);
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 26px;
+  background: linear-gradient(145deg, #fff, var(--surface-soft));
+  box-shadow: var(--shadow-soft);
+}
+.grace-ebook-collection-heading { max-width: 900px; margin-bottom: 24px; }
+.grace-ebook-collection-heading .type-pill { margin: 0 0 8px; }
+.grace-ebook-collection-heading h2 { margin: 0 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(27px, 3.5vw, 38px); font-weight: 600; line-height: 1.25; }
+html[lang="th"] .grace-ebook-collection-heading h2 { font-family: "Noto Sans Thai", "Sarabun", sans-serif; font-weight: 600; }
+.grace-ebook-collection-heading > p:not(.type-pill) { margin: 0; color: var(--muted); line-height: 1.7; }
+.grace-ebook-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.grace-ebook-item { min-width: 0; padding: 16px; border: 1px solid rgba(23,63,53,.1); border-radius: 18px; background: #fff; }
+.grace-ebook-item > a { display: block; }
+.grace-ebook-cover { display: block; width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: contain; background: #f8f6ef; }
+.grace-ebook-item h3 { margin: 14px 0 7px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 19px; font-weight: 650; line-height: 1.35; }
+html[lang="th"] .grace-ebook-item h3 { font-family: "Noto Sans Thai", "Sarabun", sans-serif; font-weight: 600; }
+.grace-ebook-item .book-author { margin: 0 0 7px; color: var(--ink); font-size: 13px; font-weight: 800; }
+.grace-ebook-item p:last-child { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.grace-ebook-page-link { margin-top: 22px; }
+.download-book-grid, .uploaded-pdf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
+.download-book-card, .uploaded-pdf-card { display: flex; min-width: 0; padding: clamp(20px, 2.4vw, 24px); border: 1px solid rgba(23,63,53,.1); border-radius: 20px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); flex-direction: column; content-visibility: auto; contain-intrinsic-size: 480px; }
+.download-book-cover {
+  display: block;
+  width: min(100%, 220px);
+  margin: 0 auto 16px;
+  border-radius: 10px;
+  box-shadow: 0 12px 26px rgba(24,49,43,.14);
+  background: #fff;
+}
+.uploaded-pdf-cover {
+  display: block;
+  width: min(100%, 190px);
+  margin: 4px auto 16px;
+  border-radius: 10px;
+  box-shadow: 0 12px 26px rgba(24,49,43,.14);
+  background: #fff;
+}
+.children-gospel-tract-card {
+  align-items: center;
+  text-align: center;
+}
+.children-gospel-card-link {
+  display: block;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+.children-gospel-cover {
+  width: min(100%, 220px);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.children-gospel-card-link:hover .children-gospel-cover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(24,49,43,.18);
+}
+.children-gospel-action {
+  align-self: center;
+  margin-top: auto;
+}
+.download-book-card h2, .uploaded-pdf-card h2 { margin: 8px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 25px; font-weight: 600; line-height: 1.35; }
+html[lang="th"] .download-book-card h2,
+html[lang="th"] .uploaded-pdf-card h2 {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+.download-book-card > p:not(.type-pill), .uploaded-pdf-card > p:not(.type-pill) { color: var(--muted); line-height: 1.65; }
+.download-book-card .book-author { margin: 0 0 8px; color: var(--ink); font-weight: 800; }
+.download-book-card .book-source { margin-top: auto; padding-top: 12px; font-size: 13px; }
+.download-book-card .book-source a { color: var(--forest-2); font-weight: 700; }
+.download-book-card > .button, .uploaded-pdf-card > .button { align-self: flex-start; margin-top: 16px; }
+.uploaded-pdf-section { margin-bottom: 34px; }
+.pdf-resource-group {
+  margin: 0 0 30px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(23,63,53,.11);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.10), transparent 20rem),
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(244,248,245,.94));
+  box-shadow: 0 16px 42px rgba(24,49,43,.08);
+}
+.pdf-resource-group-heading {
+  display: flex;
+  margin: 0 0 18px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid rgba(23,63,53,.10);
+  padding-bottom: 14px;
+}
+.pdf-resource-group-heading .eyebrow { margin: 0; color: #a87919; font-size: 13px; letter-spacing: .12em; }
+.pdf-resource-group-heading h2 {
+  margin: 0;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(25px, 3.3vw, 36px);
+  font-weight: 650;
+  line-height: 1.25;
+}
+html[lang="th"] .pdf-resource-group-heading h2 {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+.pdf-resource-group .tract-preview-card { margin-bottom: 18px; }
+.pdf-resource-group .uploaded-pdf-grid { margin-bottom: 0; }
+.pdf-site-link-card {
+  display: flex;
+  margin: 10px 0 0;
+  padding: clamp(18px, 3vw, 24px);
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(212,169,74,.12), transparent 18rem),
+    linear-gradient(135deg, rgba(255,255,255,.98), rgba(239,247,242,.95));
+  box-shadow: 0 14px 36px rgba(24,49,43,.07);
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.pdf-site-link-card:hover {
+  border-color: rgba(23,63,53,.24);
+  box-shadow: 0 18px 42px rgba(24,49,43,.11);
+  transform: translateY(-2px);
+}
+.pdf-site-link-card:focus-visible {
+  outline: 3px solid rgba(212,169,74,.55);
+  outline-offset: 4px;
+}
+.pdf-site-link-card h2 {
+  margin: 5px 0 6px;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 650;
+  line-height: 1.18;
+}
+html[lang="th"] .pdf-site-link-card h2 {
+  font-family: "Kanit", "Noto Sans Thai", "Sarabun", sans-serif;
+  font-weight: 500;
+}
+.pdf-site-link-card p:not(.type-pill) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.planned-pdf-card {
+  border-style: dashed;
+  border-color: rgba(23,63,53,.22);
+  background:
+    radial-gradient(circle at top right, rgba(214,173,75,.14), transparent 34%),
+    linear-gradient(180deg, #fffdf7, #edf5ef);
+}
+.planned-pdf-cover {
+  display: grid;
+  width: min(100%, 210px);
+  min-height: 250px;
+  margin: 4px auto 18px;
+  padding: 24px 20px;
+  place-items: center;
+  text-align: center;
+  border-radius: 14px;
+  color: #f8f0d8;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+    linear-gradient(160deg, #173f35, #0d2c25 58%, #d4a94a);
+  box-shadow: 0 16px 32px rgba(24,49,43,.18);
+}
+.planned-pdf-cover span {
+  color: rgba(248,240,216,.76);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+.planned-pdf-cover strong {
+  color: #fffaf0;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+html[lang="th"] .planned-pdf-cover strong {
+  font-family: "Mitr", "Kanit", "Noto Sans Thai", sans-serif;
+}
+.disabled-link-button {
+  opacity: .78;
+  cursor: default;
+  pointer-events: none;
+}
+.uploaded-pdf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.uploaded-pdf-grid.single-card { grid-template-columns: minmax(0, 1fr); }
+.new-city-catechism-card { max-width: 820px; }
+.uploaded-pdf-card .copyright-warning { margin: 12px 0 0; padding: 11px 14px; border-left: 4px solid var(--gold); border-radius: 8px; color: #6c5123; background: #fff8e7; font-size: 14px; font-weight: 700; }
+.uploaded-pdf-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+html[lang="th"] .uploaded-pdf-card .uploaded-pdf-actions .button {
+  min-width: 0;
+  padding-inline: 10px;
+  white-space: nowrap;
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-size: clamp(11px, 2.8vw, 13px);
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+html[lang="ko"] .new-city-catechism-card .uploaded-pdf-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+html[lang="ko"] .new-city-catechism-card .uploaded-pdf-actions .button {
+  min-width: 0;
+  width: 100%;
+  padding-inline: 8px;
+  white-space: nowrap;
+  font-size: clamp(11.5px, 3.3vw, 14px);
+  letter-spacing: -.035em;
+}
+html[lang="th"] .new-city-catechism-card .resource-action-row {
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+html[lang="th"] .new-city-catechism-card .uploaded-pdf-actions,
+html[lang="th"] .new-city-catechism-card .share-buttons {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+html[lang="th"] .new-city-catechism-card .uploaded-pdf-actions .button {
+  min-height: 34px;
+  padding-inline: 9px;
+  font-size: clamp(10.5px, 2.35vw, 12.5px);
+}
+html[lang="th"] .new-city-catechism-card .share-button {
+  min-height: 34px;
+  padding-inline: 7px;
+  font-size: clamp(10.5px, 2.25vw, 12px);
+}
+.uploaded-pdf-author { margin: 0 0 10px; color: var(--forest); font-weight: 800; }
+.uploaded-pdf-card .remote-pdf-meta { margin: 12px 0 0; color: var(--forest-2); font-size: 14px; font-weight: 800; }
+.uploaded-pdf-card .remote-site-note { margin: 12px 0 0; padding: 13px 15px; border-radius: 10px; color: #35594e; background: #edf4ef; font-size: 14px; }
+.uploaded-pdf-card .source-attribution { margin: 12px 0 0; color: #6b5a34; font-size: 13px; font-weight: 800; }
+.uploaded-pdf-card .iphone-download-note { margin: 12px 0 0; color: #596760; font-size: 13px; line-height: 1.6; }
+.cambridge-declaration-card {
+  border-color: rgba(214, 173, 75, .42);
+  background:
+    radial-gradient(circle at top right, rgba(214, 173, 75, .16), transparent 34%),
+    linear-gradient(180deg, #fff, #f6f3e9 58%, #edf4ef);
+}
+.cambridge-declaration-card h2 {
+  color: var(--forest);
+}
+.westminster-standards-card {
+  grid-column: 1 / -1;
+  border-color: rgba(31, 90, 145, .18);
+  background:
+    radial-gradient(circle at top right, rgba(31, 90, 145, .10), transparent 34%),
+    linear-gradient(180deg, #fffdf7, #eef5f2);
+}
+.westminster-standards-card > h2 {
+  color: var(--forest);
+}
+.westminster-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.westminster-doc-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(23,63,53,.10);
+  border-radius: 18px;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 10px 24px rgba(24,49,43,.07);
+}
+.westminster-doc-card .uploaded-pdf-cover {
+  width: min(100%, 155px);
+  margin-bottom: 14px;
+}
+.westminster-doc-card h3 {
+  margin: 0 0 10px;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.35;
+}
+html[lang="th"] .westminster-doc-card h3 {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+.westminster-doc-card .uploaded-pdf-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.westminster-doc-card .uploaded-pdf-actions .button {
+  width: 100%;
+  min-width: 0;
+  padding-inline: 8px;
+  font-size: clamp(10.5px, 1.35vw, 12.5px);
+  letter-spacing: -.04em;
+  white-space: nowrap;
+}
+.why-jesus-card { align-items: flex-start; }
+.pdf-cover-thumb {
+  display: block;
+  width: min(100%, 220px);
+  margin: 8px 0 8px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f4f6f4;
+  cursor: zoom-in;
+}
+.pdf-cover-thumb:hover { border-color: rgba(52,132,173,.55); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(4,35,69,.1); }
+.pdf-cover-thumb:focus-visible { outline: 3px solid rgba(69,186,225,.55); outline-offset: 3px; }
+.pdf-cover-thumb img { display: block; width: 100%; border-radius: 8px; background: #fff; }
+.external-pdf-cover-link { cursor: pointer; }
+.coverage-vision-card { align-items: flex-start; }
+.why-jesus-card .pdf-cover-thumb,
+.coverage-vision-card .pdf-cover-thumb {
+  align-self: center;
+  margin: 8px auto 12px;
+}
+.why-jesus-preview-hint { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+.tract-preview-card { display: grid; grid-template-columns: minmax(0, .96fr) minmax(420px, 1.04fr); align-items: center; gap: 28px; margin: 0 0 26px; padding: clamp(24px, 3vw, 30px); border: 1px solid rgba(23,63,53,.1); border-radius: 24px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.tract-preview-copy h2 { margin: 9px 0 8px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(28px,3vw,38px); font-weight: 600; line-height: 1.3; }
+.tract-preview-copy > p:not(.type-pill):not(.tract-author) { color: var(--muted); line-height: 1.7; }
+.tract-author { margin: 0 0 10px; color: var(--forest-2); font-weight: 800; }
+.tract-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.tract-thumbnail-area > p { margin: 0 0 10px; color: var(--muted); font-size: 13px; text-align: center; }
+.tract-thumbnails { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tract-thumbnail { min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: #f4f6f4; cursor: zoom-in; }
+.tract-thumbnail:hover { border-color: rgba(52,132,173,.55); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(4,35,69,.1); }
+.tract-thumbnail:focus-visible { outline: 3px solid rgba(69,186,225,.55); outline-offset: 3px; }
+.tract-thumbnail img { display: block; width: 100%; aspect-ratio: 1.414 / 1; border-radius: 8px; object-fit: contain; background: #fff; }
+.tract-thumbnail span { display: block; padding: 7px 2px 1px; color: var(--ink); font: 700 13px/1.2 "Sarabun", sans-serif; }
+.pdf-preview-dialog { width: min(92vw, 1180px); max-width: none; margin: auto; padding: 18px; border: 0; border-radius: 20px; background: #f5f7f5; box-shadow: 0 30px 90px rgba(4,18,42,.36); }
+.pdf-preview-dialog::backdrop { background: rgba(3,16,35,.72); backdrop-filter: blur(3px); }
+.pdf-preview-stage { display: grid; min-height: 0; place-items: center; }
+.pdf-preview-stage img { display: block; width: auto; max-width: 100%; height: auto; max-height: 75vh; border-radius: 8px; object-fit: contain; background: #fff; }
+.pdf-preview-controls { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; margin-top: 14px; }
+.pdf-preview-controls .button:last-child { justify-self: end; }
+.pdf-preview-close { position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; width: 38px; height: 38px; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #fff; background: rgba(6,27,56,.86); font-size: 27px; line-height: 1; cursor: pointer; }
+.children-gospel-page .detail-shell {
+  display: grid;
+  gap: 22px;
+}
+.children-gospel-hero {
+  display: block;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.15), transparent 19rem),
+    linear-gradient(135deg, #ffffff, #f1f7f3);
+  box-shadow: var(--shadow-soft);
+}
+.children-gospel-copy {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.children-gospel-copy h1 {
+  margin: 10px 0 12px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(34px, 4.8vw, 54px);
+  font-weight: 600;
+  line-height: 1.18;
+}
+html[lang="th"] .children-gospel-copy h1 {
+  font-family: "Kanit", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+.children-gospel-copy > p:not(.type-pill) {
+  max-width: 780px;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.children-gospel-main-actions {
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
+.children-gospel-main-actions .share-buttons {
+  flex-wrap: nowrap;
+}
+.children-gospel-section {
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+.children-gospel-section h2 {
+  margin: 0 0 16px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 600;
+}
+html[lang="th"] .children-gospel-section h2 {
+  font-family: "Kanit", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+}
+.children-gospel-section-heading {
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.children-gospel-section-heading h2 {
+  margin-bottom: 6px;
+}
+.children-gospel-section-heading p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 15px;
+}
+.children-gospel-single-viewer {
+  position: relative;
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: clamp(10px, 2vw, 14px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fff, #f5f8f5);
+  box-shadow: 0 12px 28px rgba(24,49,43,.08);
+}
+.children-gospel-single-viewer:focus-visible {
+  outline: 3px solid rgba(69,186,225,.55);
+  outline-offset: 4px;
+}
+.children-gospel-single-viewer img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  border-radius: 14px;
+  background: #fff;
+}
+.children-gospel-single-viewer figcaption {
+  padding: 12px 0 2px;
+  color: var(--forest);
+  font-weight: 800;
+  text-align: center;
+}
+.children-gospel-edge-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 44px;
+  height: 64px;
+  place-items: center;
+  padding: 0 0 5px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(6, 27, 56, .46);
+  box-shadow: 0 10px 26px rgba(6,27,56,.2);
+  font: 400 46px/1 Georgia, serif;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background .16s ease, transform .16s ease, box-shadow .16s ease;
+  backdrop-filter: blur(3px);
+}
+.children-gospel-edge-arrow:hover,
+.children-gospel-edge-arrow:focus-visible {
+  background: rgba(6, 27, 56, .72);
+  box-shadow: 0 14px 30px rgba(6,27,56,.28);
+  transform: translateY(-50%) scale(1.04);
+  outline: none;
+}
+.children-gospel-edge-arrow-prev { left: clamp(12px, 3vw, 20px); }
+.children-gospel-edge-arrow-next { right: clamp(12px, 3vw, 20px); }
+@media (max-width: 520px) {
+  .children-gospel-main-actions {
+    gap: 8px;
+  }
+  .children-gospel-main-actions .button,
+  .children-gospel-main-actions .share-button {
+    min-height: 42px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .children-gospel-edge-arrow {
+    width: 38px;
+    height: 56px;
+    font-size: 40px;
+  }
+}
+.korean-book-card { display: grid; grid-template-columns: minmax(160px, 210px) 1fr; align-items: center; gap: 28px; padding: clamp(24px, 3vw, 28px); border-radius: 22px; color: #fff; background: radial-gradient(circle at 100% 0%, rgba(255,255,255,.13), transparent 20rem), linear-gradient(120deg,#173f35,#275d4e); box-shadow: 0 16px 42px rgba(24,49,43,.12); content-visibility: auto; contain-intrinsic-size: 360px; }
+.korean-book-cover { display: block; width: 100%; max-width: 210px; margin: 0 auto; border-radius: 10px; box-shadow: 0 18px 42px rgba(0,0,0,.3); }
+.korean-book-card h2 { margin: 8px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(28px,4vw,38px); font-weight: 500; }
+.korean-book-card p:not(.type-pill) { max-width: 700px; margin: 0; color: #dce8e2; }
+.korean-book-card .type-pill { color: #f0ca7a; }
+.korean-book-card .korean-book-author { margin: 0 0 11px; color: #fff; font-weight: 800; }
+.korean-book-card .book-distribution-notice { margin-top: 14px; color: #f0ca7a; font-size: 14px; font-weight: 800; }
+.korean-book-card .book-original-request { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.22); font-size: 14px; line-height: 1.65; }
+.gospel-pointing-book-card {
+  margin-bottom: 34px;
+  color: #123a31;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.18), transparent 18rem),
+    linear-gradient(120deg, #f7f2e6, #eef6ef);
+  border: 1px solid rgba(33, 78, 67, .12);
+  box-shadow: 0 14px 34px rgba(28, 61, 52, .10);
+}
+.gospel-pointing-book-card p:not(.type-pill) { color: #425f56; }
+.gospel-pointing-book-card .type-pill { color: #b17b1a; }
+.gospel-pointing-book-card .korean-book-author { color: #173f35; }
+.gospel-pointing-book-card .book-distribution-notice { color: #8f671b; }
+.classic-ebook-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 22px 0 36px;
+}
+.classic-ebook-stack .gospel-pointing-book-card { margin-bottom: 0; }
+.full-width-ebook-card.classic-ebook-card,
+.classic-ebook-stack .full-width-ebook-card,
+.classic-ebook-stack .doctrines-of-grace-book-card {
+  grid-column: 1 / -1;
+}
+.full-width-ebook-card,
+.doctrines-of-grace-book-card.classic-ebook-card {
+  display: grid;
+  grid-template-columns: minmax(170px, 240px) minmax(0, 1fr);
+  align-items: center;
+  gap: 32px;
+}
+.full-width-ebook-card .korean-book-cover,
+.doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover {
+  width: min(100%, 240px);
+  max-width: 240px;
+  margin: 0;
+}
+.full-width-ebook-card .korean-book-copy,
+.doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy { min-width: 0; }
+.classic-ebook-card {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+  padding: clamp(22px, 2.6vw, 24px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+.classic-ebook-card .korean-book-cover {
+  width: min(100%, 230px);
+  max-width: 230px;
+  margin: 0 auto 18px;
+  box-shadow: 0 12px 26px rgba(24,49,43,.14);
+}
+.classic-ebook-card .korean-book-copy { width: 100%; }
+.classic-ebook-card h2 { font-size: clamp(24px,2.4vw,32px); line-height: 1.35; }
+.classic-ebook-card .korean-book-author {
+  margin-bottom: 24px;
+  font-size: clamp(13px, 1.1vw, 15px);
+  line-height: 1.25;
+  letter-spacing: -.03em;
+  white-space: nowrap;
+}
+.classic-ebook-stack .classic-ebook-card .korean-book-author + p {
+  margin-top: 0;
+}
+.classic-ebook-card p:not(.type-pill) { max-width: none; }
+
+.classic-ebook-stack .classic-ebook-card,
+.classic-ebook-stack .full-width-ebook-card.classic-ebook-card,
+.classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card {
+  display: grid;
+  grid-template-columns: minmax(138px, 168px) minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.classic-ebook-stack .classic-ebook-card .ebook-cover-column,
+.classic-ebook-stack .full-width-ebook-card.classic-ebook-card .ebook-cover-column,
+.classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .ebook-cover-column {
+  width: 100%;
+}
+
+.classic-ebook-stack .classic-ebook-card .korean-book-copy,
+.classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-copy,
+.classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy {
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+}
+
+@media (min-width: 1081px) {
+  .classic-ebook-stack {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+
+  .classic-ebook-stack .classic-ebook-card,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card {
+    display: flex;
+    min-height: 100%;
+    padding: 22px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    grid-column: auto;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .ebook-cover-column,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .ebook-cover-column,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .ebook-cover-column {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .korean-book-cover,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-cover,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover {
+    width: min(100%, 230px);
+    max-width: 230px;
+    margin: 0 auto 18px;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .resource-action-row,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .resource-action-row,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .resource-action-row {
+    order: 3;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 0;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .book-downloads,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .book-downloads,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .book-downloads {
+    width: 100%;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .book-downloads .button,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .book-downloads .button,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .book-downloads .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .korean-book-copy,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-copy,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .classic-ebook-stack .classic-ebook-card .korean-book-copy > p:last-child,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-copy > p:last-child,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy > p:last-child {
+    margin-bottom: 0;
+  }
+
+  .classic-ebook-stack .classic-ebook-card h2,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card h2,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card h2 {
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .classic-ebook-stack .classic-ebook-card p,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card p,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card p,
+  .classic-ebook-stack .classic-ebook-card .korean-book-author,
+  .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-author,
+  .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-author {
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
+  .free-book-section .yongjin-book-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  .free-book-section .yongjin-book-trio {
+    display: contents;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card,
+  .free-book-section .yongjin-book-list > #missionary-book {
+    display: flex;
+    min-height: 100%;
+    padding: 20px 20px 18px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    grid-column: auto;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .ebook-cover-column,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .ebook-cover-column,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .ebook-cover-column,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .ebook-cover-column,
+  .free-book-section .yongjin-book-list > #missionary-book .ebook-cover-column {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 2px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .korean-book-cover,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .korean-book-cover,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .korean-book-cover,
+  .free-book-section .yongjin-book-list > #missionary-book .korean-book-cover {
+    width: min(100%, 166px);
+    max-width: 166px;
+    aspect-ratio: 3 / 4.25;
+    object-fit: contain;
+    object-position: center top;
+    margin: 0 auto 10px;
+  }
+
+  .free-book-section #gospel-pointing-book .korean-book-cover,
+  .free-book-section #happiness-jc-ryle-book .korean-book-cover,
+  .free-book-section #gods-way-of-peace-book .korean-book-cover,
+  .free-book-section #revelation-commentary-book .korean-book-cover {
+    width: min(100%, 148px);
+    max-width: 148px;
+  }
+
+  .free-book-section .yongjin-book-list > #missionary-book .korean-book-cover {
+    width: min(100%, 156px);
+    max-width: 156px;
+    margin-bottom: 6px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .resource-action-row,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .resource-action-row,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .resource-action-row,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .resource-action-row,
+  .free-book-section .yongjin-book-list > #missionary-book .resource-action-row {
+    order: 3;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 10px;
+    min-height: 48px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .book-downloads,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .book-downloads,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .book-downloads,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .book-downloads,
+  .free-book-section .yongjin-book-list > #missionary-book .book-downloads {
+    width: 100%;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .book-downloads .button,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .book-downloads .button,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .book-downloads .button,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .book-downloads .button,
+  .free-book-section .yongjin-book-list > #missionary-book .book-downloads .button {
+    width: 100%;
+    min-height: 40px;
+    justify-content: center;
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .korean-book-copy,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .korean-book-copy,
+  .free-book-section .yongjin-book-trio > .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy,
+  .free-book-section .yongjin-book-trio > .full-width-ebook-card.classic-ebook-card .korean-book-copy,
+  .free-book-section .yongjin-book-list > #missionary-book .korean-book-copy {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card h2,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card h2,
+  .free-book-section .yongjin-book-list > #missionary-book h2 {
+    margin: 4px 0 8px;
+    font-size: clamp(22px, 1.75vw, 28px);
+    line-height: 1.32;
+    min-height: 2.45em;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card p:not(.type-pill),
+  .free-book-section .yongjin-book-trio > .classic-ebook-card p:not(.type-pill),
+  .free-book-section .yongjin-book-list > #missionary-book p:not(.type-pill) {
+    font-size: 14px;
+    line-height: 1.54;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .korean-book-author,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .korean-book-author,
+  .free-book-section .yongjin-book-list > #missionary-book .korean-book-author {
+    margin-bottom: 10px;
+    font-size: 13px;
+    min-height: 2.35em;
+  }
+
+  .free-book-section #missionary-book .missionary-book-actions {
+    gap: 6px;
+  }
+
+  .free-book-section #missionary-book .missionary-book-actions .button {
+    min-height: 38px;
+    padding-inline: 9px;
+    font-size: 11.5px;
+  }
+
+  .free-book-section #missionary-book .book-text-purchase-link {
+    margin-top: 8px;
+    padding-top: 8px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card.gospel-pointing-book-card h2,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card.gospel-pointing-book-card h2 {
+    font-size: clamp(22px, 1.7vw, 28px);
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card #free-book-heading,
+  .free-book-section .yongjin-book-list > #missionary-book h2 {
+    min-height: 0;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .type-pill,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .type-pill,
+  .free-book-section .yongjin-book-list > #missionary-book .type-pill {
+    margin-bottom: 8px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .book-distribution-notice,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .book-distribution-notice,
+  .free-book-section .yongjin-book-list > #missionary-book .book-distribution-notice,
+  .free-book-section .yongjin-book-list > .korean-book-card .book-text-source-link,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .book-text-source-link,
+  .free-book-section .yongjin-book-list > #missionary-book .book-text-purchase-link {
+    margin-top: auto;
+    padding-top: 14px;
+  }
+
+  .free-book-section .yongjin-book-list > .korean-book-card .korean-book-copy > p:last-child,
+  .free-book-section .yongjin-book-trio > .classic-ebook-card .korean-book-copy > p:last-child,
+  .free-book-section .yongjin-book-list > #missionary-book .korean-book-copy > p:last-child {
+    margin-bottom: 0;
+  }
+}
+.bible-66-book-card {
+  margin-bottom: 22px;
+  scroll-margin-top: calc(var(--site-header-height, 84px) + 96px);
+  background: linear-gradient(120deg,#061d3d,#123a69);
+}
+
+#faith-basics-36-book {
+  scroll-margin-top: calc(var(--site-header-height, 84px) + 104px);
+}
+
+.yongjin-books-collection {
+  margin: 38px 0 18px;
+  padding: clamp(24px, 3.2vw, 38px);
+  scroll-margin-top: calc(var(--site-header-height, 84px) + 104px);
+  border: 1px solid rgba(23,63,53,.14);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.18), transparent 22rem),
+    linear-gradient(180deg, rgba(255,255,255,.92), rgba(239,247,240,.88));
+  box-shadow: 0 18px 46px rgba(24,49,43,.10);
+}
+.yongjin-books-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 0;
+  text-align: left;
+}
+.yongjin-books-title-copy {
+  min-width: 0;
+}
+.yongjin-books-title-copy .type-pill {
+  margin-bottom: 5px;
+}
+.yongjin-books-heading h2 {
+  margin: 4px 0 0;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(19px, 1.8vw, 26px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+html[lang="th"] .yongjin-books-heading h2 {
+  font-family: "Mitr", "Kanit", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+}
+.yongjin-books-heading .share-buttons {
+  justify-content: flex-end;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  flex: 0 0 auto;
+}
+.yongjin-book-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 0 0 46px;
+}
+.yongjin-book-list > .korean-book-card,
+.yongjin-book-trio .classic-ebook-card,
+.yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card,
+.yongjin-book-trio .full-width-ebook-card.classic-ebook-card {
+  min-height: 0;
+  padding: clamp(20px, 2.2vw, 24px);
+}
+.yongjin-book-list > .korean-book-card .korean-book-cover,
+.yongjin-book-trio .classic-ebook-card .korean-book-cover,
+.yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover,
+.yongjin-book-trio .full-width-ebook-card.classic-ebook-card .korean-book-cover {
+  width: min(100%, 168px);
+  max-width: 168px;
+  margin: 0 auto 16px;
+  border-radius: 9px;
+  box-shadow: 0 10px 24px rgba(24,49,43,.14);
+}
+.yongjin-book-list > .korean-book-card h2,
+.yongjin-book-trio .classic-ebook-card h2 {
+  font-size: clamp(22px, 2vw, 28px);
+}
+.yongjin-book-list > .korean-book-card p:not(.type-pill) {
+  line-height: 1.62;
+}
+#bible-66-book.bible-66-book-card {
+  grid-template-columns: minmax(130px, 170px) minmax(0, 1fr);
+  gap: clamp(18px, 2.4vw, 26px);
+  align-items: center;
+}
+#bible-66-book.bible-66-book-card .korean-book-cover {
+  width: min(100%, 170px);
+  max-width: 170px;
+  margin: 0 auto;
+}
+.yongjin-book-trio {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 26px 0;
+}
+.yongjin-book-trio .classic-ebook-card,
+.yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card,
+.yongjin-book-trio .full-width-ebook-card.classic-ebook-card {
+  display: grid;
+  grid-template-columns: minmax(112px, 150px) minmax(0, 1fr);
+  align-items: start;
+  grid-column: auto;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  padding: 26px;
+  gap: clamp(16px, 2.4vw, 24px);
+}
+.yongjin-book-trio .classic-ebook-card .korean-book-cover,
+.yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover,
+.yongjin-book-trio .full-width-ebook-card.classic-ebook-card .korean-book-cover {
+  width: min(100%, 150px);
+  max-width: 150px;
+  margin: 0 auto;
+}
+.yongjin-book-trio .classic-ebook-card h2 {
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.35;
+}
+.yongjin-book-trio .classic-ebook-card .korean-book-author {
+  white-space: normal;
+}
+.yongjin-book-trio .classic-ebook-card .korean-book-copy,
+.yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy,
+.yongjin-book-trio .full-width-ebook-card.classic-ebook-card .korean-book-copy {
+  min-width: 0;
+  align-self: start;
+}
+
+.course-series-card,
+.resource-card,
+.external-site-card,
+.recommended-video-feature,
+.video-resource-feature,
+.tract-preview-card,
+.pdf-resource-group,
+.grace-ebook-collection-card,
+.yongjin-books-collection {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.resource-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-top: 22px;
+  overflow: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.resource-action-row .book-downloads,
+.resource-action-row .uploaded-pdf-actions,
+.resource-action-row .tract-actions {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-top: 0;
+  overflow: visible;
+}
+.resource-action-row > .download-button {
+  flex: 0 0 auto;
+}
+.resource-action-row .share-buttons {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.resource-action-row .share-button {
+  flex: 0 0 auto;
+}
+#scripture-memory-365 .uploaded-pdf-actions .button {
+  white-space: normal;
+  text-align: center;
+}
+.resource-action-row.book-inline-action-row {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  overflow: visible;
+}
+
+@media (max-width: 720px) {
+  #scripture-memory-365 .resource-action-row .uploaded-pdf-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  #scripture-memory-365 .resource-action-row .uploaded-pdf-actions .button {
+    width: 100%;
+  }
+}
+.resource-action-row.book-inline-action-row .book-downloads {
+  display: flex !important;
+  width: auto;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+}
+.resource-action-row.book-inline-action-row .share-buttons {
+  width: auto;
+  flex: 0 1 auto !important;
+  flex-wrap: wrap;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+}
+html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row,
+html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row,
+html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row,
+html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row {
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .book-downloads,
+html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .book-downloads,
+html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .book-downloads,
+html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .book-downloads,
+html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-buttons,
+html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-buttons,
+html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-buttons,
+html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-buttons {
+  flex: 0 1 auto !important;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .button,
+html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .button,
+html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .button,
+html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .button {
+  min-height: 36px;
+  padding-inline: 10px;
+  font-size: clamp(11px, 1.45vw, 12.5px);
+}
+html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-button,
+html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-button,
+html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-button,
+html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-button {
+  min-height: 34px;
+  padding-inline: 7px;
+  font-size: 11.5px;
+}
+html[lang="en"] #gospel-pointing-book .resource-action-row,
+html[lang="en"] #happiness-jc-ryle-book .resource-action-row,
+html[lang="en"] #gods-way-of-peace-book .resource-action-row,
+html[lang="en"] #bible-66-book .resource-action-row,
+html[lang="en"] #faith-basics-36-book .resource-action-row,
+html[lang="en"] #missionary-book .resource-action-row,
+html[lang="th"] #bible-66-book .resource-action-row,
+html[lang="th"] #missionary-book .resource-action-row,
+html[lang="th"] #scripture-memory-365 .resource-action-row,
+html[lang="th"] #jesus-coverage-vision-training .resource-action-row,
+html[lang="th"] #cambridge-declaration .resource-action-row {
+  display: block;
+  overflow: visible;
+}
+html[lang="en"] #gospel-pointing-book .resource-action-row .book-downloads,
+html[lang="en"] #happiness-jc-ryle-book .resource-action-row .book-downloads,
+html[lang="en"] #gods-way-of-peace-book .resource-action-row .book-downloads,
+html[lang="en"] #bible-66-book .resource-action-row .book-downloads,
+html[lang="en"] #faith-basics-36-book .resource-action-row .book-downloads,
+html[lang="en"] #missionary-book .resource-action-row .book-downloads,
+html[lang="th"] #bible-66-book .resource-action-row .book-downloads,
+html[lang="th"] #missionary-book .resource-action-row .book-downloads,
+html[lang="th"] #scripture-memory-365 .resource-action-row .uploaded-pdf-actions,
+html[lang="th"] #jesus-coverage-vision-training .resource-action-row .uploaded-pdf-actions,
+html[lang="th"] #cambridge-declaration .resource-action-row .uploaded-pdf-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+html[lang="en"] #gospel-pointing-book .resource-action-row .share-buttons,
+html[lang="en"] #happiness-jc-ryle-book .resource-action-row .share-buttons,
+html[lang="en"] #gods-way-of-peace-book .resource-action-row .share-buttons,
+html[lang="en"] #bible-66-book .resource-action-row .share-buttons,
+html[lang="en"] #faith-basics-36-book .resource-action-row .share-buttons,
+html[lang="en"] #missionary-book .resource-action-row .share-buttons,
+html[lang="th"] #bible-66-book .resource-action-row .share-buttons,
+html[lang="th"] #missionary-book .resource-action-row .share-buttons,
+html[lang="th"] #scripture-memory-365 .resource-action-row .share-buttons,
+html[lang="th"] #jesus-coverage-vision-training .resource-action-row .share-buttons,
+html[lang="th"] #cambridge-declaration .resource-action-row .share-buttons {
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 63, 53, .1);
+}
+.book-downloads { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+#bible-66-book .resource-action-row {
+  display: block;
+  overflow: visible;
+}
+#bible-66-book .resource-action-row .book-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+#bible-66-book .resource-action-row .share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 63, 53, .1);
+}
+.uploaded-pdf-actions,
+.tract-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+}
+.missionary-book-actions {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.missionary-book-actions .button {
+  flex: 0 1 auto;
+}
+.missionary-book-actions .book-purchase-button {
+  min-height: 42px;
+  padding-inline: 12px;
+  font-size: clamp(11px, 1.55vw, 13px);
+  font-weight: 650;
+  box-shadow: 0 3px 10px rgba(24,49,43,.05);
+}
+.book-downloads .button,
+.uploaded-pdf-actions .button,
+.schedule-actions .button {
+  min-width: 0;
+  padding-inline: 12px;
+  white-space: nowrap;
+  font-size: clamp(11.5px, 1.7vw, 14px);
+  letter-spacing: -.03em;
+}
+html[lang="th"] .book-downloads .button,
+html[lang="th"] .uploaded-pdf-actions .button,
+html[lang="th"] .schedule-actions .button {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-size: clamp(10.5px, 2.7vw, 13px);
+  font-weight: 600;
+  letter-spacing: -.035em;
+}
+#faith-basics-36-book .resource-action-row {
+  display: block;
+  overflow: visible;
+}
+#faith-basics-36-book .book-downloads {
+  display: grid;
+  width: min(100%, 460px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+#faith-basics-36-book .book-downloads .button {
+  width: 100%;
+  justify-content: center;
+  padding-inline: 8px;
+  font-size: clamp(10.5px, 1.35vw, 13px);
+  letter-spacing: -.045em;
+}
+#faith-basics-36-book .share-buttons {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 63, 53, .1);
+}
+html[lang="th"] .bible-66-book-download { padding-inline: 8px; white-space: nowrap; letter-spacing: -.02em; }
+html[lang="th"] .bible-66-book-download .download-page-count { font-size: .72em; letter-spacing: -.04em; }
+
+.free-book-section .korean-book-card,
+.free-book-section .classic-ebook-card,
+.free-book-section .full-width-ebook-card,
+.free-book-section .doctrines-of-grace-book-card.classic-ebook-card,
+.free-book-section #missionary-book {
+  display: grid;
+  grid-template-columns: minmax(120px, 168px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(16px, 2.4vw, 24px);
+  min-height: 0;
+  padding: clamp(16px, 2.2vw, 22px);
+  color: #123a31;
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(24,49,43,.09);
+  overflow: visible;
+}
+
+.free-book-section #bible-66-book.bible-66-book-card,
+.free-book-section #missionary-book {
+  grid-template-columns: minmax(120px, 168px) minmax(0, 1fr);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.12), transparent 18rem),
+    #fff;
+}
+
+.free-book-section .ebook-cover-column {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.free-book-section .korean-book-cover,
+.free-book-section .classic-ebook-card .korean-book-cover,
+.free-book-section .full-width-ebook-card .korean-book-cover,
+.free-book-section .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover,
+.free-book-section #bible-66-book.bible-66-book-card .korean-book-cover,
+.free-book-section #missionary-book .korean-book-cover {
+  display: block;
+  width: min(100%, 138px);
+  max-width: 138px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: #f8f6ef;
+  box-shadow: 0 10px 22px rgba(24,49,43,.14);
+}
+
+.free-book-section #missionary-book .korean-book-cover {
+  width: min(100%, 152px);
+  max-width: 152px;
+  background: transparent;
+  box-shadow: 0 10px 24px rgba(24,49,43,.16);
+}
+
+.free-book-section #revelation-commentary-book .korean-book-cover {
+  border: 1px solid rgba(0, 0, 0, .34);
+}
+
+.free-book-section .korean-book-copy {
+  min-width: 0;
+  align-self: start;
+}
+
+.free-book-section .korean-book-card h2,
+.free-book-section .classic-ebook-card h2,
+.free-book-section #missionary-book h2 {
+  margin: 5px 0 8px;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(21px, 2.4vw, 29px);
+  font-weight: 650;
+  line-height: 1.32;
+}
+
+html[lang="th"] .free-book-section .korean-book-card h2,
+html[lang="th"] .free-book-section .classic-ebook-card h2,
+html[lang="th"] .free-book-section #missionary-book h2 {
+  font-family: "Noto Sans Thai", "Sarabun", sans-serif;
+  font-weight: 700;
+}
+
+.free-book-section .korean-book-card p:not(.type-pill),
+.free-book-section .classic-ebook-card p:not(.type-pill),
+.free-book-section #missionary-book p:not(.type-pill) {
+  max-width: 760px;
+  color: #425f56;
+}
+
+.free-book-section .korean-book-card .type-pill,
+.free-book-section .classic-ebook-card .type-pill,
+.free-book-section #missionary-book .type-pill {
+  margin: 0 0 6px;
+  color: #b17b1a;
+}
+
+.free-book-section .korean-book-card .korean-book-author,
+.free-book-section .classic-ebook-card .korean-book-author,
+.free-book-section #missionary-book .korean-book-author {
+  margin: 0 0 9px;
+  color: var(--forest);
+  font-size: clamp(12px, 1.5vw, 14px);
+  font-weight: 850;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.free-book-section .ebook-cover-column .resource-action-row {
+  display: grid !important;
+  width: 100%;
+  gap: 8px;
+  margin-top: 0;
+  overflow: visible;
+}
+
+@media (min-width: 1081px) {
+  .free-book-section .classic-ebook-stack {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card {
+    display: flex;
+    min-height: 100%;
+    padding: 22px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    grid-column: auto;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .ebook-cover-column,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .ebook-cover-column,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .ebook-cover-column {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .korean-book-cover,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-cover,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover {
+    width: min(100%, 230px);
+    max-width: 230px;
+    margin: 0 auto 18px;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .resource-action-row,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .resource-action-row,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .resource-action-row {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 0;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .book-downloads,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .book-downloads,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .book-downloads {
+    width: 100%;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .book-downloads .button,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .book-downloads .button,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .book-downloads .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card .korean-book-copy,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-copy,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-copy {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card h2,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card h2,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card h2 {
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .free-book-section .classic-ebook-stack .classic-ebook-card p,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card p,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card p,
+  .free-book-section .classic-ebook-stack .classic-ebook-card .korean-book-author,
+  .free-book-section .classic-ebook-stack .full-width-ebook-card.classic-ebook-card .korean-book-author,
+  .free-book-section .classic-ebook-stack .doctrines-of-grace-book-card.classic-ebook-card .korean-book-author {
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+}
+
+.free-book-section .ebook-cover-column .book-downloads,
+.free-book-section .ebook-cover-column .share-buttons,
+.free-book-section .ebook-cover-column .missionary-book-actions {
+  display: grid !important;
+  width: 100%;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 0 !important;
+}
+
+.free-book-section .ebook-cover-column .resource-action-row:has(.book-downloads:empty) {
+  display: none !important;
+}
+
+.free-book-section .ebook-cover-column .button,
+.free-book-section .ebook-cover-column .share-button {
+  width: 100%;
+  min-height: 36px;
+  justify-content: center;
+  padding-inline: 8px;
+  white-space: normal;
+  text-align: center;
+  font-size: clamp(10.5px, 1.5vw, 12.5px);
+  letter-spacing: -.045em;
+}
+
+.free-book-section .ebook-cover-column .share-buttons {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.free-book-section .ebook-cover-column .share-button {
+  min-width: 0;
+  padding-inline: 4px;
+}
+
+.free-book-section #faith-basics-36-book .book-downloads,
+.free-book-section #bible-66-book .resource-action-row .book-downloads,
+.free-book-section #missionary-book .book-downloads {
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
+.book-text-purchase-link {
+  margin-top: 12px !important;
+}
+
+.book-text-purchase-link a {
+  color: var(--forest);
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-color: rgba(177, 123, 26, .65);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.book-text-purchase-link a:hover {
+  color: #8f671b;
+}
+
+.book-text-source-link {
+  margin-top: 10px !important;
+  font-size: 14px !important;
+}
+
+.book-text-source-link a {
+  color: var(--forest);
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-color: rgba(177, 123, 26, .65);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.book-text-source-link a:hover {
+  color: #8f671b;
+}
+
+.free-book-section #bible-66-book .resource-action-row .share-buttons,
+.free-book-section #faith-basics-36-book .share-buttons,
+.free-book-section #missionary-book .resource-action-row .share-buttons {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Unified introduction/description copy.
+   기준: 추천사이트 카드(14.2px)와 무료도서 카드의 체감 크기 사이. */
+.section-heading p,
+.page-heading p:not(.eyebrow),
+.resource-card p,
+.daily-source-card > p:not(.type-pill),
+.devotional-summary,
+.dering-prayer-heading p:not(.eyebrow),
+.dering-prayer-author-note,
+.home-devotional-summary,
+.home-prayer-video > p,
+.bible-reading-feature p:not(.eyebrow),
+.bible-reading-playlist-grid .playlist-introduction,
+.reading-today-header p:not(.eyebrow),
+.reading-source-note,
+.reading-schedule p:not(.type-pill),
+.sunday-placeholder-box p,
+.genre-reading-copy .playlist-introduction,
+.video-playlist-heading > p:not(.type-pill),
+.video-resource-feature > div:first-child > p:not(.type-pill),
+.external-site-card p,
+.useful-sites-intro,
+.recommended-video-feature > div:first-child > p:not(.eyebrow),
+.pdf-source-card p:not(.type-pill),
+.download-book-card > p:not(.type-pill),
+.uploaded-pdf-card > p:not(.type-pill),
+.pdf-site-link-card p:not(.type-pill),
+.course-playlist-card > p:not(.type-pill),
+.course-series-heading p,
+.course-topic-picker > p,
+.classic-ebook-card p:not(.type-pill):not(.korean-book-author):not(.book-source),
+.full-width-ebook-card .korean-book-copy > p:not(.type-pill):not(.korean-book-author):not(.book-source),
+.doctrines-of-grace-book-card .korean-book-copy > p:not(.type-pill):not(.korean-book-author):not(.book-source) {
+  font-size: var(--intro-copy-size);
+  line-height: var(--intro-copy-line-height);
+}
+@media (max-width: 768px) {
+  #bible-66-book .resource-action-row .book-downloads {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+    gap: 6px;
+  }
+  #bible-66-book .resource-action-row .book-downloads .button {
+    width: 100%;
+    min-height: 38px;
+    justify-content: center;
+    padding-inline: 5px;
+    white-space: nowrap;
+    font-size: clamp(9px, 2.45vw, 11.5px);
+    letter-spacing: -.06em;
+  }
+  html[lang="th"] #bible-66-book .resource-action-row .book-downloads .button {
+    font-size: clamp(8.5px, 2.35vw, 11px);
+    letter-spacing: -.07em;
+  }
+  #bible-66-book .bible-66-book-download .download-page-count {
+    font-size: .7em;
+  }
+}
+.local-pdf-note { grid-template-columns: 1fr; }
+.course-playlist-section { margin: 0 0 34px; }
+.course-playlist-section > h2 { margin: 0 0 18px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 30px; font-weight: 550; }
+.bonar-series-section {
+  margin: 42px 0 0;
+  padding: clamp(22px, 2.8vw, 26px);
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(212,169,74,.14), transparent 18rem),
+    linear-gradient(180deg, #fff, #f4f8f5);
+  box-shadow: var(--shadow-soft);
+}
+.bonar-series-header { max-width: 860px; margin-bottom: 18px; }
+.bonar-series-header h2 {
+  margin: 8px 0 10px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.18;
+  color: var(--forest);
+}
+.bonar-series-header > p:not(.type-pill),
+.bonar-series-status { color: var(--muted); line-height: 1.7; }
+.bonar-series-author { margin-top: 10px; color: var(--forest-2) !important; font-weight: 800; }
+.bonar-part-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.bonar-part-card {
+  min-width: 0;
+  padding: clamp(18px, 2.2vw, 20px);
+  border: 1px solid rgba(23,63,53,.09);
+  border-radius: 22px;
+  background: rgba(255,255,255,.82);
+}
+.bonar-single-list-card {
+  padding: clamp(18px, 3vw, 28px);
+}
+.bonar-single-list-card .bonar-tract-list {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px 18px;
+}
+.bonar-part-card h3 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: 26px;
+  color: var(--forest);
+}
+.bonar-tract-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.bonar-tract-list li { display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; min-width: 0; }
+.bonar-tract-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--forest-2);
+  font-size: 13px;
+  font-weight: 900;
+}
+.bonar-tract-list strong { display: block; color: var(--ink); font-family: Georgia, "Noto Serif Thai", "Noto Serif KR", serif; font-size: 17px; font-weight: 650; line-height: 1.35; }
+html[lang="th"] .bonar-tract-list strong { font-family: "Mitr", "Kanit", "Sarabun", "Noto Sans Thai", sans-serif; font-weight: 700; letter-spacing: 0; }
+html[lang="ko"] .bonar-tract-list strong { font-family: "Noto Serif KR", "Apple SD Gothic Neo", serif; font-weight: 700; letter-spacing: -0.03em; }
+html[lang="en"] .bonar-tract-list strong { font-family: "Playfair Display", Georgia, serif; font-weight: 650; }
+.bonar-tract-link strong { color: var(--forest-2); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.bonar-tract-link:hover strong { color: var(--gold-2); }
+.bonar-tract-list small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.bonar-series-status {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 800;
+}
+.course-playlist-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.course-playlist-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(20px, 2.4vw, 24px);
+  border: 1px solid #c9d8d0;
+  border-top: 5px solid var(--gold);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, #ffffff, #f1f4ef);
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
+}
+.course-playlist-card .type-pill { margin: 0 0 14px; }
+.course-playlist-card h3 { margin: 0 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 25px; font-weight: 550; line-height: 1.35; }
+.course-playlist-card > p:not(.type-pill) { margin: 0 0 18px; color: var(--muted); }
+.course-playlist-card .button { margin-top: auto; }
+.course-hub { padding-bottom: 90px; }
+.course-series-list { display: grid; gap: 30px; }
+.course-series-card { padding: clamp(24px, 3vw, 30px); border: 1px solid rgba(23,63,53,.1); border-radius: 26px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); content-visibility: auto; contain-intrinsic-size: 560px; }
+.course-series-heading { max-width: 780px; margin-bottom: 22px; }
+.course-series-heading h2 { margin: 8px 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(25px,3.2vw,36px); font-weight: 550; line-height: 1.3; }
+.course-series-heading h2.course-title-single-line { font-family: "Noto Sans KR", Arial, sans-serif; font-size: clamp(18px,3vw,34px); font-weight: 750; letter-spacing: -.08em; white-space: nowrap; }
+.course-series-heading p { margin: 0; color: var(--muted); font-size: 18px; }
+.course-topic-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px 22px; margin: 17px 0 0; padding-left: 23px; color: var(--forest); font-size: 15px; font-weight: 650; }
+.course-topic-list-below-video { margin: 22px 0 0; padding: 20px 20px 20px 42px; border-radius: 16px; background: #f1f5f1; }
+.course-topic-picker > p {
+  margin: 18px 0 -8px;
+  color: var(--forest-2);
+  font-size: 15px;
+  font-weight: 850;
+}
+html[lang="th"] .course-topic-picker > p {
+  font-family: "Mitr", "Kanit", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 600;
+}
+.selectable-topic-list {
+  gap: 13px 34px;
+  padding: 24px;
+  list-style-position: inside;
+  font-size: clamp(17px, 2.4vw, 21px);
+  line-height: 1.6;
+}
+.selectable-topic-list li {
+  padding-block: 3px;
+}
+.course-video-choice {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid rgba(23,63,53,.16);
+  border-radius: 14px;
+  color: var(--forest);
+  background: linear-gradient(145deg, #fff, #f4f7f4);
+  box-shadow: 0 5px 12px rgba(24,49,43,.06);
+  font: inherit;
+  font-weight: 750;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+html[lang="th"] .course-video-choice {
+  font-family: "Mitr", "Kanit", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 600;
+}
+.selectable-topic-list .course-video-choice {
+  display: inline;
+  width: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 700;
+}
+html[lang="th"] .selectable-topic-list .course-video-choice {
+  font-weight: 600;
+}
+.course-lesson-grid .course-video-choice {
+  font-weight: 650;
+}
+html[lang="th"] .course-lesson-grid .course-video-choice {
+  font-weight: 500;
+}
+.course-video-choice:hover,
+.course-video-choice.active {
+  color: #fff;
+  border-color: rgba(23,63,53,.42);
+  background: linear-gradient(145deg, var(--forest-2), var(--forest));
+}
+.selectable-topic-list .course-video-choice:hover,
+.selectable-topic-list .course-video-choice.active {
+  color: var(--forest);
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.course-lesson-picker {
+  margin: 22px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.course-lesson-picker summary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border-radius: 12px;
+  color: var(--forest);
+  background: transparent;
+  box-shadow: none;
+  font-weight: 850;
+  cursor: pointer;
+  list-style: none;
+}
+.course-lesson-picker summary::-webkit-details-marker { display: none; }
+.course-lesson-picker summary span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 11px 17px;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--forest);
+  box-shadow: 0 8px 18px rgba(24,49,43,.12);
+}
+.course-lesson-picker summary::after { content: none; }
+.course-lesson-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.course-youtube-actions { display: flex; margin-top: 16px; }
+.course-youtube-actions .course-inline-download {
+  flex: 0 0 auto;
+  min-height: 38px;
+  margin-top: 0;
+  padding: 7px 11px;
+  font-size: 12.5px;
+  letter-spacing: -.04em;
+}
+html[lang="th"] .course-youtube-actions .course-inline-download {
+  padding-inline: 9px;
+  font-size: 11.5px;
+  letter-spacing: -.055em;
+}
+.playlist-link-button {
+  position: relative;
+  gap: 10px;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 9px 17px 9px 14px;
+  border: 1px solid rgba(23, 63, 53, .22);
+  border-radius: 999px;
+  color: var(--forest);
+  background: linear-gradient(145deg, #fff, #f1f5f1);
+  box-shadow: 0 6px 16px rgba(24, 49, 43, .09);
+  white-space: nowrap;
+}
+.playlist-link-button::before {
+  content: "▶";
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--forest-2);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .13);
+  font-size: 10px;
+  line-height: 1;
+  text-indent: 1px;
+}
+.playlist-link-button:hover {
+  transform: translateY(-2px);
+  filter: none;
+  color: var(--forest);
+  border-color: rgba(23, 63, 53, .42);
+  background: var(--sage);
+  box-shadow: 0 10px 22px rgba(24, 49, 43, .14);
+}
+.playlist-external-mark {
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  place-items: center;
+  overflow: hidden;
+  color: var(--gold);
+  font-size: 0;
+  line-height: 1;
+}
+.playlist-external-mark::before {
+  content: "↗︎";
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+.course-downloads { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 22px; }
+.course-downloads .button { min-width: 0; padding-inline: 15px; white-space: nowrap; font-size: 14px; letter-spacing: -.035em; }
+html[lang="th"] .course-downloads .button { font-size: 13px; letter-spacing: -.045em; }
+.footer-links a.recommend-nav-link { font-size: 12px; letter-spacing: -.04em; }
+.course-selector-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin-bottom: 30px; }
+.course-selector { overflow: hidden; display: grid; grid-template-columns: 190px 1fr; min-height: 180px; border: 1px solid rgba(23,63,53,.1); border-radius: var(--radius); background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.course-selector.active { border-color: var(--gold); box-shadow: var(--shadow-lift); }
+.course-selector img { width: 100%; height: 100%; object-fit: cover; }
+.course-selector > div { padding: 22px; }
+.course-selector h2 { margin: 8px 0 15px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 22px; font-weight: 550; line-height: 1.35; }
+.course-player-panel { padding: 34px; border-radius: 26px; color: #fff; background: linear-gradient(130deg, var(--forest), var(--forest-3)); box-shadow: 0 16px 42px rgba(24,49,43,.14); }
+.course-player-panel h2 { margin: 0 0 24px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(30px,4vw,46px); font-weight: 500; }
+.course-material-note { margin: 20px 0 0; color: #dce8e2; }
+
+.article-heading { padding: 76px 0 42px; }
+.article-heading h1 { max-width: 880px; font-size: clamp(40px, 6vw, 68px); }
+.article-heading .summary { max-width: 760px; margin: 22px 0 0; color: var(--muted); font-size: 20px; }
+.article-heading .article-author { margin: 16px 0 0; color: var(--forest-2); font-size: 15px; font-weight: 700; }
+.devotional-detail .article-heading h1 { font-weight: 750; }
+.article-body { padding-bottom: 90px; font-size: 18px; }
+.article-body p { white-space: pre-line; }
+.article-prose { display: grid; gap: 1.05em; line-height: 1.85; }
+.article-prose p { margin: 0; }
+.long-article-prose { gap: 1.08em; }
+.long-article-prose .article-section-heading {
+  margin-top: 1.2em;
+  margin-bottom: .2em;
+  color: var(--forest);
+  font-family: "Noto Serif Thai", Georgia, "Noto Serif KR", serif;
+  font-size: clamp(25px, 3.3vw, 34px);
+  font-weight: 850;
+  line-height: 1.28;
+  letter-spacing: -.015em;
+}
+.long-article-prose .article-section-heading:first-child { margin-top: 0; }
+html[lang="th"] .long-article-prose .article-section-heading {
+  font-family: "Kanit", "Mitr", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.long-article-prose .article-subsection-heading {
+  margin-top: .85em;
+  margin-bottom: -.1em;
+  color: var(--forest-2);
+  font-family: Inter, "Noto Sans Thai", "Noto Sans KR", sans-serif;
+  font-size: clamp(20px, 2.5vw, 25px);
+  font-weight: 850;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+html[lang="th"] .long-article-prose .article-subsection-heading {
+  font-family: "Kanit", "Mitr", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.long-article-prose .article-sola-heading {
+  margin-top: -.35em;
+  color: var(--gold-2);
+  font-family: Inter, "Noto Sans Thai", "Noto Sans KR", sans-serif;
+  font-size: clamp(15px, 2.2vw, 18px);
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+html[lang="th"] .long-article-prose .article-sola-heading {
+  font-family: "Kanit", "Mitr", "Sarabun", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+.youtube-link { margin: 24px 0; padding: 22px; border-left: 4px solid #c4302b; background: #fff; }
+.article-video { margin: 0 0 28px; }
+.document-panel { margin-top: 36px; padding: 24px; border: 1px solid rgba(23,63,53,.1); border-radius: 18px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.document-panel h2 { margin-top: 0; }
+.document-panel iframe { width: 100%; min-height: 620px; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 10px; }
+.article-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; gap: 46px; padding-top: 34px; }
+.article-detail-layout .article-heading { width: 100%; padding-top: 22px; }
+.article-detail-layout .article-body { width: 100%; }
+.article-back-row { width: 100%; }
+.article-bottom-back-row { margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--line); }
+.other-articles-panel { position: sticky; top: 112px; padding: 24px; border: 1px solid rgba(23,63,53,.1); border-radius: 20px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.other-articles-panel h2 { margin: 0 0 16px; font-family: Georgia, "Noto Serif Thai", serif; font-size: 24px; }
+.other-articles-panel nav { display: grid; margin-bottom: 18px; }
+.other-articles-panel nav a { display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 14px; font-weight: 700; line-height: 1.45; }
+.other-articles-panel nav a:hover { color: var(--forest-2); }
+.other-articles-panel .current-article-link { display: block; padding: 13px 0; border-top: 1px solid var(--line); color: var(--forest-2); font-size: 14px; font-weight: 900; line-height: 1.45; }
+.other-articles-panel .current-article-link span::before { content: "• "; color: var(--gold-2); }
+
+.pdf-preview-modal:not([hidden]) {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+.pdf-preview-modal[hidden] { display: none; }
+.pdf-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 20, 16, .62);
+  backdrop-filter: blur(4px);
+}
+.pdf-preview-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(320px, 1fr) auto auto;
+  width: min(960px, 100%);
+  height: min(86vh, 880px);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 28px 90px rgba(0,0,0,.26);
+}
+.pdf-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.pdf-preview-header h2 {
+  margin: 0;
+  color: var(--forest);
+  font-family: Georgia, "Noto Serif Thai", serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 650;
+}
+.pdf-preview-close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--forest);
+  background: var(--surface);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pdf-preview-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #f6f6f2;
+}
+.pdf-preview-fallback {
+  margin: 0;
+  padding: 9px 16px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.pdf-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 16px 16px;
+}
+html.modal-open,
+html.modal-open body {
+  overflow: hidden;
+}
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; padding-top: 46px; padding-bottom: 46px; border-top: 1px solid var(--line); }
+.site-footer p { margin: 3px 0 0; color: var(--muted); }
+.site-footer > div:first-child > strong { font-family: "Playfair Display", Georgia, serif; font-size: clamp(24px, 3vw, 32px); font-style: italic; font-weight: 600; letter-spacing: -.02em; }
+.site-footer .copyright-notice { max-width: 680px; margin-top: 16px; font-size: 12px; line-height: 1.65; }
+.footer-contact { display: inline-block; margin-left: 10px; }
+.footer-contact a { color: var(--forest-2); font-weight: 400; text-decoration: underline; text-underline-offset: 2px; }
+.footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; color: var(--muted); }
+.footer-about-link { display: inline-block; color: var(--forest) !important; font-weight: 850; text-decoration-line: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.footer-about-link:hover { color: var(--forest-2) !important; text-decoration-color: var(--forest-2); }
+.footer-social-links { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 9px; white-space: nowrap; }
+.footer-facebook-link { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: #fff; background: #1877f2; font-family: Arial,Helvetica,sans-serif; font-size: 25px; font-weight: 800; line-height: 1; }
+.footer-facebook-link:hover { background: #0d5fc5; transform: translateY(-1px); }
+.footer-line-link { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: #fff; background: #06c755; font-family: Arial,Helvetica,sans-serif; font-size: 8px; font-weight: 800; line-height: 1; }
+.footer-line-link:hover { background: #05ad4a; transform: translateY(-1px); }
+.footer-qr-row { display: flex; flex: 0 0 100%; justify-content: flex-end; }
+.desktop-mobile-qr {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 150px);
+  align-items: center;
+  gap: 14px;
+  flex: 0 0 auto;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--forest);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+.desktop-mobile-qr:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+.desktop-mobile-qr img { display: block; width: 104px; height: 104px; }
+.desktop-mobile-qr span { display: grid; gap: 6px; }
+.desktop-mobile-qr strong { font-size: 14px; line-height: 1.3; }
+.desktop-mobile-qr small { color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+.policy-page { width: min(calc(100% - 40px), 900px); padding-top: clamp(70px, 9vw, 110px); padding-bottom: clamp(80px, 10vw, 130px); }
+.policy-page-heading { margin-bottom: 34px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.policy-page-heading h1 { margin: 8px 0 14px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(38px, 6vw, 64px); font-weight: 500; line-height: 1.14; }
+.policy-page-heading > p:not(.eyebrow) { max-width: 760px; margin: 0; color: var(--muted); font-size: clamp(17px, 2vw, 20px); line-height: 1.75; }
+.policy-page-heading small { display: block; margin-top: 14px; color: var(--muted); }
+.about-page-heading {
+  display: block;
+}
+.about-page-heading h1 {
+  margin: 0;
+  font-family: "Kanit", "Sarabun", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+.about-page-heading strong { color: var(--forest); font-weight: 900; }
+.about-page-heading > p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.75;
+}
+.about-page-title-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 24px);
+}
+.about-page-logo {
+  display: block;
+  width: min(116px, 100%);
+  height: auto;
+  flex: 0 0 auto;
+}
+.policy-page > section { margin-top: 24px; padding: clamp(22px, 3vw, 30px); border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow-soft); }
+.policy-page > section h2 { margin: 0 0 10px; font-family: Georgia, "Noto Serif Thai", serif; font-size: clamp(23px, 3vw, 30px); font-weight: 550; }
+.policy-page > section p { margin: 0; color: var(--muted); font-size: 15.5px; line-height: 1.8; }
+.about-contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.about-contact-card-grid { margin-top: 18px; }
+.about-contact-card-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.about-email-contact { margin-top: 18px !important; }
+.about-email-contact a { color: var(--forest-2); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.about-support-section { display: grid; grid-template-columns: minmax(0,1fr) 220px; align-items: center; gap: 30px; }
+.about-support-section img { display: block; width: 220px; max-height: 260px; border-radius: 16px; object-fit: contain; box-shadow: var(--shadow-soft); }
+
+@media (max-width: 1023px) {
+  .footer-qr-row { display: none; }
+}
+@media (max-width: 720px) {
+  .policy-page { width: min(calc(100% - 24px), 900px); padding-top: 52px; }
+  .about-page-heading {
+    text-align: left;
+  }
+  .about-page-title-row { gap: 12px; }
+  .about-page-logo {
+    width: 82px;
+  }
+  .policy-page > section { padding: 20px; }
+  .about-contact-links .button { width: 100%; }
+  .about-support-section { grid-template-columns: 1fr; }
+  .about-support-section img { width: min(100%, 240px); margin-inline: auto; }
+}
+
+.back-to-top-button {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 80;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.26);
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, var(--forest), var(--forest-3));
+  box-shadow: 0 12px 28px rgba(24,49,43,.2);
+  font: inherit;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-to-top-button[hidden] { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .back-to-top-button:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(24,49,43,.26); }
+}
+.back-to-top-button:active { transform: translateY(0); }
+.back-to-top-button span { transform: translateY(-1px); }
+
+.admin-shell { width: min(1320px, calc(100% - 40px)); margin: 0 auto; padding: 34px 0 80px; }
+.admin-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 30px; }
+.admin-top h1 { margin: 0; font-size: 34px; letter-spacing: -.035em; }
+.admin-grid { display: grid; grid-template-columns: minmax(680px, 1fr) 390px; gap: 28px; align-items: start; }
+.panel { padding: 30px; border: 1px solid rgba(23,63,53,.11); border-radius: 24px; background: linear-gradient(180deg, #fff, var(--surface-soft)); box-shadow: var(--shadow-soft); }
+.panel h2 { margin: 0 0 20px; font-size: 21px; }
+.admin-help-box {
+  margin-bottom: 24px;
+  padding: 18px 20px;
+  border: 1px solid rgba(23,63,53,.12);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f7fbf7, #fffdf7);
+}
+.admin-help-box h2 { margin: 0 0 10px; color: var(--forest); font-size: 19px; }
+.admin-help-box ol { margin: 0; padding-left: 22px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.admin-muted { color: var(--muted); font-size: 12px; font-weight: 600; }
+.field { display: grid; gap: 7px; margin-bottom: 15px; }
+.field label { font-size: 13px; font-weight: 750; }
+.field input, .field textarea, .field select {
+  width: 100%;
+  border: 1px solid #cdd8d2;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.field textarea { min-height: 116px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.admin-list-controls {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: -6px 0 16px;
+  padding: 10px 12px;
+  border: 1px solid rgba(23,63,53,.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,.72);
+}
+.admin-list-controls label { color: var(--muted); font-size: 13px; font-weight: 800; }
+.admin-list-controls select {
+  width: 100%;
+  border: 1px solid #cdd8d2;
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 750;
+}
+.admin-list { display: grid; gap: 10px; }
+.admin-item { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 12px; }
+.admin-item h3 { margin: 0; font-size: 16px; }
+.admin-item p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+.status { display: inline-flex; padding: 3px 8px; border-radius: 999px; background: #e7eee9; color: var(--forest); font-size: 11px; font-weight: 800; }
+.status.draft { background: #f0ece2; color: #795f2c; }
+.notice { padding: 12px 14px; border-radius: 10px; background: #edf4ef; color: var(--forest); font-size: 14px; }
+.notice.error { background: #f8e8e8; color: #7b2828; }
+.local-login { margin-bottom: 20px; }
+.hidden { display: none !important; }
+
+@media (min-width: 1024px) {
+  .admin-grid > .panel:nth-child(2) {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+  }
+  .admin-grid > .panel:first-child {
+    min-height: calc(100vh - 148px);
+  }
+  #body {
+    min-height: 380px !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .grace-ebook-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .header-inner {
+    min-height: 58px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) 78px;
+    gap: 0;
+  }
+  .brand,
+  .language-toggle { min-height: 50px; border-radius: 0; }
+  .brand-logo-stack { width: 52px; height: 40px; }
+  .brand-logo-default { width: 40px; height: 40px; }
+  .brand-logo-active { width: 40px; height: 40px; }
+  .brand-logo { border-radius: 0; }
+  .main-nav {
+    grid-column: 2 / span 3;
+    order: initial;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .hero-inner, .mission-panel, .admin-grid, .gospel-hero-grid, .video-feature-grid, .about-support-grid, .home-reflection-grid { grid-template-columns: 1fr; }
+  .article-detail-layout { grid-template-columns: 1fr; gap: 8px; }
+  .other-articles-panel { position: static; margin-bottom: 60px; }
+  .gospel-hero-grid,
+  .video-feature-grid { gap: 0; }
+  .hero-inner { gap: 36px; min-height: auto; padding: 68px 0 86px; }
+  .hero-card { max-width: 560px; }
+  .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .download-book-grid { grid-template-columns: 1fr; }
+  .classic-ebook-stack { grid-template-columns: 1fr; }
+  .korean-book-card, .reading-schedule, .video-resource-feature, .tract-preview-card { grid-template-columns: 1fr; }
+  .bonar-part-grid { grid-template-columns: 1fr; }
+  .book-downloads { min-width: 0; }
+}
+
+@media (min-width: 861px) and (max-width: 1080px) {
+  .classic-ebook-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 580px) {
+  .header-inner, .site-footer, .container, .narrow { width: min(calc(100% - 24px), 1120px); }
+  .site-footer { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .footer-links { align-items: flex-start; gap: 15px 20px; padding-right: 58px; }
+  .footer-social-links {
+    flex-basis: 100%;
+    justify-content: flex-start;
+    padding-right: 0;
+  }
+  .header-inner {
+    min-height: 50px;
+    gap: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) 58px;
+  }
+  .header-inner .main-nav { width: 100%; max-width: none; justify-self: stretch; }
+  .brand,
+  .language-toggle { min-height: 44px; border-radius: 0; }
+  .brand-logo-stack { width: 48px; height: 36px; }
+  .brand-logo-default { width: 36px; height: 36px; }
+  .brand-logo-active { width: 36px; height: 36px; }
+  .brand-logo { border-radius: 0; }
+  .brand strong { font-size: 13px; }
+  .brand strong.thai-brand-title { font-size: 14px; }
+  .brand strong.korean-brand-title { font-size: 16px; letter-spacing: -.055em; }
+  .brand strong.english-brand-title { font-size: 16px; }
+  .brand small { display: none; }
+  .bonar-series-section { padding: 20px; border-radius: 22px; }
+  .bonar-part-card { padding: 18px; }
+  .bonar-tract-list li { grid-template-columns: 32px 1fr; }
+  .library-filter-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 22px;
+    padding: 6px 0 7px;
+    top: var(--library-filter-top, var(--site-header-height, 132px));
+  }
+  .library-filter-row a::after {
+    display: none;
+  }
+  html[lang="th"] .library-filter-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .library-filter-row a {
+    min-width: 0;
+    min-height: 31px;
+    justify-content: center;
+    padding: 4px 6px;
+    border-radius: 11px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.02;
+  }
+  .brand strong { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html[lang="en"] .brand strong.english-brand-title {
+    max-width: 158px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-size: 15px;
+    line-height: 1.08;
+  }
+  .brand small { display: none; }
+  .language-switch { min-width: 0; }
+  .language-toggle { padding: 4px 3px; gap: 3px; font-size: 10.8px; letter-spacing: -.055em; }
+  .language-popover { right: -2px; min-width: 112px; padding: 7px; border-radius: 0; }
+  .language-switch a { min-height: 38px; padding: 5px 7px; border-radius: 0; font-size: 11.5px; }
+  .language-switch img { width: 25px; height: 17px; }
+  .back-to-top-button {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+  }
+  .main-nav { gap: 0; padding: 0; border-radius: 0; box-shadow: none; }
+  .main-nav a { min-width: 0; min-height: 54px; padding: 5px 3px; border-radius: 0; font-size: 12.2px; line-height: 1.02; text-align: center; box-shadow: none; }
+  html[lang="ko"] .main-nav a { font-size: 13.2px; }
+  html[lang="th"] .main-nav a { font-size: 12px; letter-spacing: -.045em; }
+  html[lang="en"] .main-nav a.recommend-nav-link { padding-inline: 3px; font-size: 11.1px; letter-spacing: -.055em; line-height: 1; }
+  html[lang="en"] .main-nav a.bible-reading-nav-link { padding-inline: 3px; font-size: 10.8px; letter-spacing: -.06em; line-height: 1; }
+  .hero h1 { font-size: 42px; }
+  .hero-card { padding: 22px; }
+  .search-form { border-radius: 18px; }
+  .search-form input { padding: 0 6px; }
+  .search-form .button { min-height: 44px; padding: 8px 15px; }
+  .section { padding: 66px 0; }
+  .section-heading, .site-footer { align-items: flex-start; flex-direction: column; }
+  .resource-grid { grid-template-columns: 1fr; }
+  .resource-card { min-height: 0; }
+  .mission-panel { padding: 32px 24px; gap: 24px; }
+  .page-heading { padding-top: 52px; }
+  .field-row { grid-template-columns: 1fr; }
+  .admin-item { grid-template-columns: 1fr; }
+  .admin-shell { width: min(100% - 22px, 1180px); padding-top: 20px; }
+  .admin-top { align-items: flex-start; flex-direction: column; }
+  .admin-top > div:last-child { display: flex; flex-wrap: wrap; gap: 8px; }
+  .admin-top > div:last-child .button { margin-left: 0 !important; }
+  .panel { padding: 20px; }
+  .gospel-hero { padding: 58px 0 78px; }
+  .gospel-copy h1 { font-size: 42px; white-space: normal; }
+  html[lang="th"] .gospel-copy h1 { font-size: clamp(42px, 12vw, 54px); }
+  .today-grid { grid-template-columns: 1fr; }
+  .today-heading .button { width: 100%; }
+  .line-qr-dialog { width: min(78vw, 340px); padding: 18px; }
+  .compact-contact-grid { grid-template-columns: 1fr; }
+  .compact-contact-card { min-height: 118px; }
+  .movie-grid { grid-template-columns: 1fr; }
+  .video-playlist-card { max-width: 100%; overflow: hidden; padding: 20px; }
+  .video-frame {
+    width: 100%;
+    min-width: 0;
+    border-radius: 16px;
+  }
+  .external-site-list { grid-template-columns: 1fr; }
+  .useful-sites-intro { grid-column: auto; }
+  .external-site-card { grid-template-columns: 1fr; padding: 18px; }
+  .external-site-card-copy > p:first-of-type {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+  }
+  .commentary-recommendation { padding: 0; }
+  .commentary-recommendation .external-site-card { margin-inline: 0; }
+  .commentary-site-card { grid-template-columns: 1fr; align-items: center; }
+  .commentary-site-card .external-site-card-copy { grid-template-columns: 68px minmax(0,1fr); gap: 0 14px; }
+  .wide-logo-site-card .external-site-card-copy { grid-template-columns: 116px minmax(0,1fr); }
+  .wide-site-logo { width: 116px; }
+  .wide-site-logo[src*="thirdmill-logo-cropped.svg"] { width: 94px; height: 50px; padding: 0; }
+  .commentary-site-icon { width: 68px; height: 68px; border-radius: 17px; }
+  .commentary-recommendation .commentary-site-icon { border-radius: 5px; }
+  .commentary-site-card .button { width: 100%; }
+  .recommended-video-feature { grid-template-columns: 1fr; padding: 20px; }
+  .external-site-card .button { width: 100%; }
+  .commentary-pdf-download { width: 100%; justify-self: stretch; }
+  .footer-links { gap: 14px; }
+  .pdf-source-card { grid-template-columns: 1fr; padding: 20px; }
+  .pdf-source-card .button { width: 100%; }
+  .pdf-site-link-card {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .course-playlist-grid { grid-template-columns: 1fr; }
+  .uploaded-pdf-grid { grid-template-columns: 1fr; }
+  .westminster-doc-grid { grid-template-columns: 1fr; }
+  .westminster-doc-card { padding: 16px; }
+  .westminster-doc-card .uploaded-pdf-cover { width: min(100%, 145px); }
+  .tract-preview-card { padding: 22px; }
+  .tract-actions .button { width: 100%; }
+  .resource-action-row .tract-actions .button,
+  .resource-action-row .uploaded-pdf-actions .button,
+  .resource-action-row .book-downloads .button {
+    width: auto;
+  }
+  .pdf-preview-dialog { width: 96vw; padding: 10px; }
+  .pdf-preview-stage img { max-height: 68vh; }
+  .pdf-preview-controls { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pdf-preview-controls strong { grid-column: 1 / -1; grid-row: 1; text-align: center; }
+  .pdf-preview-controls .button { justify-content: center; font-size: 13px; }
+  .download-book-card > .button, .uploaded-pdf-card > .button { width: 100%; }
+  .resource-action-row {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 7px;
+    overflow: visible;
+    padding-bottom: 2px;
+  }
+  .resource-action-row .book-downloads,
+  .resource-action-row .uploaded-pdf-actions,
+  .resource-action-row .tract-actions,
+  .resource-action-row .share-buttons {
+    width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+  .resource-action-row .tract-actions {
+    width: 100%;
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+  }
+  .resource-action-row .share-buttons {
+    flex: 1 1 100%;
+  }
+  .resource-action-row.book-inline-action-row .book-downloads,
+  .resource-action-row.book-inline-action-row .share-buttons {
+    width: auto;
+    flex: 0 1 auto !important;
+  }
+  .book-downloads .button,
+  .uploaded-pdf-actions .button,
+  .tract-actions .button {
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
+  }
+  .resource-action-row .tract-actions .button {
+    flex: 1 1 0;
+    justify-content: center;
+    padding-inline: 8px;
+    font-size: clamp(10.5px, 3.05vw, 13px);
+  }
+  #faith-basics-36-book .book-downloads {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #faith-basics-36-book .book-downloads .button {
+    width: 100%;
+    padding-inline: 6px;
+    font-size: clamp(9.5px, 2.65vw, 12px);
+  }
+  .course-playlist-card .button { width: 100%; }
+  .course-selector-grid { grid-template-columns: 1fr; }
+  .course-selector { grid-template-columns: 125px 1fr; }
+  .course-player-panel { padding: 24px; }
+  .daily-source-grid { grid-template-columns: 1fr; }
+  .daily-source-card .button { width: 100%; }
+  .bible-reading-feature { padding: 24px; }
+  .reading-today-panel { padding: 20px; }
+  .reading-today-header { grid-template-columns: 1fr; }
+  .week-selector > div { grid-template-columns: minmax(0,1fr) auto; }
+  .save-week-button { min-width: 62px; padding-inline: 10px; }
+  .reading-day-strip { gap: 5px; }
+  .reading-day-strip a { min-height: 40px; border-radius: 12px; font-size: 12px; }
+  .reading-day-navigation { display: grid; grid-template-columns: 1fr 1fr; }
+  .reading-day-navigation .button { justify-content: center; padding-inline: 8px; font-size: 12px; }
+  .reading-video-card, .reading-summary-card { padding: 18px; }
+  .sunday-placeholder-box { grid-template-columns: 1fr; text-align: center; }
+  .sunday-placeholder-box span { margin: 0 auto; }
+  .genre-reading-feature { padding: 22px; }
+  .genre-reading-feature h2 { font-size: clamp(25px,7vw,34px); }
+  .bible-reading-playlist-grid { grid-template-columns: 1fr; }
+  .bible-reading-playlist-grid article.featured { grid-column: auto; }
+  .reading-program-share-heading {
+    display: grid;
+    justify-content: stretch;
+    gap: 10px;
+  }
+  .reading-program-share-heading .share-buttons {
+    justify-content: flex-start;
+  }
+  .reading-schedule { padding: 20px; }
+  .video-resource-feature { padding: 22px; }
+  .video-resource-links .button { width: 100%; }
+  .course-series-card { max-width: 100%; overflow: hidden; padding: 20px; }
+  .full-width-ebook-card,
+  .doctrines-of-grace-book-card.classic-ebook-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .full-width-ebook-card .korean-book-cover,
+  .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover {
+    width: min(100%, 168px);
+    max-width: 168px;
+    margin: 0 auto 18px;
+  }
+
+  .yongjin-books-collection { padding: 18px; border-radius: 22px; scroll-margin-top: calc(var(--site-header-height, 132px) + 130px); }
+  #faith-basics-36-book { scroll-margin-top: calc(var(--site-header-height, 132px) + 122px); }
+  .yongjin-books-heading {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .yongjin-book-list { gap: 16px; margin-bottom: 36px; }
+  .yongjin-book-trio { grid-template-columns: 1fr; }
+  .yongjin-book-trio .classic-ebook-card,
+  .yongjin-book-trio .doctrines-of-grace-book-card.classic-ebook-card,
+  .yongjin-book-trio .full-width-ebook-card.classic-ebook-card {
+    padding: 22px;
+  }
+  .video-playlist-heading,
+  .course-series-heading,
+  .video-playlist-heading h2,
+  .course-series-heading h2,
+  .video-playlist-heading p,
+  .course-series-heading p {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .course-youtube-actions, .course-playlist-button { width: 100%; }
+  .video-action-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    gap: 6px;
+  }
+  .video-action-row .course-playlist-button,
+  .video-action-row .playlist-link-button {
+    width: auto;
+    max-width: 100%;
+  }
+  .video-action-row .share-buttons {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    min-width: 0;
+    gap: 5px;
+  }
+  .playlist-link-button {
+    gap: 6px;
+    min-height: 38px;
+    padding: 6px 9px;
+    font-size: 12px;
+    letter-spacing: -.025em;
+  }
+  .video-action-row .share-button {
+    min-height: 38px;
+    padding: 5px 8px;
+    font-size: 11.5px;
+  }
+  html[lang="ko"] .audiobook-playlist-card .video-action-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+  html[lang="ko"] .audiobook-playlist-card .video-action-row .share-buttons {
+    flex: 0 0 100%;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  html[lang="ko"] #daily-gospel-devotional-thai-audio.audiobook-playlist-card .video-action-row,
+  html[lang="ko"] #paul-washer-gospel-thai-audio.audiobook-playlist-card .video-action-row,
+  html[lang="ko"] #is-god-really-sovereign-thai-audio.audiobook-playlist-card .video-action-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  html[lang="ko"] #daily-gospel-devotional-thai-audio.audiobook-playlist-card .video-action-row .playlist-link-button,
+  html[lang="ko"] #paul-washer-gospel-thai-audio.audiobook-playlist-card .video-action-row .playlist-link-button,
+  html[lang="ko"] #is-god-really-sovereign-thai-audio.audiobook-playlist-card .video-action-row .playlist-link-button,
+  html[lang="ko"] #daily-gospel-devotional-thai-audio.audiobook-playlist-card .video-action-row .share-buttons,
+  html[lang="ko"] #paul-washer-gospel-thai-audio.audiobook-playlist-card .video-action-row .share-buttons,
+  html[lang="ko"] #is-god-really-sovereign-thai-audio.audiobook-playlist-card .video-action-row .share-buttons {
+    flex: 0 0 auto;
+    width: auto;
+  }
+  html[lang="th"] .playlist-link-button { font-size: 11px; letter-spacing: -.04em; }
+  .playlist-link-button::before { width: 20px; height: 20px; flex-basis: 20px; font-size: 8px; }
+  .course-series-heading h2.course-title-single-line { font-size: clamp(13.5px,4.2vw,17px); }
+  .course-topic-list { grid-template-columns: 1fr; }
+  .selectable-topic-list { gap: 10px; padding: 18px; font-size: clamp(16px,4.4vw,18px); }
+  .course-lesson-grid { grid-template-columns: 1fr; }
+  .course-lesson-picker { padding: 13px; }
+  .course-lesson-picker summary { flex-wrap: wrap; gap: 8px; }
+  .course-lesson-picker summary small { flex-basis: 100%; padding-left: 4px; font-size: 12.5px; }
+  .course-video-choice { min-height: 40px; padding: 8px 10px; font-size: 13px; }
+  .course-downloads { display: grid; }
+  .course-downloads .button { width: 100%; }
+  .missionary-book-actions { gap: 7px; }
+  .missionary-book-actions .button {
+    width: auto;
+    flex: 1 1 0;
+    min-height: 40px;
+    padding-inline: 7px;
+    font-size: 11px;
+    letter-spacing: -.045em;
+  }
+  .missionary-book-actions .book-purchase-button {
+    flex: 0 1 auto;
+    min-width: max-content;
+    font-size: 10.8px;
+    padding-inline: 8px;
+  }
+  .course-downloads .button { padding-inline: 8px; font-size: clamp(10.5px,3.1vw,13px); }
+  .devotional-reading-card { padding: 24px; }
+  .devotional-day-heading { align-items: stretch; flex-direction: column; }
+  .devotional-day-navigation { display: grid; grid-template-columns: 1fr 1fr; }
+  .devotional-day-navigation .button { justify-content: center; }
+  .dering-prayer-card { padding: 22px; }
+  .dering-prayer-navigation { display: grid; grid-template-columns: 1fr 1fr; }
+  .dering-prayer-navigation .button { padding-inline: 8px; font-size: 12px; }
+}
+
+@media (min-width: 769px) {
+  #missionary-book .resource-action-row {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow: visible;
+  }
+  #missionary-book .resource-action-row .book-downloads,
+  #missionary-book .resource-action-row .share-buttons {
+    display: flex;
+    width: auto;
+    flex: 0 0 auto;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #missionary-book .resource-action-row {
+    display: block !important;
+    overflow: visible;
+  }
+  #missionary-book .resource-action-row .book-downloads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  #missionary-book .resource-action-row .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 14px !important;
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(23, 63, 53, .1) !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .grace-ebook-collection-card { padding: 18px; border-radius: 20px; }
+  .grace-ebook-list { grid-template-columns: 1fr; }
+  .grace-ebook-item { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; padding: 13px; }
+  .grace-ebook-item h3 { margin-top: 0; font-size: 17px; }
+  .grace-ebook-page-link { width: 100%; justify-content: center; text-align: center; }
+  .yongjin-books-heading {
+    display: grid;
+    justify-content: stretch;
+    gap: 12px;
+  }
+  .yongjin-books-heading .share-buttons {
+    justify-content: flex-start;
+    margin-top: 0;
+  }
+  .download-book-grid,
+  .uploaded-pdf-grid,
+  .classic-ebook-stack,
+  .yongjin-book-list,
+  .yongjin-book-trio,
+  .yongjin-books-collection,
+  .download-book-card,
+  .uploaded-pdf-card,
+  .classic-ebook-card,
+  .korean-book-card,
+  .full-width-ebook-card,
+  .doctrines-of-grace-book-card.classic-ebook-card,
+  .resource-action-row,
+  .resource-action-row .book-downloads,
+  .resource-action-row .uploaded-pdf-actions,
+  .resource-action-row .tract-actions,
+  .resource-action-row .share-buttons {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .download-book-card,
+  .uploaded-pdf-card,
+  .classic-ebook-card,
+  .korean-book-card,
+  .full-width-ebook-card,
+  .doctrines-of-grace-book-card.classic-ebook-card {
+    overflow: hidden;
+  }
+
+  .download-book-card h2,
+  .uploaded-pdf-card h2,
+  .classic-ebook-card h2,
+  .korean-book-card h2,
+  .download-book-card p,
+  .uploaded-pdf-card p,
+  .classic-ebook-card p,
+  .korean-book-card p,
+  .classic-ebook-card .korean-book-author {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .classic-ebook-card .korean-book-author {
+    white-space: normal;
+  }
+
+  html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row,
+  html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row,
+  html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row,
+  html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row,
+  html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .book-downloads,
+  html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .book-downloads,
+  html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .book-downloads,
+  html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .book-downloads,
+  html[lang="ko"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-buttons,
+  html[lang="th"] #what-is-the-gospel-booklet-series .resource-action-row.book-inline-action-row .share-buttons,
+  html[lang="ko"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-buttons,
+  html[lang="th"] #doctrines-of-grace-book .resource-action-row.book-inline-action-row .share-buttons {
+    flex-wrap: wrap;
+  }
+
+  .resource-action-row .button,
+  .resource-action-row .share-button {
+    max-width: 100%;
+  }
+
+  .bible-reading-page .video-action-row {
+    flex-wrap: nowrap;
+    gap: 4px;
+    overflow-x: visible;
+    -webkit-overflow-scrolling: auto;
+    scrollbar-width: none;
+  }
+
+  .bible-reading-page .video-action-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bible-reading-page .video-action-row .playlist-external-mark {
+    display: none;
+  }
+
+  .bible-reading-page .video-action-row .playlist-link-button {
+    min-height: 34px;
+    padding: 5px 7px;
+    font-size: 10.5px;
+    letter-spacing: -.055em;
+    white-space: nowrap;
+  }
+
+  .bible-reading-page .video-action-row .playlist-link-button::before {
+    width: 17px;
+    height: 17px;
+    flex-basis: 17px;
+    font-size: 7px;
+  }
+
+  .bible-reading-page .video-action-row .share-buttons {
+    flex: 0 0 auto;
+    width: auto;
+    gap: 4px;
+  }
+
+  .bible-reading-page .video-action-row .share-button {
+    min-height: 34px;
+    padding: 4px 7px;
+    font-size: 10.5px;
+    white-space: nowrap;
+  }
+
+  .bible-reading-page .video-action-row .facebook-share-button > span:first-child {
+    width: 16px;
+    height: 16px;
+    font-size: 13px;
+  }
+
+  .bible-reading-page .video-action-row .line-share-button > span {
+    padding: 2px 5px;
+    font-size: 9px;
+  }
+}
+
+/* Final responsive layout normalization.
+   PC에서는 카드 전체 폭을 쓰고, 모바일에서는 버튼이 좌우로 흔들리지 않게 자연스럽게 줄바꿈한다. */
+@media (min-width: 769px) {
+  .video-playlist-heading,
+  .course-series-heading {
+    width: 100%;
+    max-width: none;
+  }
+
+  .video-playlist-heading > p:not(.type-pill),
+  .course-series-heading p,
+  .video-resource-feature > div:first-child > p:not(.type-pill),
+  .recommended-video-feature > div:first-child > p:not(.eyebrow),
+  .download-book-card > p:not(.type-pill),
+  .uploaded-pdf-card > p:not(.type-pill),
+  .classic-ebook-card p:not(.type-pill):not(.korean-book-author):not(.book-source),
+  .full-width-ebook-card .korean-book-copy > p:not(.type-pill):not(.korean-book-author):not(.book-source),
+  .doctrines-of-grace-book-card .korean-book-copy > p:not(.type-pill):not(.korean-book-author):not(.book-source),
+  .external-site-card p,
+  .pdf-source-card p:not(.type-pill),
+  .pdf-site-link-card p:not(.type-pill),
+  .course-playlist-card > p:not(.type-pill) {
+    width: 100%;
+    max-width: none;
+  }
+
+  .resource-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .resource-action-row .book-downloads,
+  .resource-action-row .uploaded-pdf-actions,
+  .resource-action-row .tract-actions,
+  .resource-action-row .share-buttons {
+    display: flex;
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* 두 개 이상의 주요 버튼이 있는 카드와 성경66권 카드는 공유 버튼을 다음 줄로 분리한다. */
+  #bible-66-book .resource-action-row,
+  #faith-basics-36-book .resource-action-row {
+    display: block;
+  }
+
+  #bible-66-book .resource-action-row .share-buttons,
+  #faith-basics-36-book .resource-action-row .share-buttons {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(23, 63, 53, .1);
+  }
+
+  #faith-basics-36-book .book-downloads {
+    display: grid;
+    width: min(100%, 460px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .resource-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    overflow: visible;
+  }
+
+  .resource-action-row .book-downloads,
+  .resource-action-row .uploaded-pdf-actions,
+  .resource-action-row .tract-actions {
+    display: flex;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 7px;
+    margin-top: 0;
+    overflow: visible;
+  }
+
+  .resource-action-row .share-buttons {
+    display: flex;
+    width: 100%;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(23, 63, 53, .1);
+  }
+
+  /* 주요 버튼이 하나뿐인 경우에는 공유 버튼을 같은 줄에 둔다. */
+  .resource-action-row:has(.book-downloads > :only-child) .share-buttons,
+  .resource-action-row:has(.uploaded-pdf-actions > :only-child) .share-buttons,
+  .resource-action-row:has(.tract-actions > :only-child) .share-buttons {
+    width: auto;
+    flex: 0 1 auto;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* 주요 버튼이 둘 이상이면 주요 버튼 줄과 공유 버튼 줄을 분리한다. */
+  .resource-action-row .book-downloads:has(> :nth-child(2)),
+  .resource-action-row .uploaded-pdf-actions:has(> :nth-child(2)),
+  .resource-action-row .tract-actions:has(> :nth-child(2)) {
+    width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .resource-action-row .book-downloads:has(> :nth-child(2)) .button,
+  .resource-action-row .uploaded-pdf-actions:has(> :nth-child(2)) .button,
+  .resource-action-row .tract-actions:has(> :nth-child(2)) .button {
+    flex: 1 1 0;
+    justify-content: center;
+    min-width: 0;
+    padding-inline: 7px;
+    font-size: clamp(10px, 2.7vw, 12.5px);
+  }
+
+  #bible-66-book .resource-action-row .share-buttons,
+  #faith-basics-36-book .resource-action-row .share-buttons {
+    width: 100%;
+    flex: 0 0 100%;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(23, 63, 53, .1);
+  }
+
+  #faith-basics-36-book .book-downloads {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .video-action-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .video-action-row .share-buttons {
+    width: auto;
+    flex: 0 1 auto;
+  }
+}
+
+.free-book-section .ebook-cover-column .resource-action-row .share-buttons,
+.free-book-section #bible-66-book .ebook-cover-column .resource-action-row .share-buttons,
+.free-book-section #faith-basics-36-book .ebook-cover-column .resource-action-row .share-buttons,
+.free-book-section #missionary-book .ebook-cover-column .resource-action-row .share-buttons {
+  display: grid !important;
+  width: 100% !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  flex: initial !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .free-book-section .korean-book-card,
+  .free-book-section .classic-ebook-card,
+  .free-book-section .full-width-ebook-card,
+  .free-book-section .doctrines-of-grace-book-card.classic-ebook-card,
+  .free-book-section #bible-66-book.bible-66-book-card,
+  .free-book-section #missionary-book {
+    display: grid !important;
+    grid-template-columns: minmax(104px, 132px) minmax(0, 1fr) !important;
+    align-items: start;
+    gap: 14px;
+    padding: 15px;
+  }
+
+  .free-book-section .korean-book-cover,
+  .free-book-section .classic-ebook-card .korean-book-cover,
+  .free-book-section .full-width-ebook-card .korean-book-cover,
+  .free-book-section .doctrines-of-grace-book-card.classic-ebook-card .korean-book-cover,
+  .free-book-section #bible-66-book.bible-66-book-card .korean-book-cover,
+  .free-book-section #missionary-book .korean-book-cover {
+    width: min(100%, 118px) !important;
+    max-width: 118px !important;
+    margin: 0 auto !important;
+  }
+
+  .free-book-section #missionary-book .korean-book-cover {
+    width: min(100%, 128px) !important;
+    max-width: 128px !important;
+  }
+
+  .free-book-section .korean-book-card h2,
+  .free-book-section .classic-ebook-card h2,
+  .free-book-section #missionary-book h2 {
+    margin-top: 3px;
+    font-size: clamp(18px, 5vw, 23px);
+  }
+
+  .free-book-section .korean-book-card p:not(.type-pill),
+  .free-book-section .classic-ebook-card p:not(.type-pill),
+  .free-book-section #missionary-book p:not(.type-pill) {
+    font-size: clamp(13px, 3.4vw, 14.5px);
+    line-height: 1.55;
+  }
+
+  .free-book-section .ebook-cover-column .button,
+  .free-book-section .ebook-cover-column .share-button {
+    min-height: 32px;
+    padding-inline: 5px;
+    font-size: clamp(9.5px, 2.65vw, 11px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .button,
+  .resource-card,
+  .video-playlist-card,
+  .video-resource-feature,
+  .external-site-card,
+  .download-book-card,
+  .uploaded-pdf-card,
+  .tract-preview-card,
+  .course-series-card,
+  .course-selector,
+  .daily-source-card,
+  .devotional-reading-card,
+  .reading-day-strip a,
+  .share-button,
+  .brand,
+  .main-nav a,
+  .language-toggle,
+  .language-switch a,
+  .line-contact-banner,
+  .compact-contact-card,
+  .footer-facebook-link,
+  .footer-line-link,
+  .back-to-top-button {
+    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

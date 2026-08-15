@@ -1,0 +1,27 @@
+{
+  "name": "truth-for-life-and-mission",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro check && ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro preview",
+    "deploy": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro build && WRANGLER_LOG_PATH=.wrangler/logs wrangler deploy",
+    "db:local": "WRANGLER_LOG_PATH=.wrangler/logs wrangler d1 execute truth-for-life-and-mission --local --file=database/schema.sql",
+    "db:remote": "WRANGLER_LOG_PATH=.wrangler/logs wrangler d1 execute truth-for-life-and-mission --remote --file=database/schema.sql",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.9",
+    "@astrojs/cloudflare": "14.1.3",
+    "@cloudflare/workers-types": "5.20260719.1",
+    "astro": "7.1.1",
+    "jose": "6.2.3",
+    "typescript": "6.0.3",
+    "wrangler": "4.112.0"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

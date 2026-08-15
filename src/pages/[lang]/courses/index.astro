@@ -1,0 +1,296 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import ResourceCard from "../../../components/ResourceCard.astro";
+import ShareButtons from "../../../components/ShareButtons.astro";
+import { isLanguage } from "../../../lib/i18n";
+import { listPublishedResources } from "../../../lib/resources";
+
+const langParam = Astro.params.lang;
+if (!isLanguage(langParam)) return Astro.redirect("/th/courses/");
+const lang = langParam;
+const storedCourses = await listPublishedResources(lang, { type: "course", limit: 24 });
+const pageCopy = {
+  th: { title: "หลักสูตร", description: "เรียนอย่างเป็นขั้นตอนผ่านวิดีโอ YouTube ภายในเว็บไซต์ และดาวน์โหลดเอกสารประกอบได้ทันที", download: "ดาวน์โหลด PDF", playlistAction: "ดูเพลย์ลิสต์", more: "หลักสูตรเพิ่มเติม", chooseLesson: "เลือกบทเรียน", chooseTopicHint: "แตะชื่อหัวข้อเพื่อเปลี่ยนวิดีโอด้านบน", chooseLesson36: "คลิกเพื่อเลือกชม 1 ใน 36 บทเรียน" },
+  ko: { title: "강좌", description: "각 강좌의 유튜브 영상을 사이트 안에서 시청하고 바로 아래에서 강의 자료를 내려받을 수 있습니다.", download: "PDF 다운로드", playlistAction: "재생목록 보기", more: "추가 강좌", chooseLesson: "강좌 선택", chooseTopicHint: "강의 제목을 클릭하면 위 영상이 바뀝니다.", chooseLesson36: "클릭하여 36강 중 하나를 선택하여 보세요" },
+  en: { title: "Courses", description: "Watch each YouTube course inside the site and download its supporting materials directly below.", download: "Download PDF", playlistAction: "View playlist", more: "More courses", chooseLesson: "Choose a lesson", chooseTopicHint: "Click a lecture title to change the video above.", chooseLesson36: "Click to choose one of the 36 lessons" }
+} as const;
+const c = pageCopy[lang];
+const bookletTopics = {
+  th: [
+    "ข่าวประเสริฐคืออะไร",
+    "พระเจ้ามีจริงหรือ",
+    "การทรงทำให้ชอบธรรมและการบังเกิดใหม่",
+    "สำหรับผู้ที่มาโบสถ์เป็นครั้งแรก",
+    "ความเชื่อปฏิรูปคืออะไร",
+    "การชำระให้บริสุทธิ์และการประหารบาป",
+    "พันธกิจและมิชชันนารี"
+  ],
+  ko: [
+    "복음이란 무엇인가",
+    "하나님은 정말 존재하는가",
+    "칭의와 거듭남",
+    "교회에 처음 온 사람을 위하여",
+    "개혁신앙이란 무엇인가",
+    "성화와 죄 죽임",
+    "선교와 선교사"
+  ],
+  en: [
+    "What Is the Gospel?",
+    "Does God Really Exist?",
+    "Justification and Regeneration",
+    "For Those Visiting Church for the First Time",
+    "What Is Reformed Faith?",
+    "Sanctification and the Mortification of Sin",
+    "Mission and Missionaries"
+  ]
+} as const;
+const faithBasicsLessonMap = [
+  { th: "บทที่ 1 พระเจ้าคือใคร", ko: "1과 하나님은 누구신가", en: "Lesson 1 — Who Is God?" },
+  { th: "บทที่ 2 พระคัมภีร์คืออะไร", ko: "2과 성경은 무엇인가", en: "Lesson 2 — What Is the Bible?" },
+  { th: "บทที่ 3 ตรีเอกานุภาพ", ko: "3과 삼위일체", en: "Lesson 3 — The Trinity" },
+  { th: "บทที่ 4 พระเจ้าในฐานะผู้สร้าง", ko: "4과 창조주 하나님", en: "Lesson 4 — God as Creator" },
+  { th: "บทที่ 5 มนุษย์ถูกสร้างตามพระฉายาของพระเจ้า", ko: "5과 하나님의 형상대로 창조된 인간", en: "Lesson 5 — Humanity Created in God's Image" },
+  { th: "บทที่ 6 พระเจ้าทรงดูแลและปกครองทุกสิ่ง", ko: "6과 하나님은 모든 것을 돌보시고 다스리신다", en: "Lesson 6 — God Cares for and Rules All Things" },
+  { th: "บทที่ 7 ความบาปเข้ามาในโลกได้อย่างไร สู่ความไว้วางใจที่มั่นคง", ko: "7과 죄는 어떻게 세상에 들어왔는가", en: "Lesson 7 — How Sin Entered the World" },
+  { th: "บทที่ 8 ความบาปคืออะไร", ko: "8과 죄란 무엇인가", en: "Lesson 8 — What Is Sin?" },
+  { th: "บทที่ 9 ความบาปทำให้มนุษย์เป็นอย่างไร", ko: "9과 죄는 인간을 어떻게 만드는가", en: "Lesson 9 — What Sin Does to Humanity" },
+  { th: "บทที่ 10 มนุษย์ช่วยตนเองให้รอดได้ไหม", ko: "10과 인간은 스스로 구원할 수 있는가", en: "Lesson 10 — Can Human Beings Save Themselves?" },
+  { th: "บทที่ 11 พระเจ้าทรงสัญญาความรอดแก่คนบาป", ko: "11과 하나님은 죄인에게 구원을 약속하셨다", en: "Lesson 11 — God Promises Salvation to Sinners" },
+  { th: "บทที่ 12 พระเจ้าทรงรักษาประชากรของพระองค์ด้วยพันธสัญญา", ko: "12과 하나님은 언약으로 자기 백성을 지키신다", en: "Lesson 12 — God Keeps His People by Covenant" },
+  { th: "บทที่ 13 พระเยซูคริสต์คือใคร", ko: "13과 예수 그리스도는 누구신가", en: "Lesson 13 — Who Is Jesus Christ?" },
+  { th: "บทที่ 14 พระเยซูทรงเป็นพระเจ้าแท้", ko: "14과 예수님은 참 하나님이시다", en: "Lesson 14 — Jesus Is Truly God" },
+  { th: "บทที่ 15 พระเยซูทรงเป็นมนุษย์แท้", ko: "15과 예수님은 참 사람이시다", en: "Lesson 15 — Jesus Is Truly Man" },
+  { th: "บทที่ 16 พระเยซูทรงสิ้นพระชนม์เพื่อคนบาป", ko: "16과 예수님은 죄인을 위해 죽으셨다", en: "Lesson 16 — Jesus Died for Sinners" },
+  { th: "บทที่ 17 พระเยซูทรงเป็นขึ้นจากความตาย", ko: "17과 예수님은 죽음에서 부활하셨다", en: "Lesson 17 — Jesus Rose from the Dead" },
+  { th: "บทที่ 18 พระเยซูเสด็จขึ้นสู่สวรรค์", ko: "18과 예수님은 하늘로 올라가셨다", en: "Lesson 18 — Jesus Ascended into Heaven" },
+  { th: "บทที่ 19 แนวคิดพระคุณและความรอด", ko: "19과 은혜와 구원", en: "Lesson 19 — Grace and Salvation" },
+  { th: "บทที่ 20 ความรักที่ไม่มีเงื่อนไข", ko: "20과 조건 없는 사랑", en: "Lesson 20 — Unconditional Love" },
+  { th: "บทที่ 21 พระเจ้าทรงเรียกให้เกิดใหม่", ko: "21과 하나님은 거듭나게 부르신다", en: "Lesson 21 — God Calls Us to New Birth" },
+  { th: "บทที่ 22 การกลับใจและความเชื่อ", ko: "22과 회개와 믿음", en: "Lesson 22 — Repentance and Faith" },
+  { th: "บทที่ 23 การประกาศว่าเป็นคนชอบธรรม", ko: "23과 의롭다고 선언하심", en: "Lesson 23 — Declared Righteous" },
+  { th: "บทที่ 24 ฐานะบุตรและความบริสุทธิ์", ko: "24과 자녀 됨과 거룩함", en: "Lesson 24 — Adoption and Holiness" },
+  { th: "บทที่ 25 พระวิญญาณบริสุทธิ์ทำงานในเรา", ko: "25과 성령께서 우리 안에서 일하신다", en: "Lesson 25 — The Holy Spirit Works in Us" },
+  { th: "บทที่ 26 เราอธิษฐานต่อพระเจ้า", ko: "26과 우리는 하나님께 기도한다", en: "Lesson 26 — We Pray to God" },
+  { th: "บทที่ 27 อ่านและฟังพระวจนะ", ko: "27과 말씀을 읽고 듣는다", en: "Lesson 27 — Reading and Hearing the Word" },
+  { th: "บทที่ 28 เรารวมกันเป็นคริสตจักร", ko: "28과 우리는 교회로 모인다", en: "Lesson 28 — We Gather as the Church" },
+  { th: "บทที่ 29 เครื่องหมายแห่งพระสัญญา", ko: "29과 약속의 표징", en: "Lesson 29 — Signs of the Promise" },
+  { th: "บทที่ 30 การแบ่งปันข่าวประเสริฐ", ko: "30과 복음을 나눔", en: "Lesson 30 — Sharing the Gospel" },
+  { th: "บทที่ 31 ความหวังเมื่อเผชิญความตาย", ko: "31과 죽음 앞에서의 소망", en: "Lesson 31 — Hope in the Face of Death" },
+  { th: "บทที่ 32 พระเยซูคริสต์จะเสด็จมาอีก", ko: "32과 예수 그리스도께서 다시 오신다", en: "Lesson 32 — Jesus Christ Will Come Again" },
+  { th: "บทที่ 33 คนตายจะเป็นขึ้นมาอีก", ko: "33과 죽은 자들이 다시 살아난다", en: "Lesson 33 — The Dead Will Rise Again" },
+  { th: "บทที่ 34 การพิพากษาของพระเจ้า", ko: "34과 하나님의 심판", en: "Lesson 34 — The Judgment of God" },
+  { th: "บทที่ 35 ฟ้าสวรรค์และแผ่นดินโลกใหม่", ko: "35과 새 하늘과 새 땅", en: "Lesson 35 — The New Heavens and the New Earth" },
+  { th: "บทที่ 36 เราจะอยู่กับพระเจ้าตลอดไป", ko: "36과 우리는 하나님과 영원히 함께 산다", en: "Lesson 36 — We Will Live with God Forever" }
+] as const;
+const faithBasicsLessons = {
+  th: faithBasicsLessonMap.map((lesson) => lesson.th),
+  ko: faithBasicsLessonMap.map((lesson) => lesson.ko),
+  en: faithBasicsLessonMap.map((lesson) => lesson.en)
+} as const;
+const courses = [
+  {
+    id: "gospel-booklet",
+    title: lang === "th" ? "ข่าวประเสริฐและชีวิตคริสเตียนผ่าน 7 หัวข้อ" : lang === "ko" ? "7주제로 배우는 복음과 신앙생활" : "The Gospel and Christian Living in 7 Themes",
+    description: lang === "th"
+      ? "การบรรยายสรุปเนื้อหาจากหนังสือเล่มเล็กของมิชชันนารี Yongjin Choi"
+      : lang === "ko"
+        ? "갓플리징 소책자 내용을 요약하여 듣는 AI 해설"
+        : "A lecture summarizing the content of missionary Yongjin Choi’s booklets.",
+    topics: bookletTopics[lang],
+    selector: "topics",
+    hidePlaylistButton: true,
+    list: lang === "ko" ? "PLQfkvfFx6_tE" : "PLBIU2IwY7RrE",
+    materials: [
+      { label: lang === "th" ? "หนังสือประกอบการสอน PDF" : lang === "ko" ? "강의책자 PDF" : "Course Booklet PDF", href: `/${lang}/library/?type=book#what-is-the-gospel-booklet-series`, linkOnly: true, downloadStyle: true }
+    ]
+  },
+  {
+    id: "faith-basics",
+    title: lang === "th" ? "พื้นฐานความเชื่อคริสเตียน | 36 บทเรียน" : lang === "ko" ? "기독교 신앙의 기초 | 36과" : "Foundations of the Christian Faith | 36 Lessons",
+    description: lang === "th" ? "หลักสูตรศาสนศาสตร์ระบบที่เรียนรู้จากพระคัมภีร์" : lang === "ko" ? "AI 해설을 통해 쉽게 배우는 조직신학 강좌 / 아래 학생용 교사용 교재를 다운받으세요" : "A systematic theology course learned through Scripture",
+    list: "PLO59yy2hsXhs",
+    totalVideos: 36,
+    lessonPicker: faithBasicsLessons[lang],
+    hidePlaylistButton: true,
+    materials: [
+      { label: lang === "th" ? "หนังสือประกอบการสอน PDF" : lang === "ko" ? "강의책자 PDF" : "Course Booklet PDF", href: `/${lang}/library/?type=book#faith-basics-36-book`, linkOnly: true, downloadStyle: true }
+    ]
+  },
+  {
+    id: "essential-faith-questions",
+    title: lang === "th" ? "2 นาที ตอบคำถามความเชื่อ" : lang === "ko" ? "2분으로 답하는 신앙 질문" : "2-Minute Answers to Questions of Faith",
+    description: lang === "th" ? "เรียบเรียงจากพระคัมภีร์ โดยอ้างอิงหนังสือของ R.C. Sproul" : lang === "ko" ? "성경을 바탕으로 R.C. 스프로울의 책을 참고하여 정리한 강좌" : "Arranged from Scripture with reference to the books of R.C. Sproul.",
+    list: "PLBy7sYITdo3U",
+    totalVideos: 41,
+    materials: []
+  },
+  {
+    id: "north-bangkok-faith-qa",
+    title: lang === "th" ? "ถามตอบความเชื่อคริสเตียนอย่างเข้าใจง่าย" : lang === "ko" ? "쉽게 묻고 답하는 기독교 신앙" : "Simple Questions and Answers on Christian Faith",
+    description: lang === "th"
+      ? "วิดีโอถามตอบสั้น ๆ โดยศิริพงษ์ แยเบียง จากคริสตจักรนอร์ทกรุงเทพ (North Bangkok Church) ที่ช่วยอธิบายคำถามเกี่ยวกับความเชื่อคริสเตียนอย่างเรียบง่ายและชัดเจน"
+      : lang === "ko"
+        ? "North Bangkok Church의 ศิริพงษ์ แยเบียง 목사님이 기독교 신앙에 관한 질문들을 짧고 이해하기 쉽게 설명하는 영상 모음입니다."
+        : "Short Q&A videos by ศิริพงษ์ แยเบียง of North Bangkok Church, offering simple and clear answers to questions about the Christian faith.",
+    list: "PLH-atCeUrfGY",
+    materials: []
+  },
+  {
+    id: "bible-big-picture",
+    title: lang === "th" ? "บทเรียนสั้น ๆ เกี่ยวกับหัวข้อสำคัญของความเชื่อ" : lang === "ko" ? "신앙의 중요한 주제에 대한 짧은 강의" : "Short Lessons on Important Topics of Faith",
+    description: lang === "th" ? "มิชชันนารี David Voetberg อธิบายหัวข้อสำคัญต่าง ๆ เกี่ยวกับพระเจ้า พระเยซู พระคัมภีร์ และความเชื่อคริสเตียนอย่างชัดเจน" : lang === "ko" ? "David Voetberg 선교사가 하나님, 예수님, 성경과 기독교 신앙에 관한 여러 중요한 주제에 대해 명확하게 설명합니다." : "Missionary David Voetberg clearly explains important topics concerning God, Jesus, the Bible, and the Christian faith.",
+    list: "PLxUrp4sYoRfQLR_XosTX6XYME5KhZDW8W",
+    materials: []
+  }
+];
+---
+
+<SiteLayout lang={lang} current="courses" title={c.title} description={c.description}>
+  <header class="page-heading container">
+    <p class="eyebrow">COURSES IN THAI</p>
+    {lang === "th" && <h1>{c.title}</h1>}
+  </header>
+  <section class="container course-hub">
+    <div class="course-series-list">
+      {courses.map((course) => {
+        const isSelectableCourse = course.selector === "topics" || course.lessonPicker?.length;
+        const embedUrl = "video" in course
+          ? `https://www.youtube.com/embed/${course.video}?rel=0&listType=playlist&list=${course.list}`
+          : `https://www.youtube.com/embed?listType=playlist&list=${course.list}`;
+        const playerUrl = `${embedUrl}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`;
+        return (
+          <article class="course-series-card" id={course.id}>
+            <div class="course-series-heading"><span class="type-pill">YouTube Playlist</span><h2>{course.title}</h2>{course.description && <p>{course.description}</p>}</div>
+            <div class="video-frame"><iframe id={`course-player-${course.id}`} class:list={{ "random-course-player": !isSelectableCourse, "selectable-course-player": isSelectableCourse }} data-playlist={course.list} data-course-id={course.id} data-total-videos={course.totalVideos ?? undefined} src={playerUrl} title={course.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            {course.selector === "topics" && course.topics?.length && (
+              <div class="course-topic-picker">
+                <p>{c.chooseTopicHint}</p>
+                <ol class="course-topic-list course-topic-list-below-video selectable-topic-list" aria-label={c.chooseLesson}>
+                  {course.topics.map((topic, index) => <li><button type="button" class="course-video-choice" data-course-target={course.id} data-video-index={index}>{topic}</button></li>)}
+                </ol>
+              </div>
+            )}
+            {course.lessonPicker?.length && (
+              <details class="course-lesson-picker">
+                <summary><span>{c.chooseLesson36}</span></summary>
+                <div class="course-lesson-grid" aria-label={c.chooseLesson}>
+                  {course.lessonPicker.map((lesson, index) => <button type="button" class="course-video-choice" data-course-target={course.id} data-video-index={index}>{lesson}</button>)}
+                </div>
+              </details>
+            )}
+            <div class="course-youtube-actions video-action-row">
+              {course.materials.length > 0 && course.materials.map((material) => (
+                <a class:list={["button", "course-inline-download", { "download-button": !("linkOnly" in material && material.linkOnly) || ("downloadStyle" in material && material.downloadStyle), secondary: ("linkOnly" in material && material.linkOnly) && !("downloadStyle" in material && material.downloadStyle) }]} href={material.href} download={"linkOnly" in material && material.linkOnly ? undefined : true}>{"linkOnly" in material && material.linkOnly ? material.label : `${c.download} · ${material.label}`}</a>
+              ))}
+              {!course.hidePlaylistButton && <a class="button secondary playlist-link-button course-playlist-button" href={`https://www.youtube.com/playlist?list=${course.list}`} target="_blank" rel="noopener noreferrer" data-course-playlist-link>{c.playlistAction} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>}
+              <ShareButtons lang={lang} url={`https://www.youtube.com/playlist?list=${course.list}`} title={course.title} />
+            </div>
+          </article>
+        );
+      })}
+    </div>
+    {lang !== "th" && storedCourses.length > 0 && <section class="section" style="padding-bottom:0"><div class="section-heading"><h2>{c.more}</h2></div><div class="resource-grid">{storedCourses.map((course) => <ResourceCard resource={course} lang={lang} />)}</div></section>}
+  </section>
+</SiteLayout>
+
+<script is:inline>
+  (() => {
+    const frames = Array.from(document.querySelectorAll("iframe[data-playlist]"));
+    if (!frames.length) return;
+    const playersByCourse = new Map();
+
+    const setActiveChoice = (courseId, index) => {
+      document.querySelectorAll(`.course-video-choice[data-course-target="${CSS.escape(courseId)}"]`).forEach((button) => {
+        button.classList.toggle("active", Number(button.dataset.videoIndex) === index);
+      });
+    };
+
+    const cuePlaylistIndex = (player, playlistId, index) => {
+      player.cuePlaylist({ list: playlistId, listType: "playlist", index, startSeconds: 0 });
+    };
+
+    const cueCourseIndex = (courseId, index) => {
+      const record = playersByCourse.get(courseId);
+      if (!record) return;
+      cuePlaylistIndex(record.player, record.playlistId, index);
+      setActiveChoice(courseId, index);
+    };
+
+    const randomizePlaylist = (player, playlistId, fallbackCount = 0, attempt = 0) => {
+      const playlist = player.getPlaylist?.() ?? [];
+      const availableCount = playlist.length || fallbackCount;
+      if (availableCount) {
+        const randomIndex = Math.floor(Math.random() * availableCount);
+        cuePlaylistIndex(player, playlistId, randomIndex);
+        const selectedVideoId = playlist[randomIndex];
+        const openLink = player.getIframe?.()?.closest("article")?.querySelector("[data-course-playlist-link]");
+        if (openLink && selectedVideoId) openLink.href = `https://www.youtube.com/watch?v=${selectedVideoId}&list=${playlistId}&index=${randomIndex + 1}`;
+        return;
+      }
+      if (attempt < 12) window.setTimeout(() => randomizePlaylist(player, playlistId, fallbackCount, attempt + 1), 250);
+    };
+
+    const randomizeSelectableCourse = (player, playlistId, courseId, fallbackCount = 0, attempt = 0) => {
+      const choices = Array.from(document.querySelectorAll(`.course-video-choice[data-course-target="${CSS.escape(courseId)}"]`));
+      const playlist = player.getPlaylist?.() ?? [];
+      const availableCount = playlist.length || fallbackCount || choices.length;
+      if (availableCount) {
+        const randomIndex = Math.floor(Math.random() * availableCount);
+        cuePlaylistIndex(player, playlistId, randomIndex);
+        setActiveChoice(courseId, randomIndex);
+        return;
+      }
+      if (attempt < 12) window.setTimeout(() => randomizeSelectableCourse(player, playlistId, courseId, fallbackCount, attempt + 1), 250);
+    };
+
+    const initializePlayers = () => {
+      frames.forEach((frame) => {
+        if (!(frame instanceof HTMLIFrameElement) || frame.dataset.randomized === "true") return;
+        frame.dataset.randomized = "true";
+        const playlistId = frame.dataset.playlist;
+        const courseId = frame.dataset.courseId;
+        const totalVideos = Number(frame.dataset.totalVideos ?? 0);
+        if (!playlistId) return;
+        new window.YT.Player(frame, {
+          events: {
+            onReady: (event) => {
+              if (courseId) playersByCourse.set(courseId, { player: event.target, playlistId });
+              if (frame.classList.contains("selectable-course-player")) {
+                if (courseId) randomizeSelectableCourse(event.target, playlistId, courseId, totalVideos);
+                return;
+              }
+              randomizePlaylist(event.target, playlistId, totalVideos);
+            }
+          }
+        });
+      });
+    };
+
+    document.addEventListener("click", (event) => {
+      const button = event.target?.closest?.(".course-video-choice[data-course-target][data-video-index]");
+      if (!button) return;
+      const courseId = button.dataset.courseTarget;
+      const index = Number(button.dataset.videoIndex ?? 0);
+      if (!courseId || Number.isNaN(index)) return;
+      cueCourseIndex(courseId, index);
+      const article = button.closest("article");
+      article?.querySelector(".video-frame")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    if (window.YT?.Player) {
+      initializePlayers();
+      return;
+    }
+
+    const previousReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof previousReady === "function") previousReady();
+      initializePlayers();
+    };
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const apiScript = document.createElement("script");
+      apiScript.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(apiScript);
+    }
+  })();
+</script>
