@@ -5,7 +5,7 @@ import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { t as renderScript } from "./script_BZVrP_O2.mjs";
 import { n as isLanguage, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_CgxsFlnQ.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { t as $$ResourceCard } from "./ResourceCard_D6Gf4t_z.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";

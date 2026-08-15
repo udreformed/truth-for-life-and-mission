@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_CgxsFlnQ.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
 import { t as localizedGospelDevotionalBody } from "./devotional-text_CMnN6j2p.mjs";
