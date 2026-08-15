@@ -1018,6 +1018,35 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			pdf: "/downloads/cambridge-declaration-en.pdf"
 		}
 	}[lang];
+	const chicagoStatement = {
+		th: {
+			badge: "เอกสารหลักคำสอน · PDF",
+			title: "คำแถลงชิคาโกว่าด้วยความไร้ข้อผิดพลาดของพระคัมภีร์",
+			description: "คำแถลงปี 1978 ที่อธิบายอย่างเป็นระบบถึงการดลใจ สิทธิอำนาจ ความจริง และความไร้ข้อผิดพลาดของพระคัมภีร์ โดยยืนยันว่าพระคัมภีร์ซึ่งพระเจ้าประทานนั้นเป็นพระวจนะที่เชื่อถือได้และเป็นจริงในต้นฉบับ",
+			attribution: "The Chicago Statement on Biblical Inerrancy · 1978",
+			preview: "ดูตัวอย่างและดาวน์โหลด",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-th.pdf",
+			cover: "/images/chicago-statement-cover-th.jpg"
+		},
+		ko: {
+			badge: "교리 문서 · PDF",
+			title: "성경 무오에 대한 시카고 선언",
+			description: "1978년 복음주의 신학자와 목회자들이 성경의 영감·권위·진실성과 무오성을 분명히 밝힌 신앙 선언문입니다. 성경이 하나님이 주신 말씀으로서 원문에서 참되고 신뢰할 수 있음을 조항별로 설명합니다.",
+			attribution: "The Chicago Statement on Biblical Inerrancy · 1978",
+			preview: "미리보기 및 다운로드",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-ko.pdf",
+			cover: "/images/chicago-statement-cover-ko.jpg"
+		},
+		en: {
+			badge: "Doctrine document · PDF",
+			title: "The Chicago Statement on Biblical Inerrancy · 1978",
+			description: "A 1978 evangelical statement explaining the inspiration, authority, truthfulness, and inerrancy of Scripture through a summary, articles of affirmation and denial, and exposition.",
+			attribution: "Chicago Summit · 1978",
+			preview: "Preview and download",
+			pdf: "/downloads/chicago-statement-biblical-inerrancy-en.pdf",
+			cover: "/images/chicago-statement-cover-en.jpg"
+		}
+	}[lang];
 	const quest = {
 		th: {
 			badge: "ภาษาไทย · แผ่นพับประกาศ · สำหรับพิมพ์",
@@ -2078,6 +2107,10 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"lang": lang,
 		"url": uploadedPdf.downloads[0]?.href ?? `/${lang}/library/?type=pdf#new-city-catechism`,
 		"title": uploadedPdf.title
+	})}</div></article><article class="uploaded-pdf-card chicago-statement-card" id="chicago-statement"><p class="type-pill">${chicagoStatement.badge}</p><img class="uploaded-pdf-cover"${addAttribute(chicagoStatement.cover, "src")}${addAttribute(chicagoStatement.title, "alt")} loading="lazy" decoding="async"><h2>${chicagoStatement.title}</h2><p>${chicagoStatement.description}</p><p class="source-attribution">${chicagoStatement.attribution}</p><div class="resource-action-row"><div class="uploaded-pdf-actions"><a class="button secondary"${addAttribute(chicagoStatement.pdf, "href")} data-pdf-preview${addAttribute(chicagoStatement.title, "data-pdf-preview-title")}${addAttribute(chicagoStatement.pdf.split("/").pop(), "download")}>${chicagoStatement.preview} ↗</a></div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+		"lang": lang,
+		"url": chicagoStatement.pdf,
+		"title": chicagoStatement.title
 	})}</div></article><article class="uploaded-pdf-card doctrines-of-grace-pdf-card" id="doctrines-of-grace-pdf"><p class="type-pill">${doctrinesOfGracePdfCard.badge}</p><h2>${doctrinesOfGracePdfCard.title}</h2><img class="uploaded-pdf-cover"${addAttribute(doctrinesOfGracePdfCard.cover, "src")}${addAttribute(doctrinesOfGracePdfCard.title, "alt")} loading="lazy"><p>${doctrinesOfGracePdfCard.description}</p><div class="resource-action-row"><div class="uploaded-pdf-actions">${doctrinesOfGracePdfCard.downloads.map((download) => renderTemplate`<a class="button download-button"${addAttribute(download.href, "href")} download>${download.action}</a>`)}</div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": lang,
 		"url": doctrinesOfGracePdfCard.downloads[0]?.href ?? `/${lang}/library/?type=pdf#doctrines-of-grace-pdf`,
