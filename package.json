@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro dev",
-    "build": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro check && ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro build",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro check && ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro build && node scripts/prepare-cloudflare-pages.mjs",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro preview",
     "deploy": "ASTRO_TELEMETRY_DISABLED=1 WRANGLER_LOG_PATH=.wrangler/logs astro build && WRANGLER_LOG_PATH=.wrangler/logs wrangler deploy",
     "db:local": "WRANGLER_LOG_PATH=.wrangler/logs wrangler d1 execute truth-for-life-and-mission --local --file=database/schema.sql",
