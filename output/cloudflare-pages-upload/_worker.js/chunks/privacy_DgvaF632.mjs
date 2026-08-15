@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_Gc4_WH87.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
 //#region src/pages/[lang]/privacy.astro
 var privacy_exports = /* @__PURE__ */ __exportAll({
 	default: () => $$Privacy,

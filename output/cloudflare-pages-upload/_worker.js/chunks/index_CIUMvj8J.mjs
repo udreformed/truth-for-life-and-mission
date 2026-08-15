@@ -5,7 +5,7 @@ import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { t as renderScript } from "./script_BZVrP_O2.mjs";
 import { n as isLanguage, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_Gc4_WH87.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { t as $$ResourceCard } from "./ResourceCard_D6Gf4t_z.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
@@ -1065,25 +1065,25 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 				title: "ชีวิตที่มีไม้กางเขนเป็นศูนย์กลาง",
 				author: "ซี. เจ. มาเฮนนีย์ (C. J. Mahaney)",
 				description: "หนังสือภาษาไทยที่ช่วยให้ข่าวประเสริฐและไม้กางเขนเป็นศูนย์กลางของชีวิตคริสเตียนทุกวัน",
-				cover: "/images/cross-centered-life-th-cover.png"
+				cover: "/images/cross-centered-life-th-cover-card.jpg"
 			},
 			{
 				title: "พระกิตติคุณของพระเยซูคริสต์",
 				author: "พอล วอชเชอร์ (Paul Washer)",
 				description: "หนังสือภาษาไทยที่อธิบายข่าวประเสริฐผ่านความบริสุทธิ์ของพระเจ้า ความบาปของมนุษย์ และการไถ่ในพระเยซูคริสต์",
-				cover: "/images/gospel-of-jesus-christ-th-cover.png"
+				cover: "/images/gospel-of-jesus-christ-th-cover-card.jpg"
 			},
 			{
 				title: "ห้าประเด็น",
 				author: "จอห์น ไพเพอร์ (John Piper)",
 				description: "หนังสือภาษาไทยที่นำเสนอหลักคำสอนแห่งพระคุณห้าประการและชี้ให้เห็นพระสิริแห่งพระคุณของพระเจ้า",
-				cover: "/images/five-points-th-cover.png"
+				cover: "/images/five-points-th-cover-card.jpg"
 			},
 			{
 				title: "คริสต์ศาสนาแบบเวรกรรม",
 				author: "อี. ดี. เบิร์นส์ (E. D. Burns)",
 				description: "ชี้ให้เห็นว่าสันติสุขที่มั่นคงไม่ได้มาจากการพยายามทำดีเพื่อควบคุมชีวิต แต่มาจากการพักพิงในพระคริสต์และความรักของพระเจ้า",
-				cover: "/images/karmic-christianity-th-cover.png"
+				cover: "/images/karmic-christianity-th-cover-card.jpg"
 			}
 		],
 		ko: [
@@ -1091,25 +1091,25 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 				title: "십자가 중심의 삶 (태국어판)",
 				author: "C. J. 메허니",
 				description: "복음과 십자가를 매일의 그리스도인 삶의 중심에 두도록 돕는 태국어 도서입니다.",
-				cover: "/images/cross-centered-life-th-cover.png"
+				cover: "/images/cross-centered-life-th-cover-card.jpg"
 			},
 			{
 				title: "예수 그리스도의 복음 (태국어판)",
 				author: "폴 워셔",
 				description: "하나님의 거룩하심과 인간의 죄, 예수 그리스도의 구속을 통해 복음을 설명하는 태국어 도서입니다.",
-				cover: "/images/gospel-of-jesus-christ-th-cover.png"
+				cover: "/images/gospel-of-jesus-christ-th-cover-card.jpg"
 			},
 			{
 				title: "다섯 가지 핵심 교리 (태국어판)",
 				author: "존 파이퍼",
 				description: "은혜의 다섯 교리를 성경적으로 설명하며 하나님의 은혜와 영광을 바라보게 하는 태국어 도서입니다.",
-				cover: "/images/five-points-th-cover.png"
+				cover: "/images/five-points-th-cover-card.jpg"
 			},
 			{
 				title: "업보적 기독교 (태국어판)",
 				author: "E. D. 번스",
 				description: "더 잘해야 복을 얻는다는 두려움의 순환에서 벗어나, 그리스도께서 이루신 평안과 하나님의 완전한 사랑 안에서 쉬도록 안내합니다.",
-				cover: "/images/karmic-christianity-th-cover.png"
+				cover: "/images/karmic-christianity-th-cover-card.jpg"
 			}
 		],
 		en: [
@@ -1117,25 +1117,25 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 				title: "The Cross Centered Life — Thai Edition",
 				author: "C. J. Mahaney",
 				description: "A Thai book encouraging Christians to keep the Gospel and the cross at the center of daily life.",
-				cover: "/images/cross-centered-life-th-cover.png"
+				cover: "/images/cross-centered-life-th-cover-card.jpg"
 			},
 			{
 				title: "The Gospel of Jesus Christ — Thai Edition",
 				author: "Paul Washer",
 				description: "A Thai presentation of the Gospel through God's holiness, human sin, and redemption in Jesus Christ.",
-				cover: "/images/gospel-of-jesus-christ-th-cover.png"
+				cover: "/images/gospel-of-jesus-christ-th-cover-card.jpg"
 			},
 			{
 				title: "Five Points — Thai Edition",
 				author: "John Piper",
 				description: "A Thai introduction to the five doctrines of grace and the glory of God's sovereign grace.",
-				cover: "/images/five-points-th-cover.png"
+				cover: "/images/five-points-th-cover-card.jpg"
 			},
 			{
 				title: "Karmic Christianity — Thai Edition",
 				author: "E. D. Burns",
 				description: "A guide out of the fearful cycle of trying to earn blessing, pointing readers to the lasting peace secured by Christ and God's perfect love.",
-				cover: "/images/karmic-christianity-th-cover.png"
+				cover: "/images/karmic-christianity-th-cover-card.jpg"
 			}
 		]
 	}[lang];
@@ -2013,7 +2013,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"button",
 		"download-button",
 		{ secondary: index > 0 }
-	], "class:list")}${addAttribute(download.href, "href")} download>${download.label}</a>`)}</div></div></div><div class="korean-book-copy"><p class="type-pill">${missionaryBook.badge}</p><h2 id="free-book-heading">${missionaryBook.title}</h2><p class="korean-book-author">${missionaryBook.author}</p><p>${missionaryBook.description}</p>${missionaryBook.purchaseHref && renderTemplate`<p class="book-text-purchase-link"><a${addAttribute(missionaryBook.purchaseHref, "href")} target="_blank" rel="noopener noreferrer">${missionaryBook.purchaseLabel} <span aria-hidden="true">↗</span></a></p>`}</div></article>`}</div></section>`}${type === "pdf" && renderTemplate`<section class="uploaded-pdf-section"${addAttribute(a.pdf, "aria-label")}><div class="pdf-resource-group pdf-resource-group-tracts"><header class="pdf-resource-group-heading"><h2>${pdfGroups.tracts}</h2></header><article class="tract-preview-card" id="quest-for-joy" aria-labelledby="quest-for-joy-title"><div class="tract-preview-copy"><p class="type-pill">${quest.badge}</p><h2 id="quest-for-joy-title">${quest.title}</h2><p class="tract-author">${quest.author}</p><p>${quest.description}</p><div class="resource-action-row"><div class="tract-actions"><a class="button download-button" href="/downloads/quest-for-joy-th.pdf" download>${quest.download}</a>${lang !== "th" && renderTemplate`<a class="button secondary" href="https://www.desiringgod.org/articles/quest-for-joy?lang=th" target="_blank" rel="noopener noreferrer">${quest.source} ↗</a>`}</div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	], "class:list")}${addAttribute(download.href, "href")} download>${download.label}</a>`)}</div></div></div><div class="korean-book-copy"><p class="type-pill">${missionaryBook.badge}</p><h2 id="missionary-book-heading">${missionaryBook.title}</h2><p class="korean-book-author">${missionaryBook.author}</p><p>${missionaryBook.description}</p>${missionaryBook.purchaseHref && renderTemplate`<p class="book-text-purchase-link"><a${addAttribute(missionaryBook.purchaseHref, "href")} target="_blank" rel="noopener noreferrer">${missionaryBook.purchaseLabel} <span aria-hidden="true">↗</span></a></p>`}</div></article>`}</div></section>`}${type === "pdf" && renderTemplate`<section class="uploaded-pdf-section"${addAttribute(a.pdf, "aria-label")}><div class="pdf-resource-group pdf-resource-group-tracts"><header class="pdf-resource-group-heading"><h2>${pdfGroups.tracts}</h2></header><article class="tract-preview-card" id="quest-for-joy" aria-labelledby="quest-for-joy-title"><div class="tract-preview-copy"><p class="type-pill">${quest.badge}</p><h2 id="quest-for-joy-title">${quest.title}</h2><p class="tract-author">${quest.author}</p><p>${quest.description}</p><div class="resource-action-row"><div class="tract-actions"><a class="button download-button" href="/downloads/quest-for-joy-th.pdf" download>${quest.download}</a>${lang !== "th" && renderTemplate`<a class="button secondary" href="https://www.desiringgod.org/articles/quest-for-joy?lang=th" target="_blank" rel="noopener noreferrer">${quest.source} ↗</a>`}</div>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": lang,
 		"url": "https://www.desiringgod.org/articles/quest-for-joy?lang=th",
 		"title": quest.title

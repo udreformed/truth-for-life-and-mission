@@ -3,7 +3,7 @@ globalThis.process.env ??= {};
 import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_Gc4_WH87.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { a as shiftDateKey, i as parseDateKey, n as getAnnualReadingDay, r as getBangkokDateKey, t as formatDateKey } from "./annual-bible-reading_CAapI2Zc.mjs";
 //#region src/pages/ko/bible-reading/365.astro
@@ -52,7 +52,7 @@ var $$365 = createComponent(($$result, $$props, $$slots) => {
 		"title": "365일 성경읽기",
 		"description": "365일 매일 약 15분 분량의 구약과 신약 본문을 읽으며 1년에 성경전체를 통독하도록 계획된 성경읽기표입니다.",
 		"data-astro-cid-kkkfwxgs": true
-	}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<header class="page-heading container annual-heading" data-astro-cid-kkkfwxgs><p class="eyebrow" data-astro-cid-kkkfwxgs>날짜에 맞춰 읽는 1년 1독</p><h1 data-astro-cid-kkkfwxgs>365일 성경읽기</h1></header><div class="container section annual-reading-page" style="padding-top:0" data-astro-cid-kkkfwxgs><section class="reading-today-panel annual-today-panel" aria-labelledby="annual-date-heading" data-astro-cid-kkkfwxgs><div class="annual-title-row" data-astro-cid-kkkfwxgs><div class="annual-share-cluster" aria-label="365일 성경통독 공유" data-astro-cid-kkkfwxgs><img class="annual-share-logo" src="/images/annual-bible-reading-365-logo.png" alt="365 성경통독" loading="lazy" data-astro-cid-kkkfwxgs>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<header class="page-heading container annual-heading" data-astro-cid-kkkfwxgs><p class="eyebrow" data-astro-cid-kkkfwxgs>날짜에 맞춰 읽는 1년 1독</p><h1 data-astro-cid-kkkfwxgs>365일 성경읽기</h1></header><div class="container section annual-reading-page" style="padding-top:0" data-astro-cid-kkkfwxgs><section class="reading-today-panel annual-today-panel" aria-labelledby="annual-date-heading" data-astro-cid-kkkfwxgs><div class="annual-title-row" data-astro-cid-kkkfwxgs><div class="annual-share-cluster" aria-label="365일 성경통독 공유" data-astro-cid-kkkfwxgs><img class="annual-share-logo" src="/images/annual-bible-reading-365-logo-ui.png" alt="365 성경통독" loading="lazy" decoding="async" data-astro-cid-kkkfwxgs>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": "ko",
 		"url": shareUrl,
 		"title": shareTitle,

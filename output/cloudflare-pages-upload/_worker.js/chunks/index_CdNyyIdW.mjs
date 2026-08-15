@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate, h as maybeRenderHead, i as renderComponent, v as defineScriptVars } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_Gc4_WH87.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { a as shiftDateKey, i as parseDateKey, n as getAnnualReadingDay, t as formatDateKey } from "./annual-bible-reading_CAapI2Zc.mjs";
 import { t as getLocalizedReadingSummary } from "./reading-summaries_BzbQjcxt.mjs";
@@ -36,7 +36,7 @@ var $$AnnualBibleReadingPanel = createComponent(($$result, $$props, $$slots) => 
 	const shareUrl = `/ko/bible-reading/?plan=365&date=${selectedKey}`;
 	const shareTitle = `365일 성경통독 · ${dateLabel}`;
 	const shareDescription = `오늘 본문: 구약 ${reading.oldTestament}, 신약 ${reading.newTestament}`;
-	return renderTemplate`${maybeRenderHead($$result)}<section class="reading-today-panel annual-today-panel" aria-labelledby="annual-date-heading" data-astro-cid-canlanos><div class="annual-title-row" data-astro-cid-canlanos><div class="annual-share-cluster" aria-label="365일 성경통독 공유" data-astro-cid-canlanos><img class="annual-share-logo" src="/images/annual-bible-reading-365-logo.png" alt="365 성경통독" loading="lazy" data-astro-cid-canlanos>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+	return renderTemplate`${maybeRenderHead($$result)}<section class="reading-today-panel annual-today-panel" aria-labelledby="annual-date-heading" data-astro-cid-canlanos><div class="annual-title-row" data-astro-cid-canlanos><div class="annual-share-cluster" aria-label="365일 성경통독 공유" data-astro-cid-canlanos><img class="annual-share-logo" src="/images/annual-bible-reading-365-logo-ui.png" alt="365 성경통독" loading="lazy" decoding="async" data-astro-cid-canlanos>${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 		"lang": "ko",
 		"url": shareUrl,
 		"title": shareTitle,

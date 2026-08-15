@@ -10,9 +10,9 @@ if (!isLanguage(langParam)) return Astro.redirect("/th/courses/");
 const lang = langParam;
 const storedCourses = await listPublishedResources(lang, { type: "course", limit: 24 });
 const pageCopy = {
-  th: { title: "หลักสูตร", description: "เรียนอย่างเป็นขั้นตอนผ่านวิดีโอ YouTube ภายในเว็บไซต์ และดาวน์โหลดเอกสารประกอบได้ทันที", download: "ดาวน์โหลด PDF", playlistAction: "ดูเพลย์ลิสต์", more: "หลักสูตรเพิ่มเติม", chooseLesson: "เลือกบทเรียน", chooseTopicHint: "แตะชื่อหัวข้อเพื่อเปลี่ยนวิดีโอด้านบน", chooseLesson36: "คลิกเพื่อเลือกชม 1 ใน 36 บทเรียน" },
-  ko: { title: "강좌", description: "각 강좌의 유튜브 영상을 사이트 안에서 시청하고 바로 아래에서 강의 자료를 내려받을 수 있습니다.", download: "PDF 다운로드", playlistAction: "재생목록 보기", more: "추가 강좌", chooseLesson: "강좌 선택", chooseTopicHint: "강의 제목을 클릭하면 위 영상이 바뀝니다.", chooseLesson36: "클릭하여 36강 중 하나를 선택하여 보세요" },
-  en: { title: "Courses", description: "Watch each YouTube course inside the site and download its supporting materials directly below.", download: "Download PDF", playlistAction: "View playlist", more: "More courses", chooseLesson: "Choose a lesson", chooseTopicHint: "Click a lecture title to change the video above.", chooseLesson36: "Click to choose one of the 36 lessons" }
+  th: { title: "หลักสูตร", description: "เรียนอย่างเป็นขั้นตอนผ่านวิดีโอ YouTube ภายในเว็บไซต์ และดาวน์โหลดเอกสารประกอบได้ทันที", download: "ดาวน์โหลด PDF", playlistAction: "ดูเพลย์ลิสต์", more: "หลักสูตรเพิ่มเติม", chooseLesson: "เลือกบทเรียน", chooseLesson36: "คลิกเพื่อเลือกชม 1 ใน 36 บทเรียน" },
+  ko: { title: "강좌", description: "각 강좌의 유튜브 영상을 사이트 안에서 시청하고 바로 아래에서 강의 자료를 내려받을 수 있습니다.", download: "PDF 다운로드", playlistAction: "재생목록 보기", more: "추가 강좌", chooseLesson: "강좌 선택", chooseLesson36: "클릭하여 36강 중 하나를 선택하여 보세요" },
+  en: { title: "Courses", description: "Watch each YouTube course inside the site and download its supporting materials directly below.", download: "Download PDF", playlistAction: "View playlist", more: "More courses", chooseLesson: "Choose a lesson", chooseLesson36: "Click to choose one of the 36 lessons" }
 } as const;
 const c = pageCopy[lang];
 const bookletTopics = {
@@ -164,7 +164,6 @@ const courses = [
             <div class="video-frame"><iframe id={`course-player-${course.id}`} class:list={{ "random-course-player": !isSelectableCourse, "selectable-course-player": isSelectableCourse }} data-playlist={course.list} data-course-id={course.id} data-total-videos={course.totalVideos ?? undefined} src={playerUrl} title={course.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
             {course.selector === "topics" && course.topics?.length && (
               <div class="course-topic-picker">
-                <p>{c.chooseTopicHint}</p>
                 <ol class="course-topic-list course-topic-list-below-video selectable-topic-list" aria-label={c.chooseLesson}>
                   {course.topics.map((topic, index) => <li><button type="button" class="course-video-choice" data-course-target={course.id} data-video-index={index}>{topic}</button></li>)}
                 </ol>

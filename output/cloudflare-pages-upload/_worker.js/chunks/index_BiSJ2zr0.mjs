@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_Gc4_WH87.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_jCvr0Ls5.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
 import { t as $$ResourceCard } from "./ResourceCard_D6Gf4t_z.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
@@ -33,7 +33,6 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			playlistAction: "ดูเพลย์ลิสต์",
 			more: "หลักสูตรเพิ่มเติม",
 			chooseLesson: "เลือกบทเรียน",
-			chooseTopicHint: "แตะชื่อหัวข้อเพื่อเปลี่ยนวิดีโอด้านบน",
 			chooseLesson36: "คลิกเพื่อเลือกชม 1 ใน 36 บทเรียน"
 		},
 		ko: {
@@ -43,7 +42,6 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			playlistAction: "재생목록 보기",
 			more: "추가 강좌",
 			chooseLesson: "강좌 선택",
-			chooseTopicHint: "강의 제목을 클릭하면 위 영상이 바뀝니다.",
 			chooseLesson36: "클릭하여 36강 중 하나를 선택하여 보세요"
 		},
 		en: {
@@ -53,7 +51,6 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			playlistAction: "View playlist",
 			more: "More courses",
 			chooseLesson: "Choose a lesson",
-			chooseTopicHint: "Click a lecture title to change the video above.",
 			chooseLesson36: "Click to choose one of the 36 lessons"
 		}
 	}[lang];
@@ -338,7 +335,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		return renderTemplate`<article class="course-series-card"${addAttribute(course.id, "id")}><div class="course-series-heading"><span class="type-pill">YouTube Playlist</span><h2>${course.title}</h2>${course.description && renderTemplate`<p>${course.description}</p>`}</div><div class="video-frame"><iframe${addAttribute(`course-player-${course.id}`, "id")}${addAttribute({
 			"random-course-player": !isSelectableCourse,
 			"selectable-course-player": isSelectableCourse
-		}, "class:list")}${addAttribute(course.list, "data-playlist")}${addAttribute(course.id, "data-course-id")}${addAttribute(course.totalVideos ?? void 0, "data-total-videos")}${addAttribute(playerUrl, "src")}${addAttribute(course.title, "title")} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${course.selector === "topics" && course.topics?.length && renderTemplate`<div class="course-topic-picker"><p>${c.chooseTopicHint}</p><ol class="course-topic-list course-topic-list-below-video selectable-topic-list"${addAttribute(c.chooseLesson, "aria-label")}>${course.topics.map((topic, index) => renderTemplate`<li><button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${topic}</button></li>`)}</ol></div>`}${course.lessonPicker?.length && renderTemplate`<details class="course-lesson-picker"><summary><span>${c.chooseLesson36}</span></summary><div class="course-lesson-grid"${addAttribute(c.chooseLesson, "aria-label")}>${course.lessonPicker.map((lesson, index) => renderTemplate`<button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${lesson}</button>`)}</div></details>`}<div class="course-youtube-actions video-action-row">${course.materials.length > 0 && course.materials.map((material) => renderTemplate`<a${addAttribute([
+		}, "class:list")}${addAttribute(course.list, "data-playlist")}${addAttribute(course.id, "data-course-id")}${addAttribute(course.totalVideos ?? void 0, "data-total-videos")}${addAttribute(playerUrl, "src")}${addAttribute(course.title, "title")} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${course.selector === "topics" && course.topics?.length && renderTemplate`<div class="course-topic-picker"><ol class="course-topic-list course-topic-list-below-video selectable-topic-list"${addAttribute(c.chooseLesson, "aria-label")}>${course.topics.map((topic, index) => renderTemplate`<li><button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${topic}</button></li>`)}</ol></div>`}${course.lessonPicker?.length && renderTemplate`<details class="course-lesson-picker"><summary><span>${c.chooseLesson36}</span></summary><div class="course-lesson-grid"${addAttribute(c.chooseLesson, "aria-label")}>${course.lessonPicker.map((lesson, index) => renderTemplate`<button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${lesson}</button>`)}</div></details>`}<div class="course-youtube-actions video-action-row">${course.materials.length > 0 && course.materials.map((material) => renderTemplate`<a${addAttribute([
 			"button",
 			"course-inline-download",
 			{
