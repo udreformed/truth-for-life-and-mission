@@ -6,9 +6,11 @@ interface Props {
   url?: string;
   title?: string;
   description?: string;
+  textOnly?: boolean;
+  urlLabel?: string;
 }
 
-const { lang, url = Astro.url.pathname + Astro.url.search + Astro.url.hash, title = "", description = "" } = Astro.props;
+const { lang, url = Astro.url.pathname + Astro.url.search + Astro.url.hash, title = "", description = "", textOnly = false, urlLabel = "" } = Astro.props;
 const labels = {
   th: { heading: "แบ่งปันหน้านี้", facebook: "FB", line: "LINE", copy: "คัดลอก", copied: "คัดลอกแล้ว" },
   ko: { heading: "이 자료 공유하기", facebook: "FB", line: "LINE", copy: "링크복사", copied: "복사됨" },
@@ -19,11 +21,15 @@ const shareTitle = title || String(Astro.props.title ?? "");
 const shareDescription = description || "";
 const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(absoluteUrl)}`;
 const lineText = [shareTitle, shareDescription].filter(Boolean).join("\n\n");
-const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(absoluteUrl)}${lineText ? `&text=${encodeURIComponent(lineText)}` : ""}`;
+const shareUrlLine = urlLabel ? `${urlLabel} ${absoluteUrl}` : absoluteUrl;
+const completeLineText = [lineText, shareUrlLine].filter(Boolean).join("\n\n");
+const lineUrl = textOnly
+  ? `https://line.me/R/msg/text/?${encodeURIComponent(completeLineText)}`
+  : `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(absoluteUrl)}${lineText ? `&text=${encodeURIComponent(lineText)}` : ""}`;
 const l = labels[lang];
 ---
 
-<div class="share-buttons" data-share-url={absoluteUrl} data-share-title={shareTitle} data-share-description={shareDescription} data-copied-label={l.copied}>
+<div class="share-buttons" data-share-url={absoluteUrl} data-share-url-label={urlLabel} data-share-title={shareTitle} data-share-description={shareDescription} data-copied-label={l.copied}>
   <button class="share-button copy-share-button" type="button" data-copy-share aria-label={`${l.heading} — ${l.copy}`}>
     <span>{l.copy}</span>
   </button>

@@ -3,7 +3,7 @@ globalThis.process.env ??= {};
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { r as typeLabels, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$ShareButtons } from "./ShareButtons_C5mVJSyH.mjs";
+import { t as $$ShareButtons } from "./ShareButtons_Ci5R3-kv.mjs";
 //#region src/components/ResourceCard.astro
 createAstro("https://tflm.pages.dev");
 var $$ResourceCard = createComponent(($$result, $$props, $$slots) => {

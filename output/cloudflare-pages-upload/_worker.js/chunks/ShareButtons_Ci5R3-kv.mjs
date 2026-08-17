@@ -7,7 +7,7 @@ createAstro("https://tflm.pages.dev");
 var $$ShareButtons = createComponent(($$result, $$props, $$slots) => {
 	const Astro = $$result.createAstro($$props, $$slots);
 	Astro.self = $$ShareButtons;
-	const { lang, url = Astro.url.pathname + Astro.url.search + Astro.url.hash, title = "", description = "" } = Astro.props;
+	const { lang, url = Astro.url.pathname + Astro.url.search + Astro.url.hash, title = "", description = "", textOnly = false, urlLabel = "" } = Astro.props;
 	const labels = {
 		th: {
 			heading: "แบ่งปันหน้านี้",
@@ -36,9 +36,10 @@ var $$ShareButtons = createComponent(($$result, $$props, $$slots) => {
 	const shareDescription = description || "";
 	const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(absoluteUrl)}`;
 	const lineText = [shareTitle, shareDescription].filter(Boolean).join("\n\n");
-	const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(absoluteUrl)}${lineText ? `&text=${encodeURIComponent(lineText)}` : ""}`;
+	const completeLineText = [lineText, urlLabel ? `${urlLabel} ${absoluteUrl}` : absoluteUrl].filter(Boolean).join("\n\n");
+	const lineUrl = textOnly ? `https://line.me/R/msg/text/?${encodeURIComponent(completeLineText)}` : `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(absoluteUrl)}${lineText ? `&text=${encodeURIComponent(lineText)}` : ""}`;
 	const l = labels[lang];
-	return renderTemplate`${maybeRenderHead($$result)}<div class="share-buttons"${addAttribute(absoluteUrl, "data-share-url")}${addAttribute(shareTitle, "data-share-title")}${addAttribute(shareDescription, "data-share-description")}${addAttribute(l.copied, "data-copied-label")}><button class="share-button copy-share-button" type="button" data-copy-share${addAttribute(`${l.heading} — ${l.copy}`, "aria-label")}><span>${l.copy}</span></button><a class="share-button facebook-share-button"${addAttribute(facebookUrl, "href")} target="_blank" rel="noopener noreferrer"${addAttribute(`${l.heading} — ${l.facebook}`, "aria-label")}><span aria-hidden="true">f</span><span>${l.facebook}</span></a><a class="share-button line-share-button"${addAttribute(lineUrl, "href")} target="_blank" rel="noopener noreferrer"${addAttribute(`${l.heading} — ${l.line}`, "aria-label")}><span aria-hidden="true">LINE</span></a></div>`;
+	return renderTemplate`${maybeRenderHead($$result)}<div class="share-buttons"${addAttribute(absoluteUrl, "data-share-url")}${addAttribute(urlLabel, "data-share-url-label")}${addAttribute(shareTitle, "data-share-title")}${addAttribute(shareDescription, "data-share-description")}${addAttribute(l.copied, "data-copied-label")}><button class="share-button copy-share-button" type="button" data-copy-share${addAttribute(`${l.heading} — ${l.copy}`, "aria-label")}><span>${l.copy}</span></button><a class="share-button facebook-share-button"${addAttribute(facebookUrl, "href")} target="_blank" rel="noopener noreferrer"${addAttribute(`${l.heading} — ${l.facebook}`, "aria-label")}><span aria-hidden="true">f</span><span>${l.facebook}</span></a><a class="share-button line-share-button"${addAttribute(lineUrl, "href")} target="_blank" rel="noopener noreferrer"${addAttribute(`${l.heading} — ${l.line}`, "aria-label")}><span aria-hidden="true">LINE</span></a></div>`;
 }, "/Users/udmission/Documents/Codex/2026-08-08/new-chat-3/truth-for-life-and-mission/src/components/ShareButtons.astro", void 0);
 //#endregion
 export { $$ShareButtons as t };

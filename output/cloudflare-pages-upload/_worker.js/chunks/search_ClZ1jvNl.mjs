@@ -4,8 +4,8 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_CgxsFlnQ.mjs";
-import { t as $$ResourceCard } from "./ResourceCard_D6Gf4t_z.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_0t_mp1ud.mjs";
+import { t as $$ResourceCard } from "./ResourceCard_Da_FkacN.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
 //#region src/pages/[lang]/search.astro
 var search_exports = /* @__PURE__ */ __exportAll({

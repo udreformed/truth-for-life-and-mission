@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import ShareButtons from "../../components/ShareButtons.astro";
+import koreanDevotionalShare from "../../lib/gospel-devotional-share-ko.json";
 import { copy, isLanguage } from "../../lib/i18n";
 import { listPublishedResources } from "../../lib/resources";
 import { localizedGospelDevotionalBody } from "../../lib/devotional-text";
@@ -173,6 +174,45 @@ function firstTwoSentences(value?: string | null) {
   return text.slice(0, 180).trim();
 }
 
+function devotionalShareBody(value?: string | null) {
+  const body = (value ?? "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/<br\s*\/?\s*>/gi, "\n")
+    .replace(/<\/p\s*>/gi, "\n\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^[ \t]*#{1,6}[ \t]+/gm, "")
+    .replace(/[*_>`~]/g, "")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  if (lang === "ko") return body.replace(/^기도$/gm, "[기도]");
+  if (lang === "th") return body.replace(/^คำอธิษฐาน$/gm, "[คำอธิษฐาน]");
+  return body.replace(/^Prayer$/gim, "[Prayer]");
+}
+
+function emphasizedDevotionalTitle(value?: string | null) {
+  const title = plainText(value);
+  return title ? `【${title}】` : "";
+}
+
+function devotionalHomepageLabel() {
+  if (lang === "ko") return "[홈페이지에서 보기]";
+  if (lang === "th") return "[ดูที่เว็บไซต์]";
+  return "[View on the website]";
+}
+
+function fullDevotionalShareBody(item: { summary?: string | null; body?: string | null }) {
+  if (lang === "ko") {
+    const calendarKey = selectedDevotionalDate.slice(5);
+    const imported = (koreanDevotionalShare as Record<string, { body: string }>)[calendarKey];
+    if (imported?.body) return imported.body;
+  }
+  return devotionalShareBody(item.body || item.summary);
+}
+
 function devotionalShareLabel(value?: string | null) {
   const dateLabel = formatDevotionalShareDateLabel(value);
   if (lang === "ko") return `[${dateLabel} 복음묵상]`;
@@ -199,7 +239,7 @@ const homePageDescription = featuredDevotional
   : undefined;
 ---
 
-<SiteLayout lang={lang} current="home" title={homePageTitle} description={homePageDescription}>
+<SiteLayout lang={lang} current="home" title={homePageTitle} description={homePageDescription} socialImage={false}>
   <section class="gospel-hero">
     <div class="container gospel-hero-grid">
       <div class="gospel-copy">
@@ -279,9 +319,11 @@ const homePageDescription = featuredDevotional
                 <div class="devotional-body">{homeDevotionalBody(item.body)}</div>
                 <ShareButtons
                   lang={lang}
-                  url={`/${lang}/?date=${selectedDevotionalDate}#daily-devotional`}
-                  title={`${devotionalShareLabel(selectedDevotionalDate)}\n${item.title}`}
-                  description={devotionalShareDescription(item)}
+                  url="https://tflm.pages.dev/"
+                  title={`${devotionalShareLabel(selectedDevotionalDate)}\n${emphasizedDevotionalTitle(item.title)}`}
+                  description={fullDevotionalShareBody(item)}
+                  urlLabel={devotionalHomepageLabel()}
+                  textOnly={true}
                 />
               </section>
             ))}

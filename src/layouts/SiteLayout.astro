@@ -7,10 +7,11 @@ interface Props {
   lang: Language;
   title?: string;
   description?: string;
+  socialImage?: boolean;
   current?: "home" | "courses" | "bibleReading" | "library" | "usefulLinks" | "search" | "admin";
 }
 
-const { lang, current, title, description } = Astro.props;
+const { lang, current, title, description, socialImage = true } = Astro.props;
 const t = copy[lang];
 const pageTitle = title ? `${title} · ${t.shortName}` : String(t.siteName);
 const pageDescription = description ?? String(t.heroBody);
@@ -84,16 +85,16 @@ const languageHref = (code: Language) => {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:secure_url" content={ogImage} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={String(t.siteName)} />
-    <meta name="twitter:card" content="summary_large_image" />
+    {socialImage && <meta property="og:image" content={ogImage} />}
+    {socialImage && <meta property="og:image:secure_url" content={ogImage} />}
+    {socialImage && <meta property="og:image:type" content="image/png" />}
+    {socialImage && <meta property="og:image:width" content="1200" />}
+    {socialImage && <meta property="og:image:height" content="630" />}
+    {socialImage && <meta property="og:image:alt" content={String(t.siteName)} />}
+    <meta name="twitter:card" content={socialImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
-    <meta name="twitter:image" content={ogImage} />
+    {socialImage && <meta name="twitter:image" content={ogImage} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Kanit:wght@400;500;600;700;800&family=Mitr:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -348,7 +349,9 @@ const languageHref = (code: Language) => {
           if (!url) return;
           const shareTitle = shareBox.dataset.shareTitle?.trim() ?? "";
           const shareDescription = shareBox.dataset.shareDescription?.trim() ?? "";
-          const shareText = [shareTitle, shareDescription, url].filter(Boolean).join("\n");
+          const shareUrlLabel = shareBox.dataset.shareUrlLabel?.trim() ?? "";
+          const shareUrlLine = shareUrlLabel ? `${shareUrlLabel} ${url}` : url;
+          const shareText = [shareTitle, shareDescription, shareUrlLine].filter(Boolean).join("\n\n");
           const originalText = button.textContent ?? "";
           const copiedLabel = shareBox.dataset.copiedLabel || "Copied";
           try {
