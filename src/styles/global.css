@@ -2356,10 +2356,10 @@ html[lang="th"] .yongjin-books-heading h2 {
   margin: 0 auto;
 }
 #bible-66-book .bible-66-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 10px;
+  display: block;
+}
+#bible-66-book .bible-66-title-main {
+  display: inline;
 }
 #bible-66-book .bible-66-title small {
   color: rgba(255,255,255,.78);
@@ -2367,11 +2367,14 @@ html[lang="th"] .yongjin-books-heading h2 {
   font-size: .52em;
   font-weight: 700;
   line-height: 1.2;
+  margin-inline-start: 10px;
+  white-space: nowrap;
 }
 #bible-66-book .book-version-badge {
   display: inline-flex;
   align-items: center;
   min-height: 1.75em;
+  margin-inline-start: 8px;
   padding: .15em .48em;
   border: 1px solid rgba(240,202,122,.78);
   border-radius: 6px;
@@ -2383,6 +2386,8 @@ html[lang="th"] .yongjin-books-heading h2 {
   line-height: 1;
   letter-spacing: .04em;
   text-transform: uppercase;
+  vertical-align: .12em;
+  white-space: nowrap;
   box-shadow: 0 8px 18px rgba(0,0,0,.14);
 }
 .yongjin-book-trio {

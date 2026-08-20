@@ -1684,9 +1684,11 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
             <div class="korean-book-copy">
               <p class="type-pill">{bible66Book.badge}</p>
               <h2 class="bible-66-title">
-                <span>{bible66Book.title}</span>
+                <span class="bible-66-title-main">
+                  {bible66Book.title}
+                  <span class="book-version-badge">{bible66Book.version}</span>
+                </span>
                 <small>{bible66Book.edition}</small>
-                <span class="book-version-badge">{bible66Book.version}</span>
               </h2>
               <p class="korean-book-author">{bible66Book.author}</p>
               <p>{bible66Book.description}</p>
