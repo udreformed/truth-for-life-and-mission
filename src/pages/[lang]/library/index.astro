@@ -418,42 +418,45 @@ const faithBasicsBook = lang === "th" ? {
   notice: ""
 };
 const bible66Book = lang === "th" ? {
-  badge: "หนังสืออธิบายพระคัมภีร์ภาษาไทย · แจกฟรี",
+  badge: "หนังสืออธิบายพระคัมภีร์ภาษาไทย · EPUB ฟรี",
   title: "คำอธิบายพระคัมภีร์ 66 เล่ม",
   edition: "ฉบับภาษาไทย",
   version: "v5.0",
-  description: "คำอธิบายพระคัมภีร์ครบทั้ง 66 เล่มฉบับภาษาไทย จัดทำสำหรับอ่าน ค้นคว้า และศึกษาพระคัมภีร์ โดยเรียบเรียงเนื้อหาจากเว็บไซต์ Bible 66 Commentary",
+  description: "คำอธิบายพระคัมภีร์ครบทั้ง 66 เล่มฉบับภาษาไทย จัดทำสำหรับอ่าน ค้นคว้า และศึกษาพระคัมภีร์ หากต้องการไฟล์ PDF ภาษาไทย กรุณาติดต่อทางอีเมลหรือ LINE ด้านล่าง",
   author: "เรียบเรียงฉบับภาษาไทย: Yongjin Choi",
   notice: "",
-  download: "PDF 2,192 หน้า",
-  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
-  filename: "bible-66-commentary-th-v5.0.pdf",
+  download: "EPUB v5.0",
+  href: "/downloads/bible-66-commentary-th-v5.0.epub",
+  filename: "bible-66-commentary-th-v5.0.epub",
+  cover: "/images/bible-66-commentary-book-cover-card.jpg?v=20260812",
   online: "ค้นหาและอ่านบนเว็บไซต์",
   originalRequest: ""
 } : lang === "ko" ? {
-  badge: "태국어 성경 해설 · 무료 다운로드",
+  badge: "성경 해설 · 무료 EPUB",
   title: "성경 66권 해설",
   edition: "태국어판",
   version: "v5.0",
-  description: "성경 66권 전체의 해설 내용을 태국어로 번역하고 정리한 책입니다. 한국어 원본 pdf가 필요하신 분은 아래 이메일이나 라인으로 요청해주세요.",
-  author: "태국어판 편집: 최용진",
+  description: "성경 66권 전체의 해설 내용을 정리한 책입니다. 한국어 원본 pdf가 필요하신 분은 아래 이메일이나 라인으로 요청해주세요.",
+  author: "저자: 최용진",
   notice: "",
-  download: "태국어 PDF (2,192쪽)",
-  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
-  filename: "bible-66-commentary-th-v5.0.pdf",
+  download: "한국어 EPUB v5.0",
+  href: "/downloads/bible-66-commentary-ko-v5.0.epub",
+  filename: "bible-66-commentary-ko-v5.0.epub",
+  cover: "/images/bible-66-commentary-book-cover-ko.jpg?v=20260820",
   online: "온라인 해설 사이트 보기",
   originalRequest: ""
 } : {
-  badge: "Thai Bible commentary · Free download",
+  badge: "Thai Bible commentary · Free EPUB",
   title: "Bible 66 Commentary",
   edition: "Thai Edition",
   version: "v5.0",
-  description: "A full Thai edition of Bible commentary covering all 66 books of the Bible. It is prepared for reading, study, teaching, and Bible research, based on the Bible 66 Commentary website.",
+  description: "A full Thai edition of Bible commentary covering all 66 books of the Bible. It is prepared for reading, study, teaching, and Bible research. If you would like the Thai PDF file, please request it by email or LINE below.",
   author: "Thai edition edited by Yongjin Choi",
   notice: "",
-  download: "Thai PDF (2,192 pages)",
-  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
-  filename: "bible-66-commentary-th-v5.0.pdf",
+  download: "Thai EPUB v5.0",
+  href: "/downloads/bible-66-commentary-th-v5.0.epub",
+  filename: "bible-66-commentary-th-v5.0.epub",
+  cover: "/images/bible-66-commentary-book-cover-card.jpg?v=20260812",
   online: "Read and search online",
   originalRequest: ""
 };
@@ -1669,14 +1672,10 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
         {bible66Book && (
           <article class="korean-book-card bible-66-book-card" id="bible-66-book">
             <div class="ebook-cover-column">
-              <img class="korean-book-cover" src="/images/bible-66-commentary-book-cover-card.jpg?v=20260812" alt={bible66Book.title} loading="lazy" />
+              <img class="korean-book-cover" src={bible66Book.cover} alt={bible66Book.title} loading="lazy" />
               <div class="resource-action-row">
                 <div class="book-downloads">
-                  <a class="button download-button bible-66-book-download" href={bible66Book.href ?? "/downloads/bible-66-commentary-th-v5.0.pdf"} download={bible66Book.filename ?? "bible-66-commentary-th-v5.0.pdf"}>
-                    {lang === "th"
-                      ? <>PDF <span class="download-page-count">(2,192 หน้า)</span></>
-                      : bible66Book.download}
-                  </a>
+                  <a class="button download-button bible-66-book-download" href={bible66Book.href ?? "/downloads/bible-66-commentary-th-v5.0.epub"} download={bible66Book.filename ?? "bible-66-commentary-th-v5.0.epub"}>{bible66Book.download}</a>
                   <a class="button secondary" href={lang === "ko" ? "https://bible-66-commentary.pages.dev" : "https://bible-66-commentary.pages.dev/?lang=th"} target="_blank" rel="noopener noreferrer">{bible66Book.online} ↗</a>
                 </div>
               </div>
