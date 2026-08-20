@@ -30,7 +30,7 @@ const nextKey = shiftDateKey(selectedKey, 1);
 const canGoPrevious = selectedDate > minDate;
 const canGoNext = selectedDate < maxDate;
 const videoEmbed = reading.videoId ? `https://www.youtube-nocookie.com/embed/${reading.videoId}?rel=0` : null;
-const shareUrl = `/ko/bible-reading/?plan=365&date=${selectedKey}`;
+const shareUrl = `/ko/bible-reading/?plan=365&date=${selectedKey}&useDate=1`;
 const shareTitle = `365일 성경통독 · ${dateLabel}`;
 const shareDescription = `오늘 본문: 구약 ${reading.oldTestament}, 신약 ${reading.newTestament}`;
 ---
@@ -47,8 +47,8 @@ const shareDescription = `오늘 본문: 구약 ${reading.oldTestament}, 신약 
   </div>
 
   <div class="reading-day-navigation annual-navigation">
-    {canGoPrevious ? <a class="button secondary" href={`/ko/bible-reading/?plan=365&date=${previousKey}`} data-annual-date-nav>← 전날</a> : <span class="button secondary disabled" aria-disabled="true">← 전날</span>}
-    {canGoNext ? <a class="button secondary" href={`/ko/bible-reading/?plan=365&date=${nextKey}`} data-annual-date-nav>다음날 →</a> : <span class="button secondary disabled" aria-disabled="true">다음날 →</span>}
+    {canGoPrevious ? <a class="button secondary" href={`/ko/bible-reading/?plan=365&date=${previousKey}&useDate=1`} data-annual-date-nav>← 전날</a> : <span class="button secondary disabled" aria-disabled="true">← 전날</span>}
+    {canGoNext ? <a class="button secondary" href={`/ko/bible-reading/?plan=365&date=${nextKey}&useDate=1`} data-annual-date-nav>다음날 →</a> : <span class="button secondary disabled" aria-disabled="true">다음날 →</span>}
   </div>
 
   <article class="annual-video-card">

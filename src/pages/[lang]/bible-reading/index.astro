@@ -327,7 +327,10 @@ const todayParts = new Intl.DateTimeFormat("en-CA", {
 const part = (type: Intl.DateTimeFormatPartTypes) => todayParts.find((item) => item.type === type)?.value ?? "";
 const todayKey = `${part("year")}-${part("month")}-${part("day")}`;
 const isDateKey = (value: string | null) => !!value && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
-const dateKey = isDateKey(Astro.url.searchParams.get("date")) ? Astro.url.searchParams.get("date")! : todayKey;
+const requestPlan = Astro.url.searchParams.get("plan");
+const requestedDate = Astro.url.searchParams.get("date");
+const shouldUseDate = requestPlan === "365" && Astro.url.searchParams.get("useDate") === "1" && isDateKey(requestedDate);
+const dateKey = shouldUseDate ? requestedDate! : todayKey;
 const shiftDate = (value: string, offset: number) => {
   const shifted = new Date(`${value}T00:00:00Z`);
   shifted.setUTCDate(shifted.getUTCDate() + offset);
@@ -367,7 +370,7 @@ const activeSundayEmbed = activeSundayVideoId
   : `https://www.youtube-nocookie.com/embed/videoseries?list=${sundayOverviewPlaylistId}&index=${activeSundayVideoIndex}&rel=0`;
 const readingSummaryLang = lang === "en" ? "th" : lang;
 const activeReadingSummary = await getLocalizedReadingSummary(readingSummaryLang, activeWeek, activeDay);
-const selectedPlan = lang === "ko" && Astro.url.searchParams.get("plan") === "365" ? "365" : "45";
+const selectedPlan = lang === "ko" && requestPlan === "365" ? "365" : "45";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, stale-while-revalidate=86400");
 ---
