@@ -2355,6 +2355,36 @@ html[lang="th"] .yongjin-books-heading h2 {
   max-width: 170px;
   margin: 0 auto;
 }
+#bible-66-book .bible-66-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 10px;
+}
+#bible-66-book .bible-66-title small {
+  color: rgba(255,255,255,.78);
+  font-family: inherit;
+  font-size: .52em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+#bible-66-book .book-version-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75em;
+  padding: .15em .48em;
+  border: 1px solid rgba(240,202,122,.78);
+  border-radius: 6px;
+  color: #173f35;
+  background: #f0ca7a;
+  font-family: Inter, "Noto Sans Thai", sans-serif;
+  font-size: .48em;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 18px rgba(0,0,0,.14);
+}
 .yongjin-book-trio {
   display: grid;
   grid-template-columns: 1fr;

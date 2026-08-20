@@ -420,31 +420,40 @@ const faithBasicsBook = lang === "th" ? {
 const bible66Book = lang === "th" ? {
   badge: "หนังสืออธิบายพระคัมภีร์ภาษาไทย · แจกฟรี",
   title: "คำอธิบายพระคัมภีร์ 66 เล่ม",
+  edition: "ฉบับภาษาไทย",
+  version: "v5.0",
   description: "คำอธิบายพระคัมภีร์ครบทั้ง 66 เล่มฉบับภาษาไทย จัดทำสำหรับอ่าน ค้นคว้า และศึกษาพระคัมภีร์ โดยเรียบเรียงเนื้อหาจากเว็บไซต์ Bible 66 Commentary",
   author: "เรียบเรียงฉบับภาษาไทย: Yongjin Choi",
   notice: "",
-  download: "PDF 1,705 หน้า",
-  href: "/downloads/bible-66-commentary-th.pdf",
+  download: "PDF 2,103 หน้า",
+  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
+  filename: "bible-66-commentary-th-v5.0.pdf",
   online: "ค้นหาและอ่านบนเว็บไซต์",
   originalRequest: ""
 } : lang === "ko" ? {
   badge: "태국어 성경 해설 · 무료 다운로드",
-  title: "성경 66권 해설 태국어판",
+  title: "성경 66권 해설",
+  edition: "태국어판",
+  version: "v5.0",
   description: "성경 66권 전체의 해설 내용을 태국어로 번역하고 정리한 책입니다. 한국어 원본 pdf가 필요하신 분은 아래 이메일이나 라인으로 요청해주세요.",
   author: "태국어판 편집: 최용진",
   notice: "",
-  download: "태국어 PDF (1,705쪽)",
-  href: "/downloads/bible-66-commentary-th.pdf",
+  download: "태국어 PDF (2,103쪽)",
+  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
+  filename: "bible-66-commentary-th-v5.0.pdf",
   online: "온라인 해설 사이트 보기",
   originalRequest: ""
 } : {
   badge: "Thai Bible commentary · Free download",
-  title: "Bible 66 Commentary — Thai Edition",
+  title: "Bible 66 Commentary",
+  edition: "Thai Edition",
+  version: "v5.0",
   description: "A full Thai edition of Bible commentary covering all 66 books of the Bible. It is prepared for reading, study, teaching, and Bible research, based on the Bible 66 Commentary website.",
   author: "Thai edition edited by Yongjin Choi",
   notice: "",
-  download: "Thai PDF (1,705 pages)",
-  href: "/downloads/bible-66-commentary-th.pdf",
+  download: "Thai PDF (2,103 pages)",
+  href: "/downloads/bible-66-commentary-th-v5.0.pdf",
+  filename: "bible-66-commentary-th-v5.0.pdf",
   online: "Read and search online",
   originalRequest: ""
 };
@@ -1663,9 +1672,9 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
               <img class="korean-book-cover" src="/images/bible-66-commentary-book-cover-card.jpg?v=20260812" alt={bible66Book.title} loading="lazy" />
               <div class="resource-action-row">
                 <div class="book-downloads">
-                  <a class="button download-button bible-66-book-download" href={bible66Book.href ?? "/downloads/bible-66-commentary-th.pdf"} download>
+                  <a class="button download-button bible-66-book-download" href={bible66Book.href ?? "/downloads/bible-66-commentary-th-v5.0.pdf"} download={bible66Book.filename ?? "bible-66-commentary-th-v5.0.pdf"}>
                     {lang === "th"
-                      ? <>PDF <span class="download-page-count">(1,705 หน้า)</span></>
+                      ? <>PDF <span class="download-page-count">(2,103 หน้า)</span></>
                       : bible66Book.download}
                   </a>
                   <a class="button secondary" href={lang === "ko" ? "https://bible-66-commentary.pages.dev" : "https://bible-66-commentary.pages.dev/?lang=th"} target="_blank" rel="noopener noreferrer">{bible66Book.online} ↗</a>
@@ -1674,7 +1683,11 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
             </div>
             <div class="korean-book-copy">
               <p class="type-pill">{bible66Book.badge}</p>
-              <h2>{bible66Book.title}</h2>
+              <h2 class="bible-66-title">
+                <span>{bible66Book.title}</span>
+                <small>{bible66Book.edition}</small>
+                <span class="book-version-badge">{bible66Book.version}</span>
+              </h2>
               <p class="korean-book-author">{bible66Book.author}</p>
               <p>{bible66Book.description}</p>
               {bible66Book.notice && <p class="book-distribution-notice">{bible66Book.notice}</p>}
