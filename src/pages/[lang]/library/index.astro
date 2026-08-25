@@ -1000,7 +1000,7 @@ const audiobookPlaylists = [
   },
   {
     id: "psalms-proverbs-reading-audio",
-    list: lang === "ko" ? "PLAqg3Fekq2yc" : "PLGbIUHbe4fjg",
+    list: lang === "ko" ? "PLAqg3Fekq2yc" : "PLHc03emoVU7M",
     showLatest: false,
     title: lang === "th" ? "สดุดีและสุภาษิต · เสียงอ่าน" : lang === "ko" ? "시편과 잠언 낭독" : "Psalms and Proverbs Audio Reading",
     description: lang === "th"
@@ -1011,7 +1011,7 @@ const audiobookPlaylists = [
     actionLabel: lang === "th" ? "เพลย์ลิสต์สดุดี" : lang === "ko" ? "시편 재생목록" : "Thai Psalms playlist",
     extraLinks: [
       {
-        href: lang === "ko" ? "https://www.youtube.com/playlist?list=PLHTWwbVCVxok" : "https://www.youtube.com/playlist?list=PLHc03emoVU7M",
+        href: lang === "ko" ? "https://www.youtube.com/playlist?list=PLHTWwbVCVxok" : "https://www.youtube.com/playlist?list=PLGbIUHbe4fjg",
         label: lang === "th" ? "เพลย์ลิสต์สุภาษิต" : lang === "ko" ? "잠언 재생목록" : "Thai Proverbs playlist"
       }
     ],
@@ -1019,8 +1019,9 @@ const audiobookPlaylists = [
   },
   {
     id: "daily-gospel-devotional-thai-audio",
-    list: "PLUN8JL8D21Qg",
-    showLatest: false,
+    list: lang === "th" ? "PLT7MyT0j5720d9Eq2kQr2A54v7AOXygOW" : "PLUN8JL8D21Qg",
+    video: lang === "th" ? "NQ2SPO5tRTY" : undefined,
+    showLatest: lang === "th",
     title: lang === "th" ? "ใคร่ครวญข่าวประเสริฐ 365 วัน" : lang === "ko" ? "365일 복음 묵상 · 태국어 오디오" : "365 Daily Gospel Devotional in Thai",
     description: lang === "th"
       ? "เพลย์ลิสต์นี้รวบรวมคำใคร่ครวญข่าวประเสริฐประจำวันจากเว็บไซต์ Truth for Life and Mission เพื่อช่วยให้ผู้ฟังเริ่มต้นวันด้วยพระคุณของพระเจ้า ความจริงของข่าวประเสริฐ และการหนุนใจจากพระวจนะ"
@@ -2262,6 +2263,16 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
         <div class="video-playlist-list">
           {audiobookPlaylists.map((playlist, index) => (
             <article class="video-playlist-card audiobook-playlist-card" id={playlist.id}>
+              {(() => {
+                const featuredVideoId = "video" in playlist ? playlist.video : "";
+                const playlistUrl = featuredVideoId
+                  ? `https://www.youtube.com/watch?v=${featuredVideoId}&list=${playlist.list}`
+                  : `https://www.youtube.com/playlist?list=${playlist.list}`;
+                const embedUrl = featuredVideoId
+                  ? `https://www.youtube.com/embed/${featuredVideoId}?list=${playlist.list}&rel=0`
+                  : `https://www.youtube.com/embed?listType=playlist&list=${playlist.list}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`;
+                return (
+                  <>
               <div class="video-playlist-heading">
                 <p class="type-pill">YouTube Audiobook</p>
                 <h2>{playlist.title}</h2>
@@ -2273,7 +2284,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                   class:list={{ "random-video-resource-player": !playlist.showLatest }}
                   data-playlist={playlist.list}
                   data-total-videos={"totalVideos" in playlist ? playlist.totalVideos : undefined}
-                  src={`https://www.youtube.com/embed?listType=playlist&list=${playlist.list}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`}
+                  src={embedUrl}
                   title={playlist.title}
                   loading={index === 0 ? "eager" : "lazy"}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -2281,7 +2292,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                 ></iframe>
               </div>
               <div class="video-action-row">
-                <a class="button secondary playlist-link-button video-playlist-open" href={`https://www.youtube.com/playlist?list=${playlist.list}`} target="_blank" rel="noopener noreferrer" data-video-playlist-open>{playlist.actionLabel} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
+                <a class="button secondary playlist-link-button video-playlist-open" href={playlistUrl} target="_blank" rel="noopener noreferrer" data-video-playlist-open>{playlist.actionLabel} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
                 {"extraLinks" in playlist && playlist.extraLinks?.map((link) => (
                   <a class="button secondary playlist-link-button" href={link.href} target="_blank" rel="noopener noreferrer">{link.label} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>
                 ))}
@@ -2289,9 +2300,12 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                   <a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#god-pleasing-booklet-series-thai-audio">태국어로 듣기</a>
                 )}
                 {!("hideShareButtons" in playlist && playlist.hideShareButtons) && (
-                  <ShareButtons lang={lang} url={`https://www.youtube.com/playlist?list=${playlist.list}`} title={playlist.title} />
+                  <ShareButtons lang={lang} url={playlistUrl} title={playlist.title} />
                 )}
               </div>
+                  </>
+                );
+              })()}
             </article>
           ))}
         </div>
