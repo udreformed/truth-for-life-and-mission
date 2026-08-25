@@ -2299,6 +2299,9 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                 {lang === "ko" && playlist.id === "god-pleasing-booklet-series-thai-audio" && (
                   <a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#god-pleasing-booklet-series-thai-audio">태국어로 듣기</a>
                 )}
+                {lang === "ko" && playlist.id === "psalms-proverbs-reading-audio" && (
+                  <a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#psalms-proverbs-reading-audio">태국어로 듣기</a>
+                )}
                 {!("hideShareButtons" in playlist && playlist.hideShareButtons) && (
                   <ShareButtons lang={lang} url={playlistUrl} title={playlist.title} />
                 )}
