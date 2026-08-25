@@ -1000,7 +1000,7 @@ const audiobookPlaylists = [
   },
   {
     id: "psalms-proverbs-reading-audio",
-    list: "PLHc03emoVU7M",
+    list: lang === "ko" ? "PLAqg3Fekq2yc" : "PLGbIUHbe4fjg",
     showLatest: false,
     title: lang === "th" ? "สดุดีและสุภาษิต · เสียงอ่าน" : lang === "ko" ? "시편과 잠언 낭독" : "Psalms and Proverbs Audio Reading",
     description: lang === "th"
@@ -1008,11 +1008,11 @@ const audiobookPlaylists = [
       : lang === "ko"
         ? "히브리어 원문에 충실하게 직접 번역(사역)한 내용을 바탕으로 AI가 낭독한 시편·잠언 재생목록입니다. 시편의 기도와 찬양, 잠언의 지혜 말씀을 차분히 들을 수 있도록 구성했으며, 앞으로도 한 편씩 계속 올릴 예정입니다."
         : "An audio set for Psalms and Proverbs read by AI, based on direct renderings personally translated with close attention to the Hebrew text. It is arranged for reflective listening to the prayers and praises of the Psalms and the wisdom sayings of Proverbs, and new readings will continue to be added one by one.",
-    actionLabel: lang === "th" ? "เปิดเพลย์ลิสต์สุภาษิต" : lang === "ko" ? "잠언 재생목록 보기" : "Open Proverbs playlist",
+    actionLabel: lang === "th" ? "เพลย์ลิสต์สดุดี" : lang === "ko" ? "시편 재생목록" : "Thai Psalms playlist",
     extraLinks: [
       {
-        href: "https://www.youtube.com/playlist?list=PLAqg3Fekq2yc",
-        label: lang === "th" ? "สดุดี 재생목록" : lang === "ko" ? "시편 재생목록" : "Psalms playlist"
+        href: lang === "ko" ? "https://www.youtube.com/playlist?list=PLHTWwbVCVxok" : "https://www.youtube.com/playlist?list=PLHc03emoVU7M",
+        label: lang === "th" ? "เพลย์ลิสต์สุภาษิต" : lang === "ko" ? "잠언 재생목록" : "Thai Proverbs playlist"
       }
     ],
     hideShareButtons: true
