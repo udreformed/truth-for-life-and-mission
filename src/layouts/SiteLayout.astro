@@ -120,7 +120,7 @@ const languageHref = (code: Language) => {
         <nav class="main-nav" aria-label="Main navigation">
           <a class:list={{ active: current === "courses" }} href={`/${lang}/courses/`}>{t.nav.courses}</a>
           <a class:list={{ active: current === "bibleReading", "bible-reading-nav-link": true }} href={`/${lang}/bible-reading/`}>{t.nav.bibleReading}</a>
-          <a class:list={{ active: current === "library" }} href={`/${lang}/library/`}>{t.nav.library}</a>
+          <a class:list={{ active: current === "library" }} href={`/${lang}/library/?type=audiobook`}>{t.nav.library}</a>
         </nav>
 
         <div class="language-switch" aria-label="Language" data-language-menu>

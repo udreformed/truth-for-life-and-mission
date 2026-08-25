@@ -10,7 +10,7 @@ const langParam = Astro.params.lang;
 if (!isLanguage(langParam)) return Astro.redirect("/th/", 302);
 const lang = langParam;
 const t = copy[lang];
-const requestedType = Astro.url.searchParams.get("type") ?? "book";
+const requestedType = Astro.url.searchParams.get("type") ?? "audiobook";
 if (requestedType === "movie") return Astro.redirect(`/${lang}/library/?type=video`, 302);
 if (requestedType === "bible-reading") return Astro.redirect(`/${lang}/bible-reading/`, 302);
 if (requestedType === "devotional") {
