@@ -976,6 +976,15 @@ const videoPlaylists = [
     actionLabel: videoPlaylistAction
   }
 ] as const;
+const koreanMissionaryGloryAudiobook = lang === "ko" ? {
+  id: "missionary-glory-korean-audio",
+  list: "PLNP2GD27Q0Bg",
+  showLatest: false,
+  totalVideos: 26,
+  title: "하나님의 영광을 바라보는 선교사 오디오북",
+  description: "최용진 선교사의 책을 26일 동안 묵상하도록 돕는 오디오북입니다. 선교와 사역의 중심이 사람의 열심이나 성과가 아니라 하나님의 영광을 바라보는 믿음 위에 서야 함을 차분히 설명합니다.",
+  actionLabel: videoPlaylistAction
+} : null;
 const audiobookPlaylists = [
   {
     id: "god-pleasing-booklet-series-thai-audio",
@@ -1043,7 +1052,8 @@ const audiobookPlaylists = [
         ? "Conrad Mbewe의 책으로, 이해하기 어려운 고난과 질문 속에서도 하나님께서 모든 것을 주권적으로 다스리신다는 성경의 가르침을 다룹니다. 하나님의 주권이 신자의 믿음과 위로의 기초가 됨을 보여주는 태국어 낭독 자료입니다."
         : "In this book, Conrad Mbewe explains the biblical teaching that God truly rules over all things, even when life is full of pain, questions, and events we cannot understand. It presents God’s sovereignty as a foundation for faith and comfort.",
     actionLabel: videoPlaylistAction
-  }
+  },
+  ...(koreanMissionaryGloryAudiobook ? [koreanMissionaryGloryAudiobook] : [])
 ] as const;
 const whyJesusPdfCopy = {
   th: {
@@ -2262,6 +2272,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                   id={`audiobook-playlist-${playlist.id}`}
                   class:list={{ "random-video-resource-player": !playlist.showLatest }}
                   data-playlist={playlist.list}
+                  data-total-videos={"totalVideos" in playlist ? playlist.totalVideos : undefined}
                   src={`https://www.youtube.com/embed?listType=playlist&list=${playlist.list}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`}
                   title={playlist.title}
                   loading={index === 0 ? "eager" : "lazy"}
@@ -2293,19 +2304,22 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
         const frames = Array.from(document.querySelectorAll(".random-video-resource-player[data-playlist]"));
         if (!frames.length) return;
 
-        const randomizePlaylist = (player, playlistId, attempt = 0) => {
+        const randomizePlaylist = (player, playlistId, fallbackCount = 0, attempt = 0) => {
           const videos = player.getPlaylist?.() ?? [];
-          if (videos.length) {
-            const randomIndex = Math.floor(Math.random() * videos.length);
+          const availableCount = videos.length || fallbackCount;
+          if (availableCount) {
+            const randomIndex = Math.floor(Math.random() * availableCount);
             player.cuePlaylist({ list: playlistId, listType: "playlist", index: randomIndex, startSeconds: 0 });
             const selectedVideoId = videos[randomIndex];
             const openLink = player.getIframe?.()?.closest("article")?.querySelector("[data-video-playlist-open]");
-            if (openLink instanceof HTMLAnchorElement && selectedVideoId) {
-              openLink.href = `https://www.youtube.com/watch?v=${selectedVideoId}&list=${playlistId}&index=${randomIndex + 1}`;
+            if (openLink instanceof HTMLAnchorElement) {
+              openLink.href = selectedVideoId
+                ? `https://www.youtube.com/watch?v=${selectedVideoId}&list=${playlistId}&index=${randomIndex + 1}`
+                : `https://www.youtube.com/playlist?list=${playlistId}&index=${randomIndex + 1}`;
             }
             return;
           }
-          if (attempt < 12) window.setTimeout(() => randomizePlaylist(player, playlistId, attempt + 1), 250);
+          if (attempt < 12) window.setTimeout(() => randomizePlaylist(player, playlistId, fallbackCount, attempt + 1), 250);
         };
 
         const initializePlayers = () => {
@@ -2313,8 +2327,9 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
             if (!(frame instanceof HTMLIFrameElement) || frame.dataset.randomized === "true") return;
             frame.dataset.randomized = "true";
             const playlistId = frame.dataset.playlist;
+            const totalVideos = Number.parseInt(frame.dataset.totalVideos ?? "0", 10) || 0;
             if (!playlistId) return;
-            new window.YT.Player(frame, { events: { onReady: (event) => randomizePlaylist(event.target, playlistId) } });
+            new window.YT.Player(frame, { events: { onReady: (event) => randomizePlaylist(event.target, playlistId, totalVideos) } });
           });
         };
 
