@@ -89,6 +89,19 @@ const faithBasicsLessons = {
 } as const;
 const courses = [
   {
+    id: "gospel-renewed-life",
+    title: lang === "th" ? "ชีวิตที่ได้รับการสร้างใหม่โดยข่าวประเสริฐ" : lang === "ko" ? "복음으로 새로워지는 삶" : "Life Renewed by the Gospel",
+    description: lang === "th"
+      ? "หลักสูตร 7 ตอนที่เรียบเรียงขึ้นใหม่จากแนวคิดสำคัญของ Richard Lovelace อธิบายว่าการฟื้นฟูฝ่ายวิญญาณเริ่มจากพระวิญญาณทรงเปิดตาใจให้เห็นพระคริสต์ชัดเจนขึ้น และข่าวประเสริฐเปลี่ยนทิศทางชีวิตจากอาณาจักรของตนเองสู่แผ่นดินของพระเจ้าอย่างไร"
+      : lang === "ko"
+        ? "리처드 러브레스의 책 내용을 기초로 새롭게 편집한 7편 강좌입니다. 영적 갱신이 단순히 더 열심히 사는 데서 시작되는 것이 아니라, 성령께서 마음의 눈을 밝히셔서 그리스도를 더 크게 보게 하실 때 시작된다는 복음의 핵심을 차분히 다룹니다."
+        : "A seven-part course newly edited from key insights in Richard Lovelace’s work. It explains how spiritual renewal begins not with simply trying harder, but with the Holy Spirit opening the eyes of the heart to see Christ more clearly and to live for God’s kingdom.",
+    video: lang === "ko" ? "FPQKy06-k74" : "4K33B_5HMFY",
+    list: lang === "ko" ? "PLbBTH9jxs4n4" : "PLfg_5UNrDEFo",
+    latestPlaylist: true,
+    materials: []
+  },
+  {
     id: "gospel-booklet",
     title: lang === "th" ? "ข่าวประเสริฐและชีวิตคริสเตียนผ่าน 7 หัวข้อ" : lang === "ko" ? "7주제로 배우는 복음과 신앙생활" : "The Gospel and Christian Living in 7 Themes",
     description: lang === "th"
@@ -154,6 +167,7 @@ const courses = [
     <div class="course-series-list">
       {courses.map((course) => {
         const isSelectableCourse = course.selector === "topics" || course.lessonPicker?.length;
+        const isLatestPlaylistCourse = course.latestPlaylist === true;
         const embedUrl = "video" in course
           ? `https://www.youtube.com/embed/${course.video}?rel=0&listType=playlist&list=${course.list}`
           : `https://www.youtube.com/embed?listType=playlist&list=${course.list}`;
@@ -161,7 +175,7 @@ const courses = [
         return (
           <article class="course-series-card" id={course.id}>
             <div class="course-series-heading"><span class="type-pill">YouTube Playlist</span><h2>{course.title}</h2>{course.description && <p>{course.description}</p>}</div>
-            <div class="video-frame"><iframe id={`course-player-${course.id}`} class:list={{ "random-course-player": !isSelectableCourse, "selectable-course-player": isSelectableCourse }} data-playlist={course.list} data-course-id={course.id} data-total-videos={course.totalVideos ?? undefined} src={playerUrl} title={course.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            <div class="video-frame"><iframe id={`course-player-${course.id}`} class:list={{ "random-course-player": !isSelectableCourse && !isLatestPlaylistCourse, "latest-course-player": isLatestPlaylistCourse, "selectable-course-player": isSelectableCourse }} data-playlist={course.list} data-course-id={course.id} data-total-videos={course.totalVideos ?? undefined} data-latest-playlist={isLatestPlaylistCourse ? "true" : undefined} src={playerUrl} title={course.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
             {course.selector === "topics" && course.topics?.length && (
               <div class="course-topic-picker">
                 <ol class="course-topic-list course-topic-list-below-video selectable-topic-list" aria-label={c.chooseLesson}>
@@ -242,6 +256,19 @@ const courses = [
       if (attempt < 12) window.setTimeout(() => randomizeSelectableCourse(player, playlistId, courseId, fallbackCount, attempt + 1), 250);
     };
 
+    const cueLatestPlaylistVideo = (player, playlistId, attempt = 0) => {
+      const playlist = player.getPlaylist?.() ?? [];
+      if (playlist.length) {
+        const latestIndex = playlist.length - 1;
+        cuePlaylistIndex(player, playlistId, latestIndex);
+        const selectedVideoId = playlist[latestIndex];
+        const openLink = player.getIframe?.()?.closest("article")?.querySelector("[data-course-playlist-link]");
+        if (openLink && selectedVideoId) openLink.href = `https://www.youtube.com/watch?v=${selectedVideoId}&list=${playlistId}&index=${latestIndex + 1}`;
+        return;
+      }
+      if (attempt < 16) window.setTimeout(() => cueLatestPlaylistVideo(player, playlistId, attempt + 1), 250);
+    };
+
     const initializePlayers = () => {
       frames.forEach((frame) => {
         if (!(frame instanceof HTMLIFrameElement) || frame.dataset.randomized === "true") return;
@@ -256,6 +283,10 @@ const courses = [
               if (courseId) playersByCourse.set(courseId, { player: event.target, playlistId });
               if (frame.classList.contains("selectable-course-player")) {
                 if (courseId) randomizeSelectableCourse(event.target, playlistId, courseId, totalVideos);
+                return;
+              }
+              if (frame.classList.contains("latest-course-player")) {
+                cueLatestPlaylistVideo(event.target, playlistId);
                 return;
               }
               randomizePlaylist(event.target, playlistId, totalVideos);
