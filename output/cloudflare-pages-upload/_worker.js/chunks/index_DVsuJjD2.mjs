@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_0t_mp1ud.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_Da7s1Mbi.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_Ci5R3-kv.mjs";
 import { t as $$ResourceCard } from "./ResourceCard_Da_FkacN.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
@@ -272,6 +272,16 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 	};
 	const courses = [
 		{
+			id: "gospel-renewed-life",
+			title: lang === "th" ? "ชีวิตที่ได้รับการสร้างใหม่โดยข่าวประเสริฐ" : lang === "ko" ? "복음으로 새로워지는 삶" : "Life Renewed by the Gospel",
+			description: lang === "th" ? "หลักสูตร 7 ตอนที่เรียบเรียงขึ้นใหม่จากแนวคิดสำคัญของ Richard Lovelace อธิบายว่าการฟื้นฟูฝ่ายวิญญาณเริ่มจากพระวิญญาณทรงเปิดตาใจให้เห็นพระคริสต์ชัดเจนขึ้น และข่าวประเสริฐเปลี่ยนทิศทางชีวิตจากอาณาจักรของตนเองสู่แผ่นดินของพระเจ้าอย่างไร" : lang === "ko" ? "리처드 러브레스의 책 내용을 기초로 새롭게 편집한 7편 강좌입니다. 영적 갱신이 단순히 더 열심히 사는 데서 시작되는 것이 아니라, 성령께서 마음의 눈을 밝히셔서 그리스도를 더 크게 보게 하실 때 시작된다는 복음의 핵심을 차분히 다룹니다." : "A seven-part course newly edited from key insights in Richard Lovelace’s work. It explains how spiritual renewal begins not with simply trying harder, but with the Holy Spirit opening the eyes of the heart to see Christ more clearly and to live for God’s kingdom.",
+			video: lang === "ko" ? "FPQKy06-k74" : "4K33B_5HMFY",
+			list: lang === "ko" ? "PLbBTH9jxs4n4" : "PLfg_5UNrDEFo",
+			latestPlaylist: true,
+			thaiCourseHref: lang === "ko" ? "/th/courses/#gospel-renewed-life" : void 0,
+			materials: []
+		},
+		{
 			id: "gospel-booklet",
 			title: lang === "th" ? "ข่าวประเสริฐและชีวิตคริสเตียนผ่าน 7 หัวข้อ" : lang === "ko" ? "7주제로 배우는 복음과 신앙생활" : "The Gospel and Christian Living in 7 Themes",
 			description: lang === "th" ? "การบรรยายสรุปเนื้อหาจากหนังสือเล่มเล็กของมิชชันนารี Yongjin Choi" : lang === "ko" ? "갓플리징 소책자 내용을 요약하여 듣는 AI 해설" : "A lecture summarizing the content of missionary Yongjin Choi’s booklets.",
@@ -331,18 +341,20 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"description": c.description
 	}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<header class="page-heading container"><p class="eyebrow">COURSES IN THAI</p>${lang === "th" && renderTemplate`<h1>${c.title}</h1>`}</header><section class="container course-hub"><div class="course-series-list">${courses.map((course) => {
 		const isSelectableCourse = course.selector === "topics" || course.lessonPicker?.length;
+		const isLatestPlaylistCourse = course.latestPlaylist === true;
 		const playerUrl = `${"video" in course ? `https://www.youtube.com/embed/${course.video}?rel=0&listType=playlist&list=${course.list}` : `https://www.youtube.com/embed?listType=playlist&list=${course.list}`}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`;
 		return renderTemplate`<article class="course-series-card"${addAttribute(course.id, "id")}><div class="course-series-heading"><span class="type-pill">YouTube Playlist</span><h2>${course.title}</h2>${course.description && renderTemplate`<p>${course.description}</p>`}</div><div class="video-frame"><iframe${addAttribute(`course-player-${course.id}`, "id")}${addAttribute({
-			"random-course-player": !isSelectableCourse,
+			"random-course-player": !isSelectableCourse && !isLatestPlaylistCourse,
+			"latest-course-player": isLatestPlaylistCourse,
 			"selectable-course-player": isSelectableCourse
-		}, "class:list")}${addAttribute(course.list, "data-playlist")}${addAttribute(course.id, "data-course-id")}${addAttribute(course.totalVideos ?? void 0, "data-total-videos")}${addAttribute(playerUrl, "src")}${addAttribute(course.title, "title")} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${course.selector === "topics" && course.topics?.length && renderTemplate`<div class="course-topic-picker"><ol class="course-topic-list course-topic-list-below-video selectable-topic-list"${addAttribute(c.chooseLesson, "aria-label")}>${course.topics.map((topic, index) => renderTemplate`<li><button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${topic}</button></li>`)}</ol></div>`}${course.lessonPicker?.length && renderTemplate`<details class="course-lesson-picker"><summary><span>${c.chooseLesson36}</span></summary><div class="course-lesson-grid"${addAttribute(c.chooseLesson, "aria-label")}>${course.lessonPicker.map((lesson, index) => renderTemplate`<button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${lesson}</button>`)}</div></details>`}<div class="course-youtube-actions video-action-row">${course.materials.length > 0 && course.materials.map((material) => renderTemplate`<a${addAttribute([
+		}, "class:list")}${addAttribute(course.list, "data-playlist")}${addAttribute(course.id, "data-course-id")}${addAttribute(course.totalVideos ?? void 0, "data-total-videos")}${addAttribute(isLatestPlaylistCourse ? "true" : void 0, "data-latest-playlist")}${addAttribute(playerUrl, "src")}${addAttribute(course.title, "title")} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${course.selector === "topics" && course.topics?.length && renderTemplate`<div class="course-topic-picker"><ol class="course-topic-list course-topic-list-below-video selectable-topic-list"${addAttribute(c.chooseLesson, "aria-label")}>${course.topics.map((topic, index) => renderTemplate`<li><button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${topic}</button></li>`)}</ol></div>`}${course.lessonPicker?.length && renderTemplate`<details class="course-lesson-picker"><summary><span>${c.chooseLesson36}</span></summary><div class="course-lesson-grid"${addAttribute(c.chooseLesson, "aria-label")}>${course.lessonPicker.map((lesson, index) => renderTemplate`<button type="button" class="course-video-choice"${addAttribute(course.id, "data-course-target")}${addAttribute(index, "data-video-index")}>${lesson}</button>`)}</div></details>`}<div class="course-youtube-actions video-action-row">${course.materials.length > 0 && course.materials.map((material) => renderTemplate`<a${addAttribute([
 			"button",
 			"course-inline-download",
 			{
 				"download-button": !("linkOnly" in material && material.linkOnly) || "downloadStyle" in material && material.downloadStyle,
 				secondary: "linkOnly" in material && material.linkOnly && !("downloadStyle" in material && material.downloadStyle)
 			}
-		], "class:list")}${addAttribute(material.href, "href")}${addAttribute("linkOnly" in material && material.linkOnly ? void 0 : true, "download")}>${"linkOnly" in material && material.linkOnly ? material.label : `${c.download} · ${material.label}`}</a>`)}${!course.hidePlaylistButton && renderTemplate`<a class="button secondary playlist-link-button course-playlist-button"${addAttribute(`https://www.youtube.com/playlist?list=${course.list}`, "href")} target="_blank" rel="noopener noreferrer" data-course-playlist-link>${c.playlistAction} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>`}${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+		], "class:list")}${addAttribute(material.href, "href")}${addAttribute("linkOnly" in material && material.linkOnly ? void 0 : true, "download")}>${"linkOnly" in material && material.linkOnly ? material.label : `${c.download} · ${material.label}`}</a>`)}${course.thaiCourseHref && renderTemplate`<a class="button secondary playlist-link-button"${addAttribute(course.thaiCourseHref, "href")}>태국어로 듣기</a>`}${!course.hidePlaylistButton && renderTemplate`<a class="button secondary playlist-link-button course-playlist-button"${addAttribute(`https://www.youtube.com/playlist?list=${course.list}`, "href")} target="_blank" rel="noopener noreferrer" data-course-playlist-link>${c.playlistAction} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>`}${renderComponent($$result, "ShareButtons", $$ShareButtons, {
 			"lang": lang,
 			"url": `https://www.youtube.com/playlist?list=${course.list}`,
 			"title": course.title
@@ -400,6 +412,19 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
       if (attempt < 12) window.setTimeout(() => randomizeSelectableCourse(player, playlistId, courseId, fallbackCount, attempt + 1), 250);
     };
 
+    const cueLatestPlaylistVideo = (player, playlistId, attempt = 0) => {
+      const playlist = player.getPlaylist?.() ?? [];
+      if (playlist.length) {
+        const latestIndex = playlist.length - 1;
+        cuePlaylistIndex(player, playlistId, latestIndex);
+        const selectedVideoId = playlist[latestIndex];
+        const openLink = player.getIframe?.()?.closest("article")?.querySelector("[data-course-playlist-link]");
+        if (openLink && selectedVideoId) openLink.href = \`https://www.youtube.com/watch?v=\${selectedVideoId}&list=\${playlistId}&index=\${latestIndex + 1}\`;
+        return;
+      }
+      if (attempt < 16) window.setTimeout(() => cueLatestPlaylistVideo(player, playlistId, attempt + 1), 250);
+    };
+
     const initializePlayers = () => {
       frames.forEach((frame) => {
         if (!(frame instanceof HTMLIFrameElement) || frame.dataset.randomized === "true") return;
@@ -414,6 +439,10 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
               if (courseId) playersByCourse.set(courseId, { player: event.target, playlistId });
               if (frame.classList.contains("selectable-course-player")) {
                 if (courseId) randomizeSelectableCourse(event.target, playlistId, courseId, totalVideos);
+                return;
+              }
+              if (frame.classList.contains("latest-course-player")) {
+                cueLatestPlaylistVideo(event.target, playlistId);
                 return;
               }
               randomizePlaylist(event.target, playlistId, totalVideos);

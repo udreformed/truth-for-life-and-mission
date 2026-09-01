@@ -5,7 +5,7 @@ import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { t as renderScript } from "./script_BZVrP_O2.mjs";
 import { n as isLanguage, t as copy } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_0t_mp1ud.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_Da7s1Mbi.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_Ci5R3-kv.mjs";
 import { t as $$ResourceCard } from "./ResourceCard_Da_FkacN.mjs";
 import { n as listPublishedResources } from "./resources_CloFJv4w.mjs";
@@ -24,7 +24,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 	if (!isLanguage(langParam)) return Astro.redirect("/th/", 302);
 	const lang = langParam;
 	const t = copy[lang];
-	const requestedType = Astro.url.searchParams.get("type") ?? "book";
+	const requestedType = Astro.url.searchParams.get("type") ?? "audiobook";
 	if (requestedType === "movie") return Astro.redirect(`/${lang}/library/?type=video`, 302);
 	if (requestedType === "bible-reading") return Astro.redirect(`/${lang}/bible-reading/`, 302);
 	if (requestedType === "devotional") {
@@ -855,33 +855,45 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		notice: ""
 	};
 	const bible66Book = lang === "th" ? {
-		badge: "หนังสืออธิบายพระคัมภีร์ภาษาไทย · แจกฟรี",
+		badge: "หนังสืออธิบายพระคัมภีร์ภาษาไทย · EPUB ฟรี",
 		title: "คำอธิบายพระคัมภีร์ 66 เล่ม",
-		description: "คำอธิบายพระคัมภีร์ครบทั้ง 66 เล่มฉบับภาษาไทย จัดทำสำหรับอ่าน ค้นคว้า และศึกษาพระคัมภีร์ โดยเรียบเรียงเนื้อหาจากเว็บไซต์ Bible 66 Commentary",
+		edition: "ฉบับภาษาไทย",
+		version: "v5.0",
+		description: "คำอธิบายพระคัมภีร์ครบทั้ง 66 เล่มฉบับภาษาไทย จัดทำสำหรับอ่าน ค้นคว้า และศึกษาพระคัมภีร์ หากต้องการไฟล์ PDF ภาษาไทย กรุณาติดต่อทางอีเมลหรือ LINE ด้านล่าง",
 		author: "เรียบเรียงฉบับภาษาไทย: Yongjin Choi",
 		notice: "",
-		download: "PDF 1,705 หน้า",
-		href: "/downloads/bible-66-commentary-th.pdf",
+		download: "EPUB v5.0",
+		href: "/downloads/bible-66-commentary-th-v5.0.epub",
+		filename: "bible-66-commentary-th-v5.0.epub",
+		cover: "/images/bible-66-commentary-book-cover-card.jpg?v=20260812",
 		online: "ค้นหาและอ่านบนเว็บไซต์",
 		originalRequest: ""
 	} : lang === "ko" ? {
-		badge: "태국어 성경 해설 · 무료 다운로드",
-		title: "성경 66권 해설 태국어판",
-		description: "성경 66권 전체의 해설 내용을 태국어로 번역하고 정리한 책입니다. 태국어로 성경을 읽고 연구하거나 가르칠 때 활용할 수 있습니다.",
-		author: "태국어판 편집: 최용진",
+		badge: "성경 해설 · 무료 EPUB",
+		title: "성경 66권 해설",
+		edition: "태국어판",
+		version: "v5.0",
+		description: "성경 66권의 전체 흐름과 핵심을 한눈에 살펴볼 수 있도록, 각 장과 단락을 체계적으로 주해하고 설명한 약 3,000쪽 분량의 성경 해설서입니다. 한국어 원본 pdf 파일이 필요하신 분은 아래 이메일이나 라인으로 요청해주세요.",
+		author: "저자: 최용진",
 		notice: "",
-		download: "태국어 PDF (1,705쪽)",
-		href: "/downloads/bible-66-commentary-th.pdf",
+		download: "한국어 EPUB v5.0",
+		href: "/downloads/bible-66-commentary-ko-v5.0.epub",
+		filename: "bible-66-commentary-ko-v5.0.epub",
+		cover: "/images/bible-66-commentary-book-cover-ko.jpg?v=20260820",
 		online: "온라인 해설 사이트 보기",
 		originalRequest: ""
 	} : {
-		badge: "Thai Bible commentary · Free download",
-		title: "Bible 66 Commentary — Thai Edition",
-		description: "A full Thai edition of Bible commentary covering all 66 books of the Bible. It is prepared for reading, study, teaching, and Bible research, based on the Bible 66 Commentary website.",
+		badge: "Thai Bible commentary · Free EPUB",
+		title: "Bible 66 Commentary",
+		edition: "Thai Edition",
+		version: "v5.0",
+		description: "A full Thai edition of Bible commentary covering all 66 books of the Bible. It is prepared for reading, study, teaching, and Bible research. If you would like the Thai PDF file, please request it by email or LINE below.",
 		author: "Thai edition edited by Yongjin Choi",
 		notice: "",
-		download: "Thai PDF (1,705 pages)",
-		href: "/downloads/bible-66-commentary-th.pdf",
+		download: "Thai EPUB v5.0",
+		href: "/downloads/bible-66-commentary-th-v5.0.epub",
+		filename: "bible-66-commentary-th-v5.0.epub",
+		cover: "/images/bible-66-commentary-book-cover-card.jpg?v=20260812",
 		online: "Read and search online",
 		originalRequest: ""
 	};
@@ -1558,7 +1570,38 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			actionLabel: videoPlaylistAction
 		}
 	];
+	const koreanMissionaryGloryAudiobook = lang === "ko" ? {
+		id: "missionary-glory-korean-audio",
+		list: "PLNP2GD27Q0Bg",
+		showLatest: false,
+		totalVideos: 26,
+		title: "하나님의 영광을 바라보는 선교사 오디오북",
+		description: "최용진 선교사의 책을 26일 동안 묵상하도록 돕는 오디오북입니다. 선교와 사역의 중심이 사람의 열심이나 성과가 아니라 하나님의 영광을 바라보는 믿음 위에 서야 함을 차분히 설명합니다.",
+		actionLabel: videoPlaylistAction
+	} : null;
 	const audiobookPlaylists = [
+		{
+			id: "daily-gospel-devotional-thai-audio",
+			list: lang === "th" ? "PLT7MyT0j5720d9Eq2kQr2A54v7AOXygOW" : "PLUN8JL8D21Qg",
+			video: lang === "th" ? "NQ2SPO5tRTY" : void 0,
+			showLatest: lang === "th",
+			title: lang === "th" ? "ใคร่ครวญข่าวประเสริฐ 365 วัน" : lang === "ko" ? "365일 복음 묵상 · 태국어 오디오" : "365 Daily Gospel Devotional in Thai",
+			description: lang === "th" ? "เพลย์ลิสต์นี้รวบรวมคำใคร่ครวญข่าวประเสริฐประจำวันจากเว็บไซต์ Truth for Life and Mission เพื่อช่วยให้ผู้ฟังเริ่มต้นวันด้วยพระคุณของพระเจ้า ความจริงของข่าวประเสริฐ และการหนุนใจจากพระวจนะ" : lang === "ko" ? "우리 홈페이지의 365일 복음 묵상 내용을 태국어로 매일 올리는 재생목록입니다. 하나님의 은혜와 복음의 진리를 매일 짧게 듣고 묵상할 수 있도록 구성했습니다." : "A daily Thai audio playlist based on the 365 Daily Gospel Devotional from Truth for Life and Mission. It helps listeners begin each day with God’s grace, the truth of the Gospel, and encouragement from Scripture.",
+			actionLabel: videoPlaylistAction
+		},
+		{
+			id: "psalms-proverbs-reading-audio",
+			list: lang === "ko" ? "PLAqg3Fekq2yc" : "PLHc03emoVU7M",
+			showLatest: false,
+			title: lang === "th" ? "สดุดีและสุภาษิต · เสียงอ่าน" : lang === "ko" ? "시편과 잠언 낭독" : "Psalms and Proverbs Audio Reading",
+			description: lang === "th" ? "เพลย์ลิสต์นี้รวบรวมเสียงอ่าน AI ของหนังสือสดุดีและสุภาษิต โดยอ้างอิงจากคำแปลแบบถอดความที่ผู้จัดทำแปลขึ้นเองอย่างใกล้ชิดกับต้นฉบับภาษาฮีบรู เพื่อช่วยให้ผู้ฟังติดตามคำอธิษฐาน การสรรเสริญ และถ้อยคำแห่งปัญญาได้ชัดเจน จะทยอยอัปโหลดตอนใหม่เพิ่มอย่างต่อเนื่อง" : lang === "ko" ? "히브리어 원문에 충실하게 직접 번역(사역)한 내용을 바탕으로 AI가 낭독한 시편·잠언 재생목록입니다. 시편의 기도와 찬양, 잠언의 지혜 말씀을 차분히 들을 수 있도록 구성했으며, 앞으로도 한 편씩 계속 올릴 예정입니다." : "An audio set for Psalms and Proverbs read by AI, based on direct renderings personally translated with close attention to the Hebrew text. It is arranged for reflective listening to the prayers and praises of the Psalms and the wisdom sayings of Proverbs, and new readings will continue to be added one by one.",
+			actionLabel: lang === "th" ? "เพลย์ลิสต์สดุดี" : lang === "ko" ? "시편 재생목록" : "Thai Psalms playlist",
+			extraLinks: [{
+				href: lang === "ko" ? "https://www.youtube.com/playlist?list=PLHTWwbVCVxok" : "https://www.youtube.com/playlist?list=PLGbIUHbe4fjg",
+				label: lang === "th" ? "เพลย์ลิสต์สุภาษิต" : lang === "ko" ? "잠언 재생목록" : "Thai Proverbs playlist"
+			}],
+			hideShareButtons: true
+		},
 		{
 			id: "god-pleasing-booklet-series-thai-audio",
 			list: lang === "ko" ? "PLOxu6Deed_oE" : "PLAEhdCEehItA",
@@ -1568,29 +1611,8 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			actionLabel: videoPlaylistAction
 		},
 		{
-			id: "psalms-proverbs-reading-audio",
-			list: "PLHc03emoVU7M",
-			showLatest: false,
-			title: lang === "th" ? "สดุดีและสุภาษิต · เสียงอ่าน" : lang === "ko" ? "시편과 잠언 낭독" : "Psalms and Proverbs Audio Reading",
-			description: lang === "th" ? "เพลย์ลิสต์นี้รวบรวมเสียงอ่าน AI ของหนังสือสดุดีและสุภาษิต โดยอ้างอิงจากคำแปลแบบถอดความที่ผู้จัดทำแปลขึ้นเองอย่างใกล้ชิดกับต้นฉบับภาษาฮีบรู เพื่อช่วยให้ผู้ฟังติดตามคำอธิษฐาน การสรรเสริญ และถ้อยคำแห่งปัญญาได้ชัดเจน จะทยอยอัปโหลดตอนใหม่เพิ่มอย่างต่อเนื่อง" : lang === "ko" ? "히브리어 원문에 충실하게 직접 번역(사역)한 내용을 바탕으로 AI가 낭독한 시편·잠언 재생목록입니다. 시편의 기도와 찬양, 잠언의 지혜 말씀을 차분히 들을 수 있도록 구성했으며, 앞으로도 한 편씩 계속 올릴 예정입니다." : "An audio set for Psalms and Proverbs read by AI, based on direct renderings personally translated with close attention to the Hebrew text. It is arranged for reflective listening to the prayers and praises of the Psalms and the wisdom sayings of Proverbs, and new readings will continue to be added one by one.",
-			actionLabel: lang === "th" ? "เปิดเพลย์ลิสต์สุภาษิต" : lang === "ko" ? "잠언 재생목록 보기" : "Open Proverbs playlist",
-			extraLinks: [{
-				href: "https://www.youtube.com/playlist?list=PLAqg3Fekq2yc",
-				label: lang === "th" ? "สดุดี 재생목록" : lang === "ko" ? "시편 재생목록" : "Psalms playlist"
-			}],
-			hideShareButtons: true
-		},
-		{
-			id: "daily-gospel-devotional-thai-audio",
-			list: "PLUN8JL8D21Qg",
-			showLatest: false,
-			title: lang === "th" ? "ใคร่ครวญข่าวประเสริฐ 365 วัน" : lang === "ko" ? "365일 복음 묵상 · 태국어 오디오" : "365 Daily Gospel Devotional in Thai",
-			description: lang === "th" ? "เพลย์ลิสต์นี้รวบรวมคำใคร่ครวญข่าวประเสริฐประจำวันจากเว็บไซต์ Truth for Life and Mission เพื่อช่วยให้ผู้ฟังเริ่มต้นวันด้วยพระคุณของพระเจ้า ความจริงของข่าวประเสริฐ และการหนุนใจจากพระวจนะ" : lang === "ko" ? "우리 홈페이지의 365일 복음 묵상 내용을 태국어로 매일 올리는 재생목록입니다. 하나님의 은혜와 복음의 진리를 매일 짧게 듣고 묵상할 수 있도록 구성했습니다." : "A daily Thai audio playlist based on the 365 Daily Gospel Devotional from Truth for Life and Mission. It helps listeners begin each day with God’s grace, the truth of the Gospel, and encouragement from Scripture.",
-			actionLabel: videoPlaylistAction
-		},
-		{
 			id: "paul-washer-gospel-thai-audio",
-			list: "PLGbIUHbe4fjg",
+			list: "PLT7MyT0j5721BAnWVr20tKnpGdVT1igal",
 			showLatest: false,
 			title: lang === "th" ? "ข่าวประเสริฐของพระเยซูคริสต์ โดย Paul Washer" : lang === "ko" ? "폴 워셔의 『예수 그리스도의 복음』 태국어 낭독" : "Paul Washer’s The Gospel of Jesus Christ in Thai",
 			description: lang === "th" ? "หนังสือเล่มนี้อธิบายข่าวประเสริฐอย่างตรงไปตรงมา โดยชี้ให้เห็นความบริสุทธิ์ของพระเจ้า ความจริงเรื่องบาป ความจำเป็นของการกลับใจและความเชื่อ และความรอดที่มีอยู่ในพระเยซูคริสต์เท่านั้น (ผู้อ่านเสียง: Thanatip Sanguansak)" : lang === "ko" ? "이 책은 하나님의 거룩하심, 인간의 죄, 회개와 믿음의 필요성, 그리고 예수 그리스도 안에만 있는 구원을 분명하게 설명합니다. 복음의 핵심을 다시 듣고 정리하기 좋은 태국어 낭독 자료입니다. (낭독자: Thanatip Sanguansak)" : "This book clearly explains the holiness of God, the reality of human sin, the need for repentance and faith, and the salvation found only in Jesus Christ. This is a Thai audio reading of the book. (Reader: Thanatip Sanguansak)",
@@ -1598,12 +1620,13 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		},
 		{
 			id: "is-god-really-sovereign-thai-audio",
-			list: "PLHTWwbVCVxok",
+			list: "PLuR2hj_NyLbWlWVAI8v0P4fvlTa4OJu4d",
 			showLatest: false,
 			title: lang === "th" ? "พระเจ้าทรงอำนาจอธิปไตยสูงสุดจริงหรือ? โดย Conrad Mbewe" : lang === "ko" ? "『하나님은 정말 주권자이신가?』 태국어 낭독" : "Is God Really Sovereign? in Thai",
 			description: lang === "th" ? "หนังสือของ Conrad Mbewe เล่มนี้ช่วยให้ผู้อ่านมองเห็นว่าพระเจ้าทรงครอบครองเหนือทุกสิ่งจริง แม้ในเวลาที่ชีวิตเต็มไปด้วยคำถาม ความเจ็บปวด หรือเหตุการณ์ที่เราไม่เข้าใจ ความจริงเรื่องอธิปไตยของพระเจ้าจึงเป็นทั้งรากฐานของความเชื่อและแหล่งปลอบใจของผู้เชื่อ" : lang === "ko" ? "Conrad Mbewe의 책으로, 이해하기 어려운 고난과 질문 속에서도 하나님께서 모든 것을 주권적으로 다스리신다는 성경의 가르침을 다룹니다. 하나님의 주권이 신자의 믿음과 위로의 기초가 됨을 보여주는 태국어 낭독 자료입니다." : "In this book, Conrad Mbewe explains the biblical teaching that God truly rules over all things, even when life is full of pain, questions, and events we cannot understand. It presents God’s sovereignty as a foundation for faith and comfort.",
 			actionLabel: videoPlaylistAction
-		}
+		},
+		...koreanMissionaryGloryAudiobook ? [koreanMissionaryGloryAudiobook] : []
 	];
 	const whyJesusPdf = {
 		th: {
@@ -2020,7 +2043,7 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		"lang": lang,
 		"url": `/${lang}/library/?type=book#yongjin-books`,
 		"title": yongjinBooksTitle
-	})}</div></section><div class="yongjin-book-list" aria-labelledby="yongjin-books-heading">${bible66Book && renderTemplate`<article class="korean-book-card bible-66-book-card" id="bible-66-book"><div class="ebook-cover-column"><img class="korean-book-cover" src="/images/bible-66-commentary-book-cover-card.jpg?v=20260812"${addAttribute(bible66Book.title, "alt")} loading="lazy"><div class="resource-action-row"><div class="book-downloads"><a class="button download-button bible-66-book-download"${addAttribute(bible66Book.href ?? "/downloads/bible-66-commentary-th.pdf", "href")} download>${lang === "th" ? renderTemplate`${renderComponent($$result, "Fragment", Fragment, {}, { "default": ($$result) => renderTemplate`PDF <span class="download-page-count">(1,705 หน้า)</span>` })}` : bible66Book.download}</a><a class="button secondary"${addAttribute(lang === "ko" ? "https://bible-66-commentary.pages.dev" : "https://bible-66-commentary.pages.dev/?lang=th", "href")} target="_blank" rel="noopener noreferrer">${bible66Book.online} ↗</a></div></div></div><div class="korean-book-copy"><p class="type-pill">${bible66Book.badge}</p><h2>${bible66Book.title}</h2><p class="korean-book-author">${bible66Book.author}</p><p>${bible66Book.description}</p>${bible66Book.notice && renderTemplate`<p class="book-distribution-notice">${bible66Book.notice}</p>`}${bible66Book.originalRequest && renderTemplate`<p class="book-original-request">${bible66Book.originalRequest}</p>`}</div></article>`}${revelationCommentaryBook && renderTemplate`<article class="korean-book-card bible-66-book-card" id="revelation-commentary-book"><div class="ebook-cover-column"><img class="korean-book-cover"${addAttribute(revelationCommentaryBook.cover, "src")}${addAttribute(revelationCommentaryBook.title, "alt")} loading="lazy"><div class="resource-action-row"><div class="book-downloads">${revelationCommentaryBook.downloads.map((download, index) => renderTemplate`<a${addAttribute(["button", {
+	})}</div></section><div class="yongjin-book-list" aria-labelledby="yongjin-books-heading">${bible66Book && renderTemplate`<article class="korean-book-card bible-66-book-card" id="bible-66-book"><div class="ebook-cover-column"><img class="korean-book-cover"${addAttribute(bible66Book.cover, "src")}${addAttribute(bible66Book.title, "alt")} loading="lazy"><div class="resource-action-row"><div class="book-downloads"><a class="button download-button bible-66-book-download"${addAttribute(bible66Book.href ?? "/downloads/bible-66-commentary-th-v5.0.epub", "href")}${addAttribute(bible66Book.filename ?? "bible-66-commentary-th-v5.0.epub", "download")}>${bible66Book.download}</a><a class="button secondary"${addAttribute(lang === "ko" ? "https://bible-66-commentary.pages.dev" : "https://bible-66-commentary.pages.dev/?lang=th", "href")} target="_blank" rel="noopener noreferrer">${bible66Book.online} ↗</a></div></div></div><div class="korean-book-copy"><p class="type-pill">${bible66Book.badge}</p><h2 class="bible-66-title"><span class="bible-66-title-main">${bible66Book.title}<span class="book-version-badge">${bible66Book.version}</span></span><small>${bible66Book.edition}</small></h2><p class="korean-book-author">${bible66Book.author}</p><p>${bible66Book.description}</p>${bible66Book.notice && renderTemplate`<p class="book-distribution-notice">${bible66Book.notice}</p>`}${bible66Book.originalRequest && renderTemplate`<p class="book-original-request">${bible66Book.originalRequest}</p>`}</div></article>`}${revelationCommentaryBook && renderTemplate`<article class="korean-book-card bible-66-book-card" id="revelation-commentary-book"><div class="ebook-cover-column"><img class="korean-book-cover"${addAttribute(revelationCommentaryBook.cover, "src")}${addAttribute(revelationCommentaryBook.title, "alt")} loading="lazy"><div class="resource-action-row"><div class="book-downloads">${revelationCommentaryBook.downloads.map((download, index) => renderTemplate`<a${addAttribute(["button", {
 		"download-button": !download.external,
 		secondary: index > 0 || download.external
 	}], "class:list")}${addAttribute(download.href, "href")}${addAttribute(download.external ? "_blank" : void 0, "target")}${addAttribute(download.external ? "noopener noreferrer" : void 0, "rel")}${addAttribute(download.external ? void 0 : true, "download")}>${download.label}${download.external ? " ↗" : ""}</a>`)}</div></div></div><div class="korean-book-copy"><p class="type-pill">${revelationCommentaryBook.badge}</p><h2>${revelationCommentaryBook.title}</h2><p class="korean-book-author">${revelationCommentaryBook.author}</p><p>${revelationCommentaryBook.description}</p>${revelationCommentaryBook.notice && renderTemplate`<p class="book-distribution-notice">${revelationCommentaryBook.notice}</p>`}</div></article>`}<div class="yongjin-book-trio">${bibleOverviewBook && renderTemplate`<article class="korean-book-card gospel-pointing-book-card booklet-series-book-card classic-ebook-card full-width-ebook-card" id="bible-overview-book"><div class="ebook-cover-column"><img class="korean-book-cover"${addAttribute(bibleOverviewBook.cover, "src")}${addAttribute(bibleOverviewBook.title, "alt")} loading="lazy"><div class="resource-action-row book-inline-action-row"><div class="book-downloads">${bibleOverviewBook.downloads.map((download, index) => renderTemplate`<a${addAttribute(["button", {
@@ -2170,28 +2193,36 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
 			"url": youtubeUrl,
 			"title": playlist.title
 		})}</div></article>`;
-	})}</div></section>`}${type === "audiobook" && renderTemplate`<section class="video-playlist-hub audiobook-playlist-hub"${addAttribute(a.audiobook, "aria-label")}><div class="video-playlist-list">${audiobookPlaylists.map((playlist, index) => renderTemplate`<article class="video-playlist-card audiobook-playlist-card"${addAttribute(playlist.id, "id")}><div class="video-playlist-heading"><p class="type-pill">YouTube Audiobook</p><h2>${playlist.title}</h2><p>${playlist.description}</p></div><div class="video-frame"><iframe${addAttribute(`audiobook-playlist-${playlist.id}`, "id")}${addAttribute({ "random-video-resource-player": !playlist.showLatest }, "class:list")}${addAttribute(playlist.list, "data-playlist")}${addAttribute(`https://www.youtube.com/embed?listType=playlist&list=${playlist.list}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`, "src")}${addAttribute(playlist.title, "title")}${addAttribute(index === 0 ? "eager" : "lazy", "loading")} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-action-row"><a class="button secondary playlist-link-button video-playlist-open"${addAttribute(`https://www.youtube.com/playlist?list=${playlist.list}`, "href")} target="_blank" rel="noopener noreferrer" data-video-playlist-open>${playlist.actionLabel} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>${"extraLinks" in playlist && playlist.extraLinks?.map((link) => renderTemplate`<a class="button secondary playlist-link-button"${addAttribute(link.href, "href")} target="_blank" rel="noopener noreferrer">${link.label} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>`)}${lang === "ko" && playlist.id === "god-pleasing-booklet-series-thai-audio" && renderTemplate`<a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#god-pleasing-booklet-series-thai-audio">태국어로 듣기</a>`}${!("hideShareButtons" in playlist && playlist.hideShareButtons) && renderTemplate`${renderComponent($$result, "ShareButtons", $$ShareButtons, {
-		"lang": lang,
-		"url": `https://www.youtube.com/playlist?list=${playlist.list}`,
-		"title": playlist.title
-	})}`}</div></article>`)}</div></section>`}</section>${(type === "video" || type === "audiobook") && renderTemplate`<script>
+	})}</div></section>`}${type === "audiobook" && renderTemplate`<section class="video-playlist-hub audiobook-playlist-hub"${addAttribute(a.audiobook, "aria-label")}><div class="video-playlist-list">${audiobookPlaylists.map((playlist, index) => renderTemplate`<article class="video-playlist-card audiobook-playlist-card"${addAttribute(playlist.id, "id")}>${(() => {
+		const featuredVideoId = "video" in playlist ? playlist.video : "";
+		const playlistUrl = featuredVideoId ? `https://www.youtube.com/watch?v=${featuredVideoId}&list=${playlist.list}` : `https://www.youtube.com/playlist?list=${playlist.list}`;
+		const embedUrl = featuredVideoId ? `https://www.youtube.com/embed/${featuredVideoId}?list=${playlist.list}&rel=0` : `https://www.youtube.com/embed?listType=playlist&list=${playlist.list}&enablejsapi=1&origin=${encodeURIComponent(Astro.url.origin)}`;
+		return renderTemplate`${renderComponent($$result, "Fragment", Fragment, {}, { "default": ($$result) => renderTemplate`<div class="video-playlist-heading"><p class="type-pill">YouTube Audiobook</p><h2>${playlist.title}</h2><p>${playlist.description}</p></div><div class="video-frame"><iframe${addAttribute(`audiobook-playlist-${playlist.id}`, "id")}${addAttribute({ "random-video-resource-player": !playlist.showLatest }, "class:list")}${addAttribute(playlist.list, "data-playlist")}${addAttribute("totalVideos" in playlist ? playlist.totalVideos : void 0, "data-total-videos")}${addAttribute(embedUrl, "src")}${addAttribute(playlist.title, "title")}${addAttribute(index === 0 ? "eager" : "lazy", "loading")} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><div class="video-action-row"><a class="button secondary playlist-link-button video-playlist-open"${addAttribute(playlistUrl, "href")} target="_blank" rel="noopener noreferrer" data-video-playlist-open>${playlist.actionLabel} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>${"extraLinks" in playlist && playlist.extraLinks?.map((link) => renderTemplate`<a class="button secondary playlist-link-button"${addAttribute(link.href, "href")} target="_blank" rel="noopener noreferrer">${link.label} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>`)}${lang === "ko" && playlist.id === "god-pleasing-booklet-series-thai-audio" && renderTemplate`<a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#god-pleasing-booklet-series-thai-audio">태국어로 듣기</a>`}${lang === "ko" && playlist.id === "psalms-proverbs-reading-audio" && renderTemplate`<a class="button secondary playlist-link-button" href="/th/library/?type=audiobook#psalms-proverbs-reading-audio">태국어로 듣기</a>`}${!("hideShareButtons" in playlist && playlist.hideShareButtons) && renderTemplate`${renderComponent($$result, "ShareButtons", $$ShareButtons, {
+			"lang": lang,
+			"url": playlistUrl,
+			"title": playlist.title
+		})}`}</div>` })}`;
+	})()}</article>`)}</div></section>`}</section>${(type === "video" || type === "audiobook") && renderTemplate`<script>
       (() => {
         const frames = Array.from(document.querySelectorAll(".random-video-resource-player[data-playlist]"));
         if (!frames.length) return;
 
-        const randomizePlaylist = (player, playlistId, attempt = 0) => {
+        const randomizePlaylist = (player, playlistId, fallbackCount = 0, attempt = 0) => {
           const videos = player.getPlaylist?.() ?? [];
-          if (videos.length) {
-            const randomIndex = Math.floor(Math.random() * videos.length);
+          const availableCount = videos.length || fallbackCount;
+          if (availableCount) {
+            const randomIndex = Math.floor(Math.random() * availableCount);
             player.cuePlaylist({ list: playlistId, listType: "playlist", index: randomIndex, startSeconds: 0 });
             const selectedVideoId = videos[randomIndex];
             const openLink = player.getIframe?.()?.closest("article")?.querySelector("[data-video-playlist-open]");
-            if (openLink instanceof HTMLAnchorElement && selectedVideoId) {
-              openLink.href = \`https://www.youtube.com/watch?v=\${selectedVideoId}&list=\${playlistId}&index=\${randomIndex + 1}\`;
+            if (openLink instanceof HTMLAnchorElement) {
+              openLink.href = selectedVideoId
+                ? \`https://www.youtube.com/watch?v=\${selectedVideoId}&list=\${playlistId}&index=\${randomIndex + 1}\`
+                : \`https://www.youtube.com/playlist?list=\${playlistId}&index=\${randomIndex + 1}\`;
             }
             return;
           }
-          if (attempt < 12) window.setTimeout(() => randomizePlaylist(player, playlistId, attempt + 1), 250);
+          if (attempt < 12) window.setTimeout(() => randomizePlaylist(player, playlistId, fallbackCount, attempt + 1), 250);
         };
 
         const initializePlayers = () => {
@@ -2199,8 +2230,9 @@ var $$Index = createComponent(async ($$result, $$props, $$slots) => {
             if (!(frame instanceof HTMLIFrameElement) || frame.dataset.randomized === "true") return;
             frame.dataset.randomized = "true";
             const playlistId = frame.dataset.playlist;
+            const totalVideos = Number.parseInt(frame.dataset.totalVideos ?? "0", 10) || 0;
             if (!playlistId) return;
-            new window.YT.Player(frame, { events: { onReady: (event) => randomizePlaylist(event.target, playlistId) } });
+            new window.YT.Player(frame, { events: { onReady: (event) => randomizePlaylist(event.target, playlistId, totalVideos) } });
           });
         };
 

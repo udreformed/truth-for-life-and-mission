@@ -4,7 +4,7 @@ import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, d as renderTemplate, h as maybeRenderHead, i as renderComponent, v as defineScriptVars } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
 import { n as isLanguage } from "./i18n_B790PXAF.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_0t_mp1ud.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_Da7s1Mbi.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_Ci5R3-kv.mjs";
 import { t as youtubeEmbedUrl } from "./youtube_BWYuiuwP.mjs";
 //#region src/pages/[lang]/library/children-gospel-tract.astro

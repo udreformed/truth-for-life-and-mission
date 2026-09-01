@@ -3,9 +3,9 @@ globalThis.process.env ??= {};
 import { n as __exportAll } from "./rolldown-runtime_Upwk45wU.mjs";
 import { E as createAstro, _ as addAttribute, a as Fragment, d as renderTemplate, h as maybeRenderHead, i as renderComponent } from "./server_DzJkc2yi.mjs";
 import { t as createComponent } from "./compiler_BiDVP5L8.mjs";
-import { t as $$SiteLayout } from "./SiteLayout_0t_mp1ud.mjs";
+import { t as $$SiteLayout } from "./SiteLayout_Da7s1Mbi.mjs";
 import { t as $$ShareButtons } from "./ShareButtons_Ci5R3-kv.mjs";
-import { a as shiftDateKey, i as parseDateKey, n as getAnnualReadingDay, r as getBangkokDateKey, t as formatDateKey } from "./annual-bible-reading_CAapI2Zc.mjs";
+import { a as shiftDateKey, i as parseDateKey, n as getAnnualReadingDay, r as getBangkokDateKey, t as formatDateKey } from "./annual-bible-reading_DVswH1NQ.mjs";
 //#region src/pages/ko/bible-reading/365.astro
 var _365_exports = /* @__PURE__ */ __exportAll({
 	default: () => $$365,
