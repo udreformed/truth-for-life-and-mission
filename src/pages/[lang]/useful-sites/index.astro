@@ -37,7 +37,10 @@ const pageCopy = {
     odbmKind: "เฝ้าเดี่ยวประจำวัน · บทความ · เสียง · แผนการอ่าน",
     reformedConfessionsTitle: "Reformed Confessions",
     reformedConfessionsDescription: "เว็บไซต์ที่รวบรวมเอกสารคำสารภาพความเชื่อสำคัญในประวัติศาสตร์คริสตจักร เช่น คำสารภาพความเชื่อเวสต์มินสเตอร์ คำถามคำตอบใหญ่และคำถามคำตอบสั้น คำสารภาพความเชื่อเบลจิก หลักข้อเชื่อแห่งดอร์ท และคำสอนถามตอบไฮเดลเบิร์ก เพื่อให้อ่าน ค้นหา ศึกษา และดาวน์โหลดเอกสารได้สะดวก",
-    reformedConfessionsKind: "คำสารภาพความเชื่อ · คำสอนถามตอบ · เอกสารประวัติศาสตร์"
+    reformedConfessionsKind: "คำสารภาพความเชื่อ · คำสอนถามตอบ · เอกสารประวัติศาสตร์",
+    theologyGlossaryTitle: "ฐานข้อมูลศัพท์ศาสนศาสตร์ เกาหลี·ไทย·อังกฤษ",
+    theologyGlossaryDescription: "ฐานข้อมูลศัพท์ศาสนศาสตร์สามภาษา สำหรับมิชชันนารี ผู้แปล และผู้สอน ใช้ค้นหาและเปรียบเทียบคำศัพท์ภาษาเกาหลี ไทย และอังกฤษ เพื่อเลือกใช้คำให้ชัดเจนขึ้นในการสอนและงานพันธกิจ",
+    theologyGlossaryKind: "ศัพท์ศาสนศาสตร์ · เกาหลี · ไทย · อังกฤษ"
   },
   ko: {
     title: "유용한 사이트",
@@ -67,7 +70,10 @@ const pageCopy = {
     odbmKind: "태국어 매일 묵상 · 오디오 · 읽기 계획",
     reformedConfessionsTitle: "Reformed Confessions",
     reformedConfessionsDescription: "교회가 오랜 시간 성경의 진리를 고백하고 가르치기 위해 사용해 온 역사적 신앙고백 문서들을 한곳에 모은 사이트입니다. 웨스트민스터 신앙고백서, 대·소요리문답, 벨직 신앙고백서, 도르트 신조, 하이델베르크 요리문답 등을 읽고 검색하며 필요한 자료를 내려받을 수 있습니다.",
-    reformedConfessionsKind: "신앙고백서 · 요리문답 · 역사적 문서"
+    reformedConfessionsKind: "신앙고백서 · 요리문답 · 역사적 문서",
+    theologyGlossaryTitle: "한·태·영 신학 용어 데이터베이스",
+    theologyGlossaryDescription: "선교사와 번역자, 태국어 사역자를 위한 삼국어 신학 용어 데이터베이스입니다. 한국어·태국어·영어 용어를 함께 확인하고 비교하여 설교, 강의, 번역과 제자훈련 자료를 준비할 때 용어 선택을 돕습니다.",
+    theologyGlossaryKind: "신학 용어 · 한국어 · 태국어 · 영어"
   },
   en: {
     title: "Useful sites",
@@ -97,7 +103,10 @@ const pageCopy = {
     odbmKind: "Thai daily devotional · audio · reading plans",
     reformedConfessionsTitle: "Reformed Confessions",
     reformedConfessionsDescription: "A collection of historic confessional documents the church has used to confess and teach biblical truth, including the Westminster Confession of Faith, the Larger and Shorter Catechisms, the Belgic Confession, the Canons of Dort, and the Heidelberg Catechism, with tools for reading, searching, and downloading resources.",
-    reformedConfessionsKind: "Confessions · catechisms · historic documents"
+    reformedConfessionsKind: "Confessions · catechisms · historic documents",
+    theologyGlossaryTitle: "Korean·Thai·English Theology Glossary",
+    theologyGlossaryDescription: "A trilingual theology glossary for missionaries, translators, and Thai-language ministry workers. It helps compare Korean, Thai, and English terms when preparing sermons, teaching materials, translations, and discipleship resources.",
+    theologyGlossaryKind: "Theology terms · Korean · Thai · English"
   }
 } as const;
 
@@ -115,6 +124,11 @@ const youversionUrl = lang === "th" ? "https://www.bible.com/th/app" : lang === 
 const odbmUrl = "https://www.odbm.org/th/today/";
 const reformedConfessionsUrl = "https://re-confessions.pages.dev/";
 const graceBannasanUrl = lang === "en" ? "https://www.gracebannasan.com/en/" : "https://www.gracebannasan.com/";
+const theologyGlossaryUrl = lang === "th"
+  ? "https://theology-glossary-trilingual.thaigodpleasing.chatgpt.site/?lang=th"
+  : lang === "en"
+    ? "https://theology-glossary-trilingual.thaigodpleasing.chatgpt.site/?lang=en"
+    : "https://theology-glossary-trilingual.thaigodpleasing.chatgpt.site/";
 ---
 
 <SiteLayout lang={lang} title={t.title} description={t.description} current="library">
@@ -219,6 +233,10 @@ const graceBannasanUrl = lang === "en" ? "https://www.gracebannasan.com/en/" : "
       <article class="recommendation-share-card" id="thirdmill-thai">
         <RecommendedSiteCard href="https://thai.thirdmill.org/" title={t.thirdmillTitle} description={t.thirdmillDescription} meta={t.thirdmillKind} action={t.visit} imageSrc="/thirdmill-logo-cropped.svg" imageAlt="Thirdmill" imageLayout="wide" showArrow={lang !== "th"} hideAction />
         <ShareButtons lang={lang} url="https://thai.thirdmill.org/" title={t.thirdmillTitle} />
+      </article>
+      <article class="recommendation-share-card" id="theology-glossary-trilingual">
+        <RecommendedSiteCard href={theologyGlossaryUrl} title={t.theologyGlossaryTitle} description={t.theologyGlossaryDescription} meta={t.theologyGlossaryKind} action={t.visit} imageSrc="/theology-glossary-icon.png" imageAlt={t.theologyGlossaryTitle} showArrow={lang !== "th"} hideAction />
+        <ShareButtons lang={lang} url={theologyGlossaryUrl} title={t.theologyGlossaryTitle} />
       </article>
     </div>
   </section>
