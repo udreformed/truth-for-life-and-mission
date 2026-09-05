@@ -141,6 +141,7 @@ const courses = [
     list: lang === "ko" ? "PLA7MeIBGzUVw" : "PLMFOIOc6tVDI",
     latestPlaylist: true,
     thaiCourseHref: lang === "ko" ? "/th/courses/#grudem-systematic-theology" : undefined,
+    thaiCourseLabel: "태국어로 보기",
     materials: []
   }
 ];
@@ -183,7 +184,7 @@ const courses = [
               {course.materials.length > 0 && course.materials.map((material) => (
                 <a class:list={["button", "course-inline-download", { "download-button": !("linkOnly" in material && material.linkOnly) || ("downloadStyle" in material && material.downloadStyle), secondary: ("linkOnly" in material && material.linkOnly) && !("downloadStyle" in material && material.downloadStyle) }]} href={material.href} download={"linkOnly" in material && material.linkOnly ? undefined : true}>{"linkOnly" in material && material.linkOnly ? material.label : `${c.download} · ${material.label}`}</a>
               ))}
-              {course.thaiCourseHref && <a class="button secondary playlist-link-button" href={course.thaiCourseHref}>태국어로 듣기</a>}
+              {course.thaiCourseHref && <a class="button secondary playlist-link-button" href={course.thaiCourseHref}>{course.thaiCourseLabel ?? "태국어로 듣기"}</a>}
               {!course.hidePlaylistButton && <a class="button secondary playlist-link-button course-playlist-button" href={`https://www.youtube.com/playlist?list=${course.list}`} target="_blank" rel="noopener noreferrer" data-course-playlist-link>{c.playlistAction} <span class="playlist-external-mark" aria-hidden="true">↗</span></a>}
               <ShareButtons lang={lang} url={`https://www.youtube.com/playlist?list=${course.list}`} title={course.title} />
             </div>
