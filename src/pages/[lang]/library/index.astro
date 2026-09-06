@@ -330,6 +330,7 @@ const doctrinesOfGracePdfCard = lang === "th" ? {
   title: "หลักคำสอนแห่งพระคุณ",
   description: "คู่มือศึกษาพระคัมภีร์เรื่อง “หลักคำสอนแห่งพระคุณ” ที่ช่วยให้เข้าใจว่าความรอดตั้งแต่ต้นจนจบเป็นพระคุณของพระเจ้า เหมาะสำหรับการเรียนส่วนตัวและกลุ่มศึกษาพระคัมภีร์",
   editor: "เรียบเรียงโดย: Yongjin Choi",
+  cover: "/images/doctrines-of-grace-th-cover.png",
   downloads: [
     { action: "PDF ภาษาไทย", href: "/downloads/doctrines-of-grace-th.pdf" }
   ]
@@ -338,6 +339,7 @@ const doctrinesOfGracePdfCard = lang === "th" ? {
   title: "은혜의 교리",
   description: "칼빈주의 5대 교리로 알려진 “은혜의 교리”를 성경공부 교재 형식으로 정리한 자료입니다. 구원이 처음부터 끝까지 하나님의 은혜임을 차분히 배우도록 돕습니다.",
   editor: "편저자: 최용진",
+  cover: "/images/doctrines-of-grace-ko-cover.png",
   downloads: [
     { action: "한국어 PDF", href: "/downloads/doctrines-of-grace-ko.pdf" }
   ]
@@ -346,6 +348,7 @@ const doctrinesOfGracePdfCard = lang === "th" ? {
   title: "Doctrines of Grace",
   description: "A Bible-study guide to the “Doctrines of Grace,” commonly known as the five points of Calvinism. It helps readers see that salvation is God's grace from beginning to end.",
   editor: "Editor: Yongjin Choi",
+  cover: "/images/doctrines-of-grace-th-cover.png",
   downloads: [
     { action: "Thai PDF", href: "/downloads/doctrines-of-grace-th.pdf" }
   ]
@@ -1222,6 +1225,7 @@ const albertMartinEvangelismCopy = {
     author: "Albert N. Martin",
     description: "สรุปคำบรรยายที่อธิบายว่า วิธีการประกาศข่าวประเสริฐไม่ควรถูกแยกออกจากเทววิทยา แต่ต้องอยู่ภายใต้มาตรฐานของพระคัมภีร์ ทั้งเรื่องพระสิริของพระเจ้า การประกาศพระวจนะ การกลับใจ ความเชื่อ และการพึ่งพาพระราชกิจของพระวิญญาณบริสุทธิ์",
     download: "PDF ภาษาไทย",
+    cover: "/images/albert-martin-reformed-theology-evangelism-th-cover.jpg",
     href: "/downloads/albert-martin-reformed-theology-evangelism-th.pdf"
   },
   ko: {
@@ -1230,6 +1234,7 @@ const albertMartinEvangelismCopy = {
     author: "Albert N. Martin",
     description: "전도 방법론이 신학과 분리된 기술의 문제가 아니라는 점을 설명하는 강의 요약입니다. 하나님의 영광, 말씀 선포, 회개와 믿음, 인간의 영적 무능, 성령의 역사라는 개혁신학의 핵심이 전도 방식에도 어떻게 적용되어야 하는지 정리합니다.",
     download: "한국어 PDF",
+    cover: "/images/albert-martin-reformed-theology-evangelism-ko-cover.jpg",
     href: "/downloads/albert-martin-reformed-theology-evangelism-ko.pdf"
   },
   en: {
@@ -1238,6 +1243,7 @@ const albertMartinEvangelismCopy = {
     author: "Albert N. Martin",
     description: "A concise lecture summary explaining that evangelistic methodology cannot be separated from theology. It shows how the glory of God, the proclamation of the Word, repentance and faith, human inability, and the work of the Holy Spirit should shape the way the gospel is presented.",
     download: "English PDF",
+    cover: "/images/albert-martin-reformed-theology-evangelism-en-cover.jpg",
     href: "/downloads/albert-martin-reformed-theology-evangelism-en.pdf"
   }
 } as const;
@@ -2065,6 +2071,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
             <article class="uploaded-pdf-card albert-martin-evangelism-card" id="albert-martin-reformed-theology-evangelism">
               <p class="type-pill">{albertMartinEvangelism.badge}</p>
               <h2>{albertMartinEvangelism.title}</h2>
+              <img class="uploaded-pdf-cover" src={albertMartinEvangelism.cover} alt={albertMartinEvangelism.title} loading="lazy" decoding="async" />
               <p class="source-attribution">{albertMartinEvangelism.author}</p>
               <p>{albertMartinEvangelism.description}</p>
               <div class="resource-action-row">
@@ -2123,6 +2130,7 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
 <article class="uploaded-pdf-card doctrines-of-grace-pdf-card" id="doctrines-of-grace-pdf">
               <p class="type-pill">{doctrinesOfGracePdfCard.badge}</p>
               <h2>{doctrinesOfGracePdfCard.title}</h2>
+              <img class="uploaded-pdf-cover" src={doctrinesOfGracePdfCard.cover} alt={doctrinesOfGracePdfCard.title} loading="lazy" decoding="async" />
               <p class="source-attribution">{doctrinesOfGracePdfCard.editor}</p>
               <p>{doctrinesOfGracePdfCard.description}</p>
               <div class="resource-action-row">
