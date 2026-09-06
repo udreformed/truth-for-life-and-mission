@@ -1215,6 +1215,33 @@ const coverageVisionResourceCopy = {
   }
 } as const;
 const coverageVisionResource = coverageVisionResourceCopy[lang];
+const albertMartinEvangelismCopy = {
+  th: {
+    badge: "เทววิทยาปฏิรูป · การประกาศข่าวประเสริฐ",
+    title: "ความสัมพันธ์ระหว่างเทววิทยาปฏิรูปกับวิธีการประกาศข่าวประเสริฐ",
+    author: "Albert N. Martin",
+    description: "สรุปคำบรรยายที่อธิบายว่า วิธีการประกาศข่าวประเสริฐไม่ควรถูกแยกออกจากเทววิทยา แต่ต้องอยู่ภายใต้มาตรฐานของพระคัมภีร์ ทั้งเรื่องพระสิริของพระเจ้า การประกาศพระวจนะ การกลับใจ ความเชื่อ และการพึ่งพาพระราชกิจของพระวิญญาณบริสุทธิ์",
+    download: "PDF ภาษาไทย",
+    href: "/downloads/albert-martin-reformed-theology-evangelism-th.pdf"
+  },
+  ko: {
+    badge: "개혁신학 · 전도 방법론",
+    title: "개혁신학과 전도 방법론의 관계",
+    author: "Albert N. Martin",
+    description: "전도 방법론이 신학과 분리된 기술의 문제가 아니라는 점을 설명하는 강의 요약입니다. 하나님의 영광, 말씀 선포, 회개와 믿음, 인간의 영적 무능, 성령의 역사라는 개혁신학의 핵심이 전도 방식에도 어떻게 적용되어야 하는지 정리합니다.",
+    download: "한국어 PDF",
+    href: "/downloads/albert-martin-reformed-theology-evangelism-ko.pdf"
+  },
+  en: {
+    badge: "Reformed theology · Evangelistic methodology",
+    title: "The Relationship Between Reformed Theology and Evangelistic Methodology",
+    author: "Albert N. Martin",
+    description: "A concise lecture summary explaining that evangelistic methodology cannot be separated from theology. It shows how the glory of God, the proclamation of the Word, repentance and faith, human inability, and the work of the Holy Spirit should shape the way the gospel is presented.",
+    download: "English PDF",
+    href: "/downloads/albert-martin-reformed-theology-evangelism-en.pdf"
+  }
+} as const;
+const albertMartinEvangelism = albertMartinEvangelismCopy[lang];
 const pdfGroupCopy = {
   th: {
     tracts: "หนังสือแจกจ่าย / หนังสือเล่มเล็ก",
@@ -2033,6 +2060,18 @@ Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300, s
                   <a class="button secondary" href={coverageVisionToolkitUrl} target="_blank" rel="noopener noreferrer">{coverageVisionResource.toolkit} ↗</a>
                 </div>
                 <ShareButtons lang={lang} url={coverageVisionDetailUrl} title={coverageVisionResource.title} />
+              </div>
+            </article>
+            <article class="uploaded-pdf-card albert-martin-evangelism-card" id="albert-martin-reformed-theology-evangelism">
+              <p class="type-pill">{albertMartinEvangelism.badge}</p>
+              <h2>{albertMartinEvangelism.title}</h2>
+              <p class="source-attribution">{albertMartinEvangelism.author}</p>
+              <p>{albertMartinEvangelism.description}</p>
+              <div class="resource-action-row">
+                <div class="uploaded-pdf-actions">
+                  <a class="button download-button" href={albertMartinEvangelism.href} download={albertMartinEvangelism.href.split("/").pop()}>{albertMartinEvangelism.download}</a>
+                </div>
+                <ShareButtons lang={lang} url={albertMartinEvangelism.href} title={albertMartinEvangelism.title} />
               </div>
             </article>
           </div>
